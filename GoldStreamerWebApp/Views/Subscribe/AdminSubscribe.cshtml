@@ -1,0 +1,172 @@
+﻿@model BLL.DomainClasses.Subscribe
+@using GoldStreamer.Helpers
+@{
+    ViewBag.Title = @Resources.General.sendSubscribe;
+    string baseUrl = CultureHelper.GetBaseURL().ToLower();
+    string culture = CultureHelper.GetCurrentCulture().ToLower();
+    string primaryCulture = CultureHelper.GetPrimaryCulture().ToLower();
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+
+}
+
+@section SideMenu{
+    @Html.Partial("_AdminSideMenu")
+}
+<script>
+    $(function () {
+        $("#div_ss").addClass("menuItemactive");
+    });
+</script>
+@section UpperBanner{
+
+
+    <div class="innerBanner">
+        <div class="banner">
+            <h1 class="banner_header">@Resources.General.sendSubscribe</h1>
+
+            <img src="../../Content/Images/inner_banner.jpg" width="1050" height="180" alt="" />
+        </div>
+    </div>
+}
+<link rel="stylesheet" href="/Content/example.css" type="text/css" />
+<script type="text/javascript">
+    var editor;
+    function RichTextEditor_OnLoad(rteeditor) {
+        editor = rteeditor;
+        var content = true;
+        if (!content) {
+            setTimeout(function () {
+                editor.SetText("<table cellspacing=\"4\" cellpadding=\"4\" border=\"0\"><tr><td><p><img src=\"http://www.richtexteditor.com/uploads/j0262681.jpg\" alt=\"\" /></p></td> <td> <p>When your algorithmic and programming skills have reached a level which you cannot improve any further, refining your team strategy will give you that extra edge you need to reach the top. We practiced programming contests with different team members and strategies for many years, and saw a lot of other teams do so too.</p></td></tr> <tr> <td> <p> <img src=\"http://www.richtexteditor.com/uploads/PH02366J.jpg\" alt=\"\" /></p></td> <td> <p>From this we developed a theory about how an optimal team should behave during a contest. However, a refined strategy is not a must: The World Champions of 1995, Freiburg University, were a rookie team, and the winners of the 1994 Northwestern European Contest, Warsaw University, met only two weeks before that contest.</p></td></tr></table>");
+            }, 1000);
+            return;
+        }
+    }
+</script>
+<form id="form" method="POST">
+    <div id="AjaxResult" >
+            <table style="width:100%; text-align:center;">
+                <tr>
+                    <td  style="width:10%">@Resources.General.Subject :</td>
+                    <td style="width:10%"></td>
+                    <td>
+                        <div style=" margin-left: 79%;">
+                            <input type="text" id="Subject" name="Subject" placeholder="@Resources.General.Subject" />
+                            </div>
+</td>
+                    </tr>
+                <tr>
+                    <td style="width:10%"></td>
+                    <td style="width:10%"></td>
+                    <td>
+                        <div style="margin-left: 73%;"> @Html.Label(Resources.Messages.Required, new { @class = "has-error ", @style = "display:none;color: red;width: -21%;margin-left: 0px;", id = "errNoSubject" })
+</div>
+                </td>
+                </tr>
+                <tr>
+                    <td style="width:10%">المحتوى:</td>
+                    <td style="width:10%"></td>
+                    <td style="text-align:right;">
+
+                        @Html.TextArea("contentTxt", new { @style="width: 575px;height: 190px;"})
+                        @*@Html.Raw(ViewBag.Editor)*@
+                        @Html.Label(Resources.Messages.Required, new { @class = "has-error ", @style = "color:red;display:none", id = "errNoEditor" })
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3"><button class="btn" id="btn_sumbit" value="@Resources.General.Send" type="button">
+    @Resources.General.Send
+</button></td>
+                    
+                </tr>
+            </table>
+           
+            
+        <div>@ViewBag._content</div>
+        <br />
+    </div>
+</form>
+
+    <script type="text/javascript">
+        $('#Subject').blur(function () {
+
+            var txt2 = $('#Subject').val()
+            if (txt2==""||txt2==null||txt2=='') {
+                  $("#errNoSubject").show();
+                return false;
+            }
+            else {
+                $("#errNoSubject").hide();
+            }
+        });
+    $('#btn_sumbit').click(function (e) {
+        try {
+           
+            e.preventDefault();
+            if ($("#Subject").val() == "")
+            {
+                $("#errNoSubject").show();
+                return false;
+            }
+            else
+            {
+                $("#errNoSubject").hide();
+            }
+            var form = $("#form").serialize();
+            $("#errNoEditor").hide();
+            var sub = $("#Subject").val();
+            var content = $("#contentTxt").val()
+            $.ajax({
+                url: "@(baseUrl)Subscribe/AdminSubscribe/",
+                type: "POST",
+                async: false,
+                cache: false,
+                data : {subject: sub , content :content },
+                success: function (data, statusText, xhr) {
+                    toastr.success('@Resources.Messages.sent');
+                    $('#Subject').val('');
+                    editor.SetText('');
+                    editor.SetHtmlCode('');
+                    @*if (data.status == 200 || data.StatusCode == null) {
+
+                        toastr.success('@Resources.Messages.sent');
+                        $("#Subject").val('');
+                        path = "@(baseUrl)Subscribe/AdminSubscribe/";
+                        $.ajax({
+                            url: path,
+                            type: 'Get',
+                            async: false,
+                            cache: false,
+                            success: function (data) {
+                                $('#AjaxResult').html(data)
+                            },
+                            error: function (xhr, textStatus) {
+                                if (xhr.status == 5)
+                                    window.location.reload();
+                                else
+                                    toastr.error("something seems wrong");
+                            }
+                        });
+
+                    }
+
+                    else {
+                        toastr.error('@Resources.Messages.SaveFailed');
+                    }*@
+
+
+                },
+                error: function (data, statusText, xhr) {
+                    if (data.status == 2) {
+                        $("#errNoEditor").show();
+                        return false;
+                    }
+                    else {
+                        toastr.error('@Resources.Messages.SaveFailed');
+                    }
+                }
+            });
+        }
+        catch (err) { }
+        return false;
+    });
+    </script>

@@ -1,0 +1,10 @@
+﻿@model List<BLL.DomainClasses.NewsCategory>
+
+@foreach (var item in Model)
+{
+    <div class="menuItem menuItemactive">
+        @Html.ActionLink(item.CategoryName, "Index", new { subCategoryId = item.Id })
+
+    </div>
+
+}

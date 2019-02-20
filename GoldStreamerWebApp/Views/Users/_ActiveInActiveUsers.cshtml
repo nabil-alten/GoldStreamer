@@ -1,0 +1,29 @@
+﻿
+
+<form class="form-horizontal" id="form" method="post" action="">
+    <div class="form-group">
+        <div class="control-label col-md-2">@Resources.General.FirstName</div>
+        <div class="col-md-10">
+            @Html.TextBox("FullName", new { @data_val = "true", placeholder = @Resources.General.FirstName, @id = "FullName", @maxlength = "20" })
+        </div>
+        <div class="control-label col-md-2">@Resources.General.UserName</div>
+        <div class="col-md-10">
+            @Html.TextBox("UserName", new { @data_val = "true", placeholder = @Resources.General.UserName, @id = "UserName", @maxlength = "20" })
+        </div>
+        <div class="control-label col-md-2">@Resources.General.UserType</div>
+        <div class="col-md-10">
+            <select class="form-control" id="drpUserType">
+                <option value="0" selected>@Resources.General.select</option>
+                <option value="2" >@Resources.General.Trader</option>
+                <option value="3">@Resources.General.UserText</option>
+            </select>
+        </div>
+        <div>
+            <div class="col-md-offset-2 col-md-10">
+                <input type="button" id="btnSearch" value='@Resources.General.Filter' class="btn btn-default" />
+
+            </div>
+        </div>
+    </div>
+   
+</form>

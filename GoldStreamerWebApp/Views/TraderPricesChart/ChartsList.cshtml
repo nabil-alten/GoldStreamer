@@ -1,0 +1,55 @@
+﻿@model IEnumerable<BLL.DomainClasses.TraderPricesChart>
+
+@{
+    ViewBag.Title = "ChartsList";
+    Layout = "~/Views/Shared/_LayoutInner.cshtml";
+}
+<table class="table">
+    <tr>
+        <th>
+           اسم التاجر
+        </th>
+        <th>
+          اليوم
+        </th>
+        <th>
+         متوسط سعر الشراء
+        </th>
+        <th>
+          متوسط سعر البيع
+        </th>
+        <th>
+          سعر الاغلاق للشراء
+        </th>
+        <th>
+           سعر الاغلاق للبيع
+        </th>
+     
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Trader.Name)
+        </td>
+        <td>
+            @String.Format("{0:d}",item.Date)
+            @*@Html.DisplayFor(modelItem => item.Date.Date, "ShortDate")*@
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.BuyAverage)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SellAverage)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.BuyClose)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SellClose)
+        </td>
+       
+    </tr>
+}
+
+</table>

@@ -1,0 +1,1039 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="BuyPrice" xml:space="preserve">
+    <value>سعر الشراء</value>
+  </data>
+  <data name="ChangeLanguage" xml:space="preserve">
+    <value>تغيير اللغة</value>
+  </data>
+  <data name="From" xml:space="preserve">
+    <value>من</value>
+  </data>
+  <data name="maxPrice" xml:space="preserve">
+    <value>أفضل سعر بيع</value>
+  </data>
+  <data name="minPrice" xml:space="preserve">
+    <value>أفضل سعر شراء</value>
+  </data>
+  <data name="Page" xml:space="preserve">
+    <value>صفحة</value>
+  </data>
+  <data name="PriceDate" xml:space="preserve">
+    <value>الوقت</value>
+  </data>
+  <data name="PriceViewer" xml:space="preserve">
+    <value>عرض الأسعار</value>
+  </data>
+  <data name="SellPrice" xml:space="preserve">
+    <value>سعر البيع</value>
+  </data>
+  <data name="TradePrices" xml:space="preserve">
+    <value>إضافة سعر</value>
+  </data>
+  <data name="Trader" xml:space="preserve">
+    <value>التجار</value>
+  </data>
+  <data name="TraderName" xml:space="preserve">
+    <value>اسم التاجر</value>
+  </data>
+  <data name="am" xml:space="preserve">
+    <value>ص</value>
+  </data>
+  <data name="pm" xml:space="preserve">
+    <value>م</value>
+  </data>
+  <data name="LastPriceDate" xml:space="preserve">
+    <value>أخر تحديث</value>
+  </data>
+  <data name="OpenBuy" xml:space="preserve">
+    <value>شراء - افتتاحى</value>
+  </data>
+  <data name="OpenSell" xml:space="preserve">
+    <value>بيع - افتتاحى</value>
+  </data>
+  <data name="AddPrice" xml:space="preserve">
+    <value>تحديث السعر</value>
+  </data>
+  <data name="BasketPrices" xml:space="preserve">
+    <value>أسعار سلة التجار</value>
+  </data>
+  <data name="Basket" xml:space="preserve">
+    <value>سلة التجار</value>
+  </data>
+  <data name="Add" xml:space="preserve">
+    <value>إضافة</value>
+  </data>
+  <data name="BasketName" xml:space="preserve">
+    <value>اسم السلة</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>حذف</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>تعديل</value>
+  </data>
+  <data name="updatePrice" xml:space="preserve">
+    <value>تحديث السعر</value>
+  </data>
+  <data name="Filter" xml:space="preserve">
+    <value>بحث</value>
+    <comment>Zone/Index</comment>
+  </data>
+  <data name="BasketBuy" xml:space="preserve">
+    <value>شراء - سلة</value>
+  </data>
+  <data name="BasketSell" xml:space="preserve">
+    <value>بيع - سلة</value>
+  </data>
+  <data name="basketPriceHistory" xml:space="preserve">
+    <value>إستعراض سلة أسعار تاجر</value>
+  </data>
+  <data name="BasketUpdate" xml:space="preserve">
+    <value>تحديث السلة</value>
+  </data>
+  <data name="SuperTrader" xml:space="preserve">
+    <value>تاجر رئيسى</value>
+  </data>
+  <data name="Home" xml:space="preserve">
+    <value>الرئيسية</value>
+  </data>
+  <data name="Login" xml:space="preserve">
+    <value>تسجيل الدخول</value>
+  </data>
+  <data name="Register" xml:space="preserve">
+    <value>مستخدم جديد</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>حفظ</value>
+  </data>
+  <data name="CurrentBuy" xml:space="preserve">
+    <value>شراء - حالى</value>
+  </data>
+  <data name="CurrentSell" xml:space="preserve">
+    <value>بيع - حالى</value>
+  </data>
+  <data name="maxSellPrice" xml:space="preserve">
+    <value>أعلى بيع</value>
+  </data>
+  <data name="minBuyPrice" xml:space="preserve">
+    <value>أقل شراء</value>
+  </data>
+  <data name="InBasketPrices" xml:space="preserve">
+    <value>أسعار السلة</value>
+  </data>
+  <data name="maxBuyPrice" xml:space="preserve">
+    <value>أفضل سعر شراء</value>
+  </data>
+  <data name="minSellPrice" xml:space="preserve">
+    <value>أفضل سعر بيع</value>
+  </data>
+  <data name="BackToBasket" xml:space="preserve">
+    <value>عودة للسلة</value>
+  </data>
+  <data name="buyMax" xml:space="preserve">
+    <value>أعلى شراء</value>
+  </data>
+  <data name="sellMin" xml:space="preserve">
+    <value>أقل بيع</value>
+  </data>
+  <data name="BackToTraders" xml:space="preserve">
+    <value>عودة إلى صفحة التجار</value>
+  </data>
+  <data name="TraderPriceHistory" xml:space="preserve">
+    <value>إستعراض أسعار تاجر</value>
+  </data>
+  <data name="FavorateList" xml:space="preserve">
+    <value>أسعار تجار المفضلة</value>
+  </data>
+  <data name="UsersNo" xml:space="preserve">
+    <value>المستخدمين الذين تم إضافتهم</value>
+  </data>
+  <data name="AssignFavLink" xml:space="preserve">
+    <value>إختيار التجار المفضلين</value>
+  </data>
+  <data name="ShowFavLstLink" xml:space="preserve">
+    <value>أسعار تجار المفضلة</value>
+  </data>
+  <data name="GeneratePassword" xml:space="preserve">
+    <value>إعادة إنشاء كلمة المرور</value>
+  </data>
+  <data name="AddTraderUsers" xml:space="preserve">
+    <value>إضافة مستخدم لتاجر رئيسي</value>
+  </data>
+  <data name="isactive" xml:space="preserve">
+    <value>مفعل/غير مفعل</value>
+  </data>
+  <data name="Password" xml:space="preserve">
+    <value>كلمة المرور</value>
+  </data>
+  <data name="UserName" xml:space="preserve">
+    <value>اسم المستخدم</value>
+  </data>
+  <data name="STraderProfileCreate" xml:space="preserve">
+    <value>إضافة تاجر رئيسى</value>
+  </data>
+  <data name="Active" xml:space="preserve">
+    <value>حالة التاجر</value>
+  </data>
+  <data name="City" xml:space="preserve">
+    <value>المدينة</value>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>البريد الالكترونى</value>
+  </data>
+  <data name="FirstName" xml:space="preserve">
+    <value>الاسم بالكامل</value>
+  </data>
+  <data name="Gender" xml:space="preserve">
+    <value>النوع</value>
+  </data>
+  <data name="Governorate" xml:space="preserve">
+    <value>المحافظة</value>
+  </data>
+  <data name="LastName" xml:space="preserve">
+    <value>اللقب</value>
+  </data>
+  <data name="Mobile" xml:space="preserve">
+    <value>رقم الموبايل</value>
+  </data>
+  <data name="phone" xml:space="preserve">
+    <value>رقم التليفون</value>
+  </data>
+  <data name="ReEmail" xml:space="preserve">
+    <value>تأكيد البريد الالكترونى</value>
+  </data>
+  <data name="Region" xml:space="preserve">
+    <value>المنطقة</value>
+  </data>
+  <data name="StoreName" xml:space="preserve">
+    <value>اسم المتجر</value>
+  </data>
+  <data name="STraderOrder" xml:space="preserve">
+    <value>ترتيب التاجر</value>
+  </data>
+  <data name="FavPriceListTitle" xml:space="preserve">
+    <value>أسعار قائمة المفضلة للتاجر</value>
+  </data>
+  <data name="GoToFavPriceList" xml:space="preserve">
+    <value>إنتقل لصفحة أسعار المفضلة</value>
+  </data>
+  <data name="GoToMainPriceList" xml:space="preserve">
+    <value>إنتقل لصفحة الأسعار الرئيسية</value>
+  </data>
+  <data name="MngFavList" xml:space="preserve">
+    <value>إدارة المفضلة</value>
+  </data>
+  <data name="ShowUsers" xml:space="preserve">
+    <value>عرض المستخدمين</value>
+  </data>
+  <data name="ShowFavPrices" xml:space="preserve">
+    <value>أسعار المفضلة</value>
+  </data>
+  <data name="ConfirmPassword" xml:space="preserve">
+    <value>تأكيد كلمة المرور</value>
+  </data>
+  <data name="CurrPassword" xml:space="preserve">
+    <value>كلمة المرور الحالية</value>
+  </data>
+  <data name="select" xml:space="preserve">
+    <value>إختر</value>
+  </data>
+  <data name="Female" xml:space="preserve">
+    <value>أنثى</value>
+  </data>
+  <data name="Male" xml:space="preserve">
+    <value>ذكر</value>
+  </data>
+  <data name="STUpdate" xml:space="preserve">
+    <value>تعديل تاجر رئيسى</value>
+  </data>
+  <data name="Actions" xml:space="preserve">
+    <value>إجراءات</value>
+  </data>
+  <data name="Activate" xml:space="preserve">
+    <value>تفعيل</value>
+  </data>
+  <data name="SearchResultCount" xml:space="preserve">
+    <value>عدد نتائج البحث</value>
+  </data>
+  <data name="PriceFavTitle" xml:space="preserve">
+    <value>إستعراض عروض المفضلة</value>
+  </data>
+  <data name="SuperTraderProfile" xml:space="preserve">
+    <value>صفحة التاجر</value>
+  </data>
+  <data name="BackToPricePage" xml:space="preserve">
+    <value>إنتقل لصفحة عرض الأسعار</value>
+  </data>
+  <data name="ActiveState" xml:space="preserve">
+    <value>مفعل</value>
+  </data>
+  <data name="Captcha" xml:space="preserve">
+    <value>كود التحقق</value>
+  </data>
+  <data name="EnterCaptcha" xml:space="preserve">
+    <value>إدخل كود التحقق</value>
+  </data>
+  <data name="RefreshCaptcha" xml:space="preserve">
+    <value>تحديث</value>
+  </data>
+  <data name="CheckMail" xml:space="preserve">
+    <value>برجاء التحقق من البريد الالكترونى لإستكمال التفعيل للحساب </value>
+  </data>
+  <data name="Resend" xml:space="preserve">
+    <value>إعادة ارسال</value>
+  </data>
+  <data name="ResendMessage" xml:space="preserve">
+    <value>فى حاله عدم إستلام البريد الاكترونى برجاء إعادة الارسال</value>
+  </data>
+  <data name="ConfirmMail" xml:space="preserve">
+    <value>تأكيد التفعيل</value>
+  </data>
+  <data name="loginLink" xml:space="preserve">
+    <value>إضغط هنا لتسجيل الدخول</value>
+  </data>
+  <data name="ForgotPassword" xml:space="preserve">
+    <value>نسيت كلمة المرور؟</value>
+  </data>
+  <data name="ChangePassword" xml:space="preserve">
+    <value>تغيير كلمة المرور</value>
+  </data>
+  <data name="ConfirmNewPassword" xml:space="preserve">
+    <value> تأكيد كلمة المرور الجديدة</value>
+  </data>
+  <data name="NewPassword" xml:space="preserve">
+    <value>كلمة المرور الجديدة</value>
+  </data>
+  <data name="Send" xml:space="preserve">
+    <value>إرسال</value>
+  </data>
+  <data name="PasswordChanged" xml:space="preserve">
+    <value>تم تغيير كلمة المرور بنجاح</value>
+  </data>
+  <data name="ResetPassword" xml:space="preserve">
+    <value>إعادة ضبط كلمة المرور</value>
+  </data>
+  <data name="ManageUsers" xml:space="preserve">
+    <value>الصلاحيات</value>
+  </data>
+  <data name="CheckMailPassword" xml:space="preserve">
+    <value>برجاء التحقق من البريد الالكترونى لإستكمال إعادة ظبط  كلمة المرور</value>
+  </data>
+  <data name="ReGetPassword" xml:space="preserve">
+    <value>إستعادة كلمة المرور</value>
+  </data>
+  <data name="UserType" xml:space="preserve">
+    <value>نوع المستخدم</value>
+  </data>
+  <data name="TraderText" xml:space="preserve">
+    <value>تاجر</value>
+  </data>
+  <data name="UserText" xml:space="preserve">
+    <value>مستخدم</value>
+  </data>
+  <data name="Print" xml:space="preserve">
+    <value>طباعة</value>
+  </data>
+  <data name="Comment" xml:space="preserve">
+    <value>التعليق</value>
+  </data>
+  <data name="Feedback" xml:space="preserve">
+    <value>إتصل بنا</value>
+  </data>
+  <data name="Submit" xml:space="preserve">
+    <value>إرسل تعليق</value>
+  </data>
+  <data name="PriceList" xml:space="preserve">
+    <value>قائمة الأسعار</value>
+  </data>
+  <data name="FeedbackSubject" xml:space="preserve">
+    <value>الصاغة : رأيك يهمنا</value>
+  </data>
+  <data name="QuestionGroup" xml:space="preserve">
+    <value>مجموعة الاسئلة</value>
+  </data>
+  <data name="QuestionGroupDesc" xml:space="preserve">
+    <value>عنوان مجموعة الاسئلة </value>
+  </data>
+  <data name="QuestionOrder" xml:space="preserve">
+    <value>ترتيب مجموعة الاسئلة</value>
+  </data>
+  <data name="Description" xml:space="preserve">
+    <value>الوصف</value>
+  </data>
+  <data name="notactive" xml:space="preserve">
+    <value>إلغاء التفعيل</value>
+  </data>
+  <data name="PageSizeChoose" xml:space="preserve">
+    <value>إختر عدد العناصر بالصفحة</value>
+  </data>
+  <data name="Users" xml:space="preserve">
+    <value>المستخدمين</value>
+  </data>
+  <data name="UsersNoTable" xml:space="preserve">
+    <value>عدد المستخدمين</value>
+  </data>
+  <data name="QuestionsTitle" xml:space="preserve">
+    <value>مجموعات الأسئلة</value>
+  </data>
+  <data name="Search" xml:space="preserve">
+    <value>بحث</value>
+  </data>
+  <data name="AdvancedSearch" xml:space="preserve">
+    <value>بحث متقدم</value>
+  </data>
+  <data name="traderlabel" xml:space="preserve">
+    <value>تاجر</value>
+  </data>
+  <data name="ExportTpPDF" xml:space="preserve">
+    <value>PDFصيغة</value>
+  </data>
+  <data name="answer" xml:space="preserve">
+    <value>الإجابة</value>
+  </data>
+  <data name="ChooseGroup" xml:space="preserve">
+    <value>إختر المجموعة</value>
+  </data>
+  <data name="ComonQuestions" xml:space="preserve">
+    <value>الأسئلة الشائعة</value>
+  </data>
+  <data name="Group" xml:space="preserve">
+    <value>المجموعة</value>
+  </data>
+  <data name="Procedures" xml:space="preserve">
+    <value>الإجراءات</value>
+  </data>
+  <data name="Question" xml:space="preserve">
+    <value>السؤال</value>
+  </data>
+  <data name="NoResults" xml:space="preserve">
+    <value>لا توجد نتائج للعرض</value>
+  </data>
+  <data name="NumberOfQuestions" xml:space="preserve">
+    <value>عدد الأسئلة</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>الاسم</value>
+  </data>
+  <data name="NewsMainCategory" xml:space="preserve">
+    <value>الفئة الرئيسية للأخبار</value>
+  </data>
+  <data name="NewsMainCategoryName" xml:space="preserve">
+    <value>عنوان الفئة الرئيسية للأخبار</value>
+  </data>
+  <data name="NewsMainCategoryOrder" xml:space="preserve">
+    <value>ترتيب الفئة الرئيسية للأخبار</value>
+  </data>
+  <data name="Upload" xml:space="preserve">
+    <value>تحميل الصورة</value>
+  </data>
+  <data name="VideoLink" xml:space="preserve">
+    <value>رابط الفيديو</value>
+  </data>
+  <data name="Subject" xml:space="preserve">
+    <value>الموضوع</value>
+  </data>
+  <data name="NewsMainCategoryMaxVal" xml:space="preserve">
+    <value>لا يمكن إضافة أكثر من فئتين رئيسيتين</value>
+  </data>
+  <data name="Update" xml:space="preserve">
+    <value>تعديل</value>
+  </data>
+  <data name="sendSubscribe" xml:space="preserve">
+    <value>مراسلة المشتركين</value>
+  </data>
+  <data name="Subscribe" xml:space="preserve">
+    <value>خدمة أخبارنا</value>
+  </data>
+  <data name="AddNews" xml:space="preserve">
+    <value>إضافة خبر</value>
+  </data>
+  <data name="IsLatest" xml:space="preserve">
+    <value>أخر الاخبار</value>
+  </data>
+  <data name="NewsCategory" xml:space="preserve">
+    <value>عنوان الفئة للأخبار</value>
+  </data>
+  <data name="NewsDate" xml:space="preserve">
+    <value>تاريخ الأصدار</value>
+  </data>
+  <data name="NewsSource" xml:space="preserve">
+    <value>المصدر</value>
+  </data>
+  <data name="NewsSourceURL" xml:space="preserve">
+    <value>رابط المصدر</value>
+  </data>
+  <data name="NewsSummary" xml:space="preserve">
+    <value>موجز الخبر</value>
+  </data>
+  <data name="NewsTitle" xml:space="preserve">
+    <value>عنوان الخبر</value>
+  </data>
+  <data name="NewsCategoryText" xml:space="preserve">
+    <value>الأخبار</value>
+  </data>
+  <data name="NewsOrder" xml:space="preserve">
+    <value>ترتيب الأخبار</value>
+  </data>
+  <data name="subscribebtn" xml:space="preserve">
+    <value>إشترك</value>
+  </data>
+  <data name="AddNewCategory" xml:space="preserve">
+    <value>إضافة خبر</value>
+  </data>
+  <data name="ChooseCategory" xml:space="preserve">
+    <value>إختر فئة الخبر</value>
+  </data>
+  <data name="chooseMainCategory" xml:space="preserve">
+    <value>إختر الفئة الرئيسية للأخبار</value>
+  </data>
+  <data name="NewsCount" xml:space="preserve">
+    <value>عدد الأخبار</value>
+  </data>
+  <data name="ChooseDate" xml:space="preserve">
+    <value>إختر الفترة الزمنية</value>
+  </data>
+  <data name="LoacleGoldNews" xml:space="preserve">
+    <value>أخبار الذهب المحلية</value>
+  </data>
+  <data name="Next" xml:space="preserve">
+    <value>التالي</value>
+  </data>
+  <data name="Previous" xml:space="preserve">
+    <value>السابق</value>
+  </data>
+  <data name="ReadMore" xml:space="preserve">
+    <value>إقرأ المزيد</value>
+  </data>
+  <data name="MainUser" xml:space="preserve">
+    <value>مستخدم رئيسي</value>
+  </data>
+  <data name="NewsDetails" xml:space="preserve">
+    <value>تفاصيل الخبر</value>
+  </data>
+  <data name="NewsMostViewed" xml:space="preserve">
+    <value>الأكثر مشاهدة</value>
+  </data>
+  <data name="ViewsNo" xml:space="preserve">
+    <value>عدد المشاهدات</value>
+  </data>
+  <data name="AddNewsSubCategory" xml:space="preserve">
+    <value>إضافة فئة فرعية للخبر</value>
+  </data>
+  <data name="CategoryOrder" xml:space="preserve">
+    <value>ترتيب الفئة الفرعية للأخبار</value>
+  </data>
+  <data name="NewsSubCategory" xml:space="preserve">
+    <value>الفئة الفرعية للأخبار</value>
+  </data>
+  <data name="EditProfile" xml:space="preserve">
+    <value>صفحة المستخدم</value>
+  </data>
+  <data name="SearchNews" xml:space="preserve">
+    <value>بحث الأخبار</value>
+  </data>
+  <data name="NewsUpdate" xml:space="preserve">
+    <value>تعديل الخبر</value>
+  </data>
+  <data name="userquestioncheck" xml:space="preserve">
+    <value>اسئلة الزوار</value>
+  </data>
+  <data name="NoCategoryQuestions" xml:space="preserve">
+    <value>اسئلة تم تصنيفها</value>
+  </data>
+  <data name="NoAnswersQuestions" xml:space="preserve">
+    <value>اسئلة تم الاجابة عليها</value>
+  </data>
+  <data name="QuestionsNoAnswer" xml:space="preserve">
+    <value>اسئلة تم الرد عليها</value>
+  </data>
+  <data name="deactive" xml:space="preserve">
+    <value>غير مفعل</value>
+  </data>
+  <data name="All" xml:space="preserve">
+    <value>الكل</value>
+  </data>
+  <data name="EditTraderProfile" xml:space="preserve">
+    <value>تعديل تاجر</value>
+  </data>
+  <data name="SendReply" xml:space="preserve">
+    <value>إرسال رد</value>
+  </data>
+  <data name="notreplied" xml:space="preserve">
+    <value>لم يتم الرد</value>
+  </data>
+  <data name="replied" xml:space="preserve">
+    <value>تم الرد</value>
+  </data>
+  <data name="NewsUser" xml:space="preserve">
+    <value>الأخبار</value>
+  </data>
+  <data name="AllowGeneralProfile" xml:space="preserve">
+    <value>السماح لباقي المستخدمين الاطلاع على بياناتي الشخصية</value>
+  </data>
+  <data name="RegisterInNews" xml:space="preserve">
+    <value>التسجيل في خدمة متابعة أخبار الموقع</value>
+  </data>
+  <data name="EditUserProfile" xml:space="preserve">
+    <value>تعديل مستخدم</value>
+  </data>
+  <data name="UserInfo" xml:space="preserve">
+    <value>بيانات المستخدم</value>
+  </data>
+  <data name="FAQ" xml:space="preserve">
+    <value>الاسئلة الشائعة</value>
+  </data>
+  <data name="GlobalGoldPrices" xml:space="preserve">
+    <value>أسعار الذهب العالمية</value>
+  </data>
+  <data name="userquestion" xml:space="preserve">
+    <value>اسئلة المستخدم</value>
+  </data>
+  <data name="OldPassword" xml:space="preserve">
+    <value>كلمة المرور القديمه</value>
+  </data>
+  <data name="Ask" xml:space="preserve">
+    <value>شراء</value>
+  </data>
+  <data name="Bid" xml:space="preserve">
+    <value>بيع</value>
+  </data>
+  <data name="Close" xml:space="preserve">
+    <value>سعر الإغلاق</value>
+  </data>
+  <data name="High" xml:space="preserve">
+    <value>أعلى سعر</value>
+  </data>
+  <data name="Low" xml:space="preserve">
+    <value>أقل سعر</value>
+  </data>
+  <data name="Open" xml:space="preserve">
+    <value>أول سعر</value>
+  </data>
+  <data name="TradersComparison" xml:space="preserve">
+    <value>مقارنة التجار</value>
+  </data>
+  <data name="AverageClose" xml:space="preserve">
+    <value>متوسط الإغلاق</value>
+  </data>
+  <data name="AveragePrice" xml:space="preserve">
+    <value>متوسط السعر</value>
+  </data>
+  <data name="Bar" xml:space="preserve">
+    <value>بار</value>
+  </data>
+  <data name="Buy" xml:space="preserve">
+    <value>شراء</value>
+  </data>
+  <data name="ChooseTrader" xml:space="preserve">
+    <value>اختار التاجر</value>
+  </data>
+  <data name="Line" xml:space="preserve">
+    <value>خط</value>
+  </data>
+  <data name="Month" xml:space="preserve">
+    <value>شهر</value>
+  </data>
+  <data name="MonthWeek" xml:space="preserve">
+    <value>شهر/اسبوعى</value>
+  </data>
+  <data name="Periods" xml:space="preserve">
+    <value>الفترات</value>
+  </data>
+  <data name="Price" xml:space="preserve">
+    <value>السعر</value>
+  </data>
+  <data name="ReportType" xml:space="preserve">
+    <value>نوع التقرير</value>
+  </data>
+  <data name="ScatterLine" xml:space="preserve">
+    <value>خط مبعثر</value>
+  </data>
+  <data name="Sell" xml:space="preserve">
+    <value>بيع</value>
+  </data>
+  <data name="ViewReport" xml:space="preserve">
+    <value>عرض التقرير</value>
+  </data>
+  <data name="Week" xml:space="preserve">
+    <value>أسبوع</value>
+  </data>
+  <data name="YearMonth" xml:space="preserve">
+    <value>سنة/شهر</value>
+  </data>
+  <data name="BuySell" xml:space="preserve">
+    <value>شراء/بيع</value>
+  </data>
+  <data name="NewsList" xml:space="preserve">
+    <value>الرجوع الى قائمة الاخبار</value>
+  </data>
+  <data name="Carat10" xml:space="preserve">
+    <value>عيار 10</value>
+  </data>
+  <data name="Carat14" xml:space="preserve">
+    <value>عيار 14</value>
+  </data>
+  <data name="Carat18" xml:space="preserve">
+    <value>عيار 18</value>
+  </data>
+  <data name="Carat21" xml:space="preserve">
+    <value>عيار 21</value>
+  </data>
+  <data name="Carat24" xml:space="preserve">
+    <value>عيار 24</value>
+  </data>
+  <data name="GoldLatestPrice" xml:space="preserve">
+    <value>أخر سعر للذهب</value>
+  </data>
+  <data name="RelatedNews" xml:space="preserve">
+    <value>اخبار ذات صلة</value>
+  </data>
+  <data name="carat22" xml:space="preserve">
+    <value>عيار 22</value>
+  </data>
+  <data name="goldpricesmonth" xml:space="preserve">
+    <value>اسعار الذهب من </value>
+  </data>
+  <data name="daymonth" xml:space="preserve">
+    <value>يوم/شهر</value>
+  </data>
+  <data name="globalmarket" xml:space="preserve">
+    <value>الأسواق العالمية</value>
+  </data>
+  <data name="goldpricesweek" xml:space="preserve">
+    <value>اسعار الذهب من </value>
+  </data>
+  <data name="leprice" xml:space="preserve">
+    <value>السعر بالجنية المصري</value>
+  </data>
+  <data name="period" xml:space="preserve">
+    <value>الفترة</value>
+  </data>
+  <data name="pound" xml:space="preserve">
+    <value>جنية</value>
+  </data>
+  <data name="show" xml:space="preserve">
+    <value>عرض</value>
+  </data>
+  <data name="showtype" xml:space="preserve">
+    <value>نوع العرض</value>
+  </data>
+  <data name="to" xml:space="preserve">
+    <value>الي </value>
+  </data>
+  <data name="Hours" xml:space="preserve">
+    <value>ساعة</value>
+  </data>
+  <data name="Minutes" xml:space="preserve">
+    <value>دقيقة</value>
+  </data>
+  <data name="Since" xml:space="preserve">
+    <value>منذ</value>
+  </data>
+  <data name="AboutUs" xml:space="preserve">
+    <value>من نحن</value>
+  </data>
+  <data name="Hello" xml:space="preserve">
+    <value>مرحبا</value>
+  </data>
+  <data name="ManageFav" xml:space="preserve">
+    <value>إدارة المفضلة</value>
+  </data>
+  <data name="PricesOffers" xml:space="preserve">
+    <value>عروض الاسعار</value>
+  </data>
+  <data name="Profile" xml:space="preserve">
+    <value>الصفحة الشخصية</value>
+  </data>
+  <data name="ProfileInfo" xml:space="preserve">
+    <value>معلومات الحساب</value>
+  </data>
+  <data name="TraderOnly" xml:space="preserve">
+    <value>التجار فقط</value>
+  </data>
+  <data name="TradersBasket" xml:space="preserve">
+    <value>سلة التجار</value>
+  </data>
+  <data name="UpdatePrices" xml:space="preserve">
+    <value>تحديث الاسعار</value>
+  </data>
+  <data name="AccountLock" xml:space="preserve">
+    <value>لقد تم اغلاق الحساب !</value>
+  </data>
+  <data name="AddAll" xml:space="preserve">
+    <value>إضافة الكل</value>
+  </data>
+  <data name="AddChoosen" xml:space="preserve">
+    <value>إضافة المختار</value>
+  </data>
+  <data name="Available" xml:space="preserve">
+    <value>المتاح</value>
+  </data>
+  <data name="CancelSearch" xml:space="preserve">
+    <value>الغاء البحث</value>
+  </data>
+  <data name="Chossen" xml:space="preserve">
+    <value>المختار</value>
+  </data>
+  <data name="ContinueLogin" xml:space="preserve">
+    <value>:إستكمال عملية الدخول للمستخدم</value>
+  </data>
+  <data name="DeleteAll" xml:space="preserve">
+    <value>حذف الكل</value>
+  </data>
+  <data name="DeleteChoosen" xml:space="preserve">
+    <value>حذف المختار</value>
+  </data>
+  <data name="FirstPrivilage" xml:space="preserve">
+    <value>الميزة الاولي</value>
+  </data>
+  <data name="Goldsmiths" xml:space="preserve">
+    <value>الصاغه</value>
+  </data>
+  <data name="GoldText1" xml:space="preserve">
+    <value>كيلو دهب عيار 24</value>
+  </data>
+  <data name="GoldText2" xml:space="preserve">
+    <value>نص كيلو  دهب عيار 18</value>
+  </data>
+  <data name="ListPrices" xml:space="preserve">
+    <value>الاسعار المعلنة علي مدار اليوم</value>
+  </data>
+  <data name="NoOfmovements" xml:space="preserve">
+    <value>عدد الحركات 0</value>
+  </data>
+  <data name="NoOfmovements1" xml:space="preserve">
+    <value>{0}عدد الحركات</value>
+  </data>
+  <data name="PersonalInformation" xml:space="preserve">
+    <value>البيانات الشخصية</value>
+  </data>
+  <data name="PrintingDate" xml:space="preserve">
+    <value>تاريخ الطباعة : </value>
+  </data>
+  <data name="QuesrtionSearch" xml:space="preserve">
+    <value>البحث بالسؤال او المجموعة</value>
+  </data>
+  <data name="QuestionType" xml:space="preserve">
+    <value>نوع السؤال</value>
+  </data>
+  <data name="RegisterNewTrader" xml:space="preserve">
+    <value>تسجيل تاجر جديد</value>
+  </data>
+  <data name="RegisterNewUser" xml:space="preserve">
+    <value>تسجيل مستخدم جديد</value>
+  </data>
+  <data name="RegisterNow" xml:space="preserve">
+    <value>سجل الآن</value>
+  </data>
+  <data name="ReloadAdvertisedPrice" xml:space="preserve">
+    <value>تحديث السعر المعلن</value>
+  </data>
+  <data name="SearchGoldsmiths" xml:space="preserve">
+    <value>ابحث داخل الصاغة</value>
+  </data>
+  <data name="SubscribtionCancelled" xml:space="preserve">
+    <value>لقد تم إلغاء إشتراكك علي خدمة متابعة أخبار الموقع</value>
+  </data>
+  <data name="TraderRegister" xml:space="preserve">
+    <value>تسجيل التاجر</value>
+  </data>
+  <data name="TradersNumber" xml:space="preserve">
+    <value>{0}عدد التجار</value>
+  </data>
+  <data name="TradersNumber1" xml:space="preserve">
+    <value>عدد التجار 0</value>
+  </data>
+  <data name="unsubscribtion" xml:space="preserve">
+    <value>الغاء اشتراك</value>
+  </data>
+  <data name="unsubscribtionFailed" xml:space="preserve">
+    <value>خطأ في إالغاء الإشتراك</value>
+  </data>
+  <data name="unsubscribtionFailedMsg" xml:space="preserve">
+    <value>لقد حدث خطأ أثناء عملية الغاء الإشتراك في خدمة متابعة أخبار الموقع برجاء التأكد من الرابط</value>
+  </data>
+  <data name="traderpriceslist" xml:space="preserve">
+    <value>متوسط اسعار التجار</value>
+  </data>
+  <data name="comparsonChart" xml:space="preserve">
+    <value>مقارنة اسعار التجار</value>
+  </data>
+  <data name="GlobalChart" xml:space="preserve">
+    <value>مؤشر اسعار الدهب العالمية</value>
+  </data>
+  <data name="traderChart" xml:space="preserve">
+    <value>مؤشر اسعار التاجر خلال فترة</value>
+  </data>
+  <data name="DollarPrice1" xml:space="preserve">
+    <value>سعر الدولار</value>
+  </data>
+  <data name="generalGoldPrices" xml:space="preserve">
+    <value>المؤشر العام لاخبار الذهب في مصر</value>
+  </data>
+  <data name="GoldNews" xml:space="preserve">
+    <value>اخبار الذهب العالمية والمحلية</value>
+  </data>
+  <data name="GoldPrice1gm" xml:space="preserve">
+    <value>سعر جرام الذهب</value>
+  </data>
+  <data name="SearchInSagha" xml:space="preserve">
+    <value>ابحث داخل الصاغة</value>
+  </data>
+  <data name="AdminQuestions" xml:space="preserve">
+    <value>أسئلة الأدمن</value>
+  </data>
+  <data name="Dashboard" xml:space="preserve">
+    <value>مساحة العمل</value>
+  </data>
+  <data name="FavouriteListManagement" xml:space="preserve">
+    <value>ادارة المفضلة</value>
+  </data>
+  <data name="Tradedata" xml:space="preserve">
+    <value>البيانات التجارية</value>
+  </data>
+  <data name="Logout" xml:space="preserve">
+    <value>خروج</value>
+  </data>
+  <data name="Loading" xml:space="preserve">
+    <value>...جاري التحميل</value>
+  </data>
+  <data name="UsageTerms" xml:space="preserve">
+    <value>شروط الإستخدام</value>
+  </data>
+  <data name="ComparasonTraders" xml:space="preserve">
+    <value>مقارنة اسعار التاجر :</value>
+  </data>
+  <data name="OtherTraders" xml:space="preserve">
+    <value>مع باقي التجار  </value>
+  </data>
+  <data name="ChatRoom" xml:space="preserve">
+    <value>غرفة المحادثة</value>
+  </data>
+  <data name="AddBasket" xml:space="preserve">
+    <value>إضافة سلة جديدة</value>
+  </data>
+  <data name="Baskets" xml:space="preserve">
+    <value>السَلاَّت</value>
+  </data>
+  <data name="privacyPolicy" xml:space="preserve">
+    <value>سياسة الخصوصية</value>
+  </data>
+</root>

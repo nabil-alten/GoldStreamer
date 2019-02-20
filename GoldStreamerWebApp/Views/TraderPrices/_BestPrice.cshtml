@@ -1,0 +1,45 @@
+﻿@model BLL.DomainClasses.TraderPrices
+
+
+<br />
+<br />
+<br />
+<div style="width : 100%;" class="headerTitle">
+    <h1 style="color:#fff;">@Resources.General.ListPrices</h1>
+</div>
+
+<br />
+<table style="width:100%" id="list" border="0" class="data_table">
+    <tr>
+      <td width="30%"></td>
+        <td><h2>@Resources.General.maxPrice</h2> </td>
+        <td><h2>@Resources.General.minPrice</h2>  </td>
+        <td width="30%"></td>
+        </tr>
+    <tr>
+        <td width="30%"></td>
+
+        <td>@*@Html.TextBox("MaxSell", ViewData["maxSell"].ToString(), new Dictionary<string, object>() { { "readonly", "true" } })*@
+            @*<label id="txtGoldBuyPrice" class="price1">hiiiii @ViewData["maxSell"].ToString()</label>*@
+            @*<img src="~/Content/Images/circ.png" />*@
+
+            <div class="price_Div6">
+                <label id="MaxSell" class="best_price_lb">@ViewData["maxSell"].ToString()</label>
+                <img src="~/Content/images/circ.png" />
+            </div>
+        </td>
+
+
+        <td>@*@Html.TextBox("MinBuy", ViewData["minBuy"].ToString(), new Dictionary<string, object>() { { "readonly", "true" } })*@
+            <div class="price_Div6">
+                <label id="MinBuy" class="best_price_lb">@ViewData["minBuy"].ToString()</label>
+                <img src="~/Content/images/circ.png" />
+            </div>
+        
+        </td>
+        <td width="30%"></td>
+
+        
+         
+    </tr>
+</table>

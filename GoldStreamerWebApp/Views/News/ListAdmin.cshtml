@@ -1,0 +1,51 @@
+﻿@model List<BLL.DomainClasses.News>
+@{
+    ViewBag.Title = "ListAdmin";
+}
+
+<h2>ListAdmin</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Resources.General.NewsTitle
+        </th>
+        <th>
+            @Resources.General.NewsDate
+        </th>
+        <th>
+            @Resources.General.isactive
+        </th>
+        <th>
+            @Resources.General.IsLatest
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Date)
+            </td>
+            <td>
+                @Html.CheckBoxFor(modelItem=>item.IsActive)
+            </td>
+            <td>
+                @Html.CheckBoxFor(modelItem => item.IsLatest)
+            </td>
+            <td>
+                <a href="javascript:DeleteBasket(@item.Id);" title="@Resources.General.Delete">@Resources.General.Delete</a>|
+                @Html.ActionLink(@Resources.General.Edit, "Edit", new { newsId = @item.Id })
+
+                @*display basket history for super trader*@
+                @*@Html.ActionLink(@Resources.General.basketPriceHistory, "PricesHistory", new { title = @Resources.General.basketPriceHistory, id = item.ID })*@
+
+            </td>
+        </tr>
+    }
+
+</table>

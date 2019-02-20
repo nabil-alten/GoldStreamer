@@ -1,0 +1,122 @@
+﻿@using GoldStreamer.Helpers
+@model List<GoldStreamer.Models.ViewModels.TraderPricesPrintVM>
+@{
+    Layout = "~/Views/Shared/_LayoutInner.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>TraderPricesPrint</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/toast")
+    <script src="~/Scripts/jquery-1.11.1.min.js"></script>
+
+</head>
+<body>
+@{
+    string baseUrl = CultureHelper.GetBaseURL().ToLower();
+}
+
+@using (Html.BeginForm("GeneratePDF", "ExportToPDF", FormMethod.Get,new{id="form"}))
+{
+    <div>
+        <table class="table" id="list" style="align-content: center">
+            <tr>
+                <td colspan="4">
+                    <div align="center" style="font-size: large"> @Resources.General.PriceList</div>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="4" style="align-content: center">
+                    <div align="center" style="font-size: large"> @Model[0].Date</div>
+                    @Html.Hidden("TraderID", Model[0].TraderID)
+                    @Html.Hidden("date", Model[0].Date)
+                </td>
+            </tr>
+            <tr>
+
+                <td colspan="4" style="font-size:20px; font-weight:bold;">
+                    @Resources.General.TraderName: @Model[0].TraderName
+                </td>
+            </tr>
+
+            <tr>
+                
+                    <div id="bestP">
+                        @{Html.RenderAction("_BestPrices");}
+                    </div>
+                
+            </tr>
+            @if (!Model.Any())
+            {
+                <tr>
+                    <td colspan="4">
+                        @Html.Label("lblMSGsearch", Resources.Messages.NoData)
+                    </td>
+                </tr>
+
+            }
+
+            else
+            {
+                <tr>
+                    <td>
+                        @Html.Label(@Resources.General.BuyPrice)
+                    </td>
+                    <td colspan="2">
+                        @Html.Label(@Resources.General.SellPrice)
+                    </td>
+                    <td>
+                        @Html.Label(@Resources.General.PriceDate)
+
+                    </td>
+
+                </tr>
+
+                foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @String.Format("{0:0,0.00}", item.BuyPrice)
+                            @Html.HiddenFor(m => item.BuyPrice)
+                        </td>
+                        <td colspan="2">
+                            @String.Format("{0:0,0.00}", item.SellPrice)
+                            @Html.HiddenFor(m => item.SellPrice)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.priceDate)
+                            @Html.HiddenFor(m => item.Date)
+                        </td>
+
+                    </tr>
+                }
+                if (!Model[0].print)
+                {
+                    <tr>
+                        <td colspan="4">
+                            <a href="javascript:window.print()" class="btn">@Resources.General.Print</a>
+                            <input id="PrintPreview1" type="submit" value='@Resources.General.ExportTpPDF' class="btn" />
+                        </td>
+                    </tr>
+                }
+
+            }
+        </table>
+
+    </div>
+}
+@Scripts.Render("~/bundles/jqueryval")
+
+</body>
+<footer>
+    @Resources.General.PrintingDate @DateTime.Now
+</footer>
+</html>

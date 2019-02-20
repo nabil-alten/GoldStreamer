@@ -1,0 +1,15 @@
+﻿@model BLL.DomainClasses.TraderPrices
+
+    
+      
+            <td>@Resources.General.maxPrice</td>
+            <td>
+                @Html.TextBox("MaxSell", ViewData["maxSell"].ToString(),new Dictionary<string, object>() { { "readonly", "true" } })
+                
+            </td>
+            <td>@Resources.General.minPrice</td>
+            <td>
+                @Html.TextBox("MinBuy", ViewData["minBuy"].ToString(),new Dictionary<string, object>() { { "readonly", "true" } })
+            </td>
+       
+  

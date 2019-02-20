@@ -1,0 +1,132 @@
+﻿@using Microsoft.AspNet.Identity
+@{
+    var controller = ViewContext.RouteData.GetRequiredString("controller");
+    var action = ViewContext.RouteData.GetRequiredString("action");
+
+
+}
+<ul>
+    @if (GoldStreamer.Helpers.UserNavigation.IsAdmin())
+    {
+
+        <li>@Html.ActionLink(Resources.General.Home, "Home", "Home", null, new { title = @Resources.General.Home })</li>
+        <li>
+            <a href="~/Home/About" class="@(action == "About" ? "active" : "")">  @Resources.General.AboutUs</a>
+        </li>
+        <li>
+            <a href="~/Home/AdminDashboard" class="@(action == "AdminDashboard"  ? "active" : "")">  @Resources.General.Dashboard</a>
+        </li>
+
+
+        @*<li>
+                <a href="~/Trader/Index" class="@((action == "Index" && controller == "Trader") || (controller == "TraderPrices" && action == "Index") ? "active" : "")"> @Resources.General.SuperTrader</a>
+            </li>
+
+            <li>
+                <a href="~/Trader/ShowPriceList" class="@((action == "ShowPriceList" && controller == "Trader")|| (controller == "Pricer")  ? "active" : "")"> @Resources.General.Trader</a>
+
+            </li>
+            <li>
+                <a href="~/SuperTrader/Index" class="@(action == "Index" && controller == "SuperTrader" ? "active" : "")"> @Resources.General.SuperTraderProfile</a>
+            </li>*@
+
+
+        <li>
+            <a href="~/Feedback" class="@((controller == "Feedback" || action == "UsageTerms") ? "active" : "")"> @Resources.General.Feedback</a>
+        </li>
+        <li>
+            <a href="~/TraderPricesChart/GlobalPricesIndex" class="@(controller == "TraderPricesChart" ? "active" : "")"> @Resources.General.GlobalChart</a>
+        </li>
+
+        <li>
+            <a href="~/GlobalPrice" class="@(controller == "GlobalPrice"  ? "active" : "")"> @Resources.General.GlobalGoldPrices</a>
+        </li>
+        <li>
+            <a href="~/News/Index" class="@(controller == "News" && action == "Index" ? "active" : "")"> @Resources.General.NewsCategoryText</a>
+        </li>
+        <li>
+            <a href="~/FAQ/Index" class="@(controller == "FAQ" && action == "Index" ? "active" : "")"> @Resources.General.FAQ</a>
+        </li>
+        @*<li>
+                <a href="~/Question/UserQuestion" class="@(controller == "Question" && action == "UserQuestion" ? "active" : "")"> @Resources.General.userquestion</a>
+            </li>*@
+
+    }
+
+
+
+
+    else if (GoldStreamer.Helpers.UserNavigation.IsTrader() || GoldStreamer.Helpers.UserNavigation.IsSuperTrader())
+    {
+        <li>@Html.ActionLink(Resources.General.Home, "Home", "Home", null, new { title = @Resources.General.Home })</li>
+
+        <li>
+            <a href="~/Home/About" class="@((action == "About" ) ? "active" : "")">  @Resources.General.AboutUs</a>
+        </li>
+
+        if (GoldStreamer.Helpers.UserNavigation.IsTrader())
+        {
+            <li>
+                <a href="~/Home/TraderDashboard" class="@(action == "TraderDashboard"  ? "active" : "")">  @Resources.General.Dashboard</a>
+            </li>
+        }
+
+        else
+        {
+            <li>
+                <a href="~/Home/SuperTraderDashboard" class="@(action == "SuperTraderDashboard" ? "active" : "")"> @Resources.General.Dashboard</a>
+            </li>
+        }
+
+
+
+
+        <li>
+            <a href="~/GlobalPrice" class="@(controller == "GlobalPrice"  ? "active" : "")"> @Resources.General.GlobalGoldPrices</a>
+        </li>
+        <li>
+            <a href="~//TraderPricesChart/GlobalPricesIndex" class="@(controller == "TraderPricesChart" ? "active" : "")"> @Resources.General.GlobalChart</a>
+        </li>
+
+        <li>
+            <a href="~/News/Index" class="@(action == "Index" && controller == "News" ? "active" : "")"> @Resources.General.NewsUser</a>
+        </li>
+
+        <li>
+            <a href="~/FAQ/Index" class="@(action == "Index" && controller == "FAQ" ? "active" : "")"> @Resources.General.FAQ</a>
+        </li>
+
+        <li>
+            <a href="~/Feedback" class="@(controller == "Feedback" ? "active" : "")"> @Resources.General.Feedback</a>
+        </li>
+    }
+
+
+
+
+
+
+    else
+    {
+
+        <li>@Html.ActionLink(Resources.General.Home, "Home", "Home", null, new { title = @Resources.General.Home })</li>
+        <li>@Html.ActionLink(Resources.General.AboutUs, "About", "Home", null, new { title = Resources.General.AboutUs })</li>
+        <li>
+            <a href="~//TraderPricesChart/GlobalPricesIndex" class="@(controller == "TraderPricesChart" ? "active" : "")"> @Resources.General.GlobalChart</a>
+        </li>
+      
+        <li>
+            <a href="~/GlobalPrice" class="@(controller == "GlobalPrice"  ? "active" : "")"> @Resources.General.GlobalGoldPrices</a>
+        </li>
+          <li>@Html.ActionLink(Resources.General.NewsUser, "Index", "News", null, new { title = @Resources.General.NewsUser })</li>
+        <li>@Html.ActionLink(Resources.General.FAQ, "Index", "FAQ", null, new { title = @Resources.General.FAQ })</li>
+
+        <li>@Html.ActionLink(Resources.General.Feedback, "Index", "Feedback", null, new { title = @Resources.General.Feedback })</li>
+
+
+    }
+
+
+</ul>
+
+

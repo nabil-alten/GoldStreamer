@@ -1,0 +1,84 @@
+﻿@using GoldStreamer.Helpers
+@using PagedList.Mvc;
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>@ViewBag.Title </title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/toast")
+    @{
+        string baseUrl = CultureHelper.GetBaseURL().ToLower();
+    }
+    <script src="~/Scripts/jquery.signalR-2.2.0.js"></script>
+    <script src="/signalr/hubs"></script>
+    <script type="text/javascript">
+        $(function () {
+            var priceViewer = $.connection.priceViewerHub;
+            priceViewer.client.updateHeader = function () {
+                doUpdateHeader();
+            };
+
+            //$.connection.hub.logging = true;
+            $.connection.hub.start().done(function () {
+                doUpdateHeader();
+            }).fail(function (e) {
+            });
+        });
+
+
+        function doUpdateHeader() {
+            var tbl = $('#pricesHeader');
+            $.ajax({
+                url: '@(baseUrl)/' + 'Home/DoShowBest',
+                contentType: 'application/html ; charset:utf-8',
+                type: 'GET',
+                dataType: 'html'
+            }).success(function (result) {
+                tbl.empty().append(result);
+            }).error(function () {
+            });
+        }
+    </script>
+</head>
+
+<body style="width: 100%">
+
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            @*<div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>*@
+            <div class="navbar-collapse collapse">
+                @Html.Partial("UpperTaps")
+                
+                @Html.Partial("_LoginPartial")
+
+            </div>
+            <marquee direction="right" scrolldelay="200" onmouseover="this.stop();" onmouseout="this.start();"><div id="pricesHeader"></div></marquee>
+        </div> 
+    </div>
+    <div class="container body-content">
+        @{ Html.RenderPartial("AlertPartialView"); }
+        @RenderBody()
+
+    </div>
+
+    @Scripts.Render("~/bundles/jqueryval")
+    @RenderSection("scripts", required: false)
+    @*<script>
+        window.onload = replaceDigits
+            </script>*@
+</body>
+</html>

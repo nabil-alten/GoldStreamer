@@ -1,0 +1,185 @@
+﻿@using GoldStreamer.Helpers
+@model IEnumerable<BLL.DomainClasses.Trader>
+@{
+    ViewBag.Title = Resources.General.BasketUpdate;
+    string baseUrl = CultureHelper.GetBaseUrlWithoutAreaAndCulture().ToLower();
+    Layout = "~/Views/Shared/_LayoutInner.cshtml";
+    
+}
+<link href="~/Content/css/style.css" rel="stylesheet" />
+<link href="~/Content/bootstrap.css" rel="stylesheet" />
+<link href="~/Content/css/bootstrap-duallistbox.css" rel="stylesheet" />
+<script src="~/Scripts/jquery.bootstrap-duallistbox.js"></script>
+
+<style>
+    .innerBanner {
+        margin-top: 0px;
+    }
+
+    .innerNav {
+        height: 40px;
+    }
+
+    .innerInfo {
+        height: 40px;
+    }
+</style>
+
+
+<style>
+    .innerBanner {
+        margin-top: 0px;
+    }
+
+    .innerNav {
+        height: 40px;
+    }
+
+    .innerInfo {
+        height: 40px;
+    }
+
+    .bootstrap-duallistbox-container .buttons {
+        width: 67.5%;
+    }
+
+    .bootstrap-duallistbox-container .filter {
+        margin: 32px -76px -63px 15px;
+    }
+
+    .row {
+        margin-right: 130px;
+        width: 75%;
+    }
+
+    .bootstrap-duallistbox-container .info {
+        width: 20%;
+    }
+</style>
+
+
+
+<div style="width:100%; min-height: 600px; overflow:auto;">
+
+
+    @using (Html.BeginForm("Update", "Basket", FormMethod.Post, new { id = "form" }))
+    {
+        @Html.Action("_EditName")
+        <div style="width: 104%; float: right; direction: rtl; padding:20px;">
+            <select id="User" multiple="multiple">
+                @foreach (var item in Model)
+                {
+                    if (item.BasketTraders.Count > 0)
+                    {
+                        <option value="@item.ID" selected="selected">
+                            @item.Name @item.Family
+                        </option>
+                    }
+                    else
+                    {
+                        <option value="@item.ID">
+                            @item.Name @item.Family
+                        </option>
+                    }
+                }
+            </select>
+
+        </div>
+        <div class="clr"></div>
+        <div style="width:10px; margin:0 auto;">
+            <input type="submit" id="Create" value="@Resources.General.Save" class="btn" />
+        </div>
+
+
+        
+    }
+    </div>
+    <script>
+        if ($('#User').length > 0) {
+            $('#User').bootstrapDualListbox({
+                nonSelectedListLabel: '@Resources.General.Available',
+                selectedListLabel: '@Resources.General.Chossen',
+                //preserveSelectionOnMove: 'moved',
+                moveOnSelect: false,
+                nonSelectedFilter: '',
+                selectedFilter: '',
+                filterPlaceHolder: '@Resources.General.Search',
+                infoText: '@Resources.General.TradersNumber',
+                selectorMinimalHeight: 300,
+                filterTextClear: '@Resources.General.CancelSearch',
+                moveAllLabel: '@Resources.General.AddAll',
+                moveSelectedLabel: '@Resources.General.AddChoosen',
+                removeSelectedLabel: '@Resources.General.DeleteChoosen',
+                removeAllLabel: '@Resources.General.DeleteAll',
+
+                preserveSelectionOnMove: false,                                                     // 'all' / 'moved' / false
+                helperSelectNamePostfix: '_helper',                                                 // 'string_of_postfix' / false
+                showFilterInputs: true,                                                             // whether to show filter inputs
+
+                infoTextFiltered: '<span class="label label-warning">@Resources.General.Trader</span> {0} @Resources.General.From  ' + '{1}', // when not all of the options are visible due to the filter
+                infoTextEmpty: '@Resources.General.TradersNumber1'
+            });
+        }
+
+        $('#Create').click(function (e) {
+            e.preventDefault(); // <------------------ stop default behaviour of button
+            var name = document.getElementById('Name').value;
+
+            var foo = [];
+            $('#User :selected').each(function (i, selected) {
+                foo[i] = selected.value;
+            });
+
+            if (!$("#form").valid()) return false;
+            $.ajax({
+                url: '@(baseUrl)/' + '/Basket/Update/',
+                type: "POST",
+                data: JSON.stringify({ 'basketName': name, userIds: foo }),
+                cache: false,
+                contentType: "application/json; charset=utf-8",
+
+                success: function () {
+                    toastr.success('@Resources.Messages.Saved');
+                },
+                error: function (data, xhr, textStatus) {
+                    if (data.status === 1)
+                        toastr.error('@Resources.Messages.BasketNameDuplicate');
+                    else
+                        toastr.error(textStatus);
+                }
+            });
+            return false;
+        }
+
+      );
+    </script>
+
+    @if (GoldStreamer.Helpers.UserNavigation.IsSuperTrader())
+    {
+        @section SideMenu{
+            @Html.Partial("_SuperTraderMenu")
+        }
+    }
+    else if (GoldStreamer.Helpers.UserNavigation.IsTrader())
+    {
+        @section SideMenu{
+            @Html.Partial("_TraderSideMenu")
+        }
+    }
+    @section UpperBanner{
+
+
+        <div class="innerBanner">
+            <h1 class="banner_header">@Resources.General.BasketUpdate</h1>
+
+            <div class="banner"><img src="@(baseUrl)/Content/Images/inner_banner.jpg" width="1050" height="180" alt="" /></div>
+        </div>
+    }
+
+
+
+    <script>
+        $(function () {
+            $("#div_basket").addClass("menuItemactive");
+        });
+    </script>

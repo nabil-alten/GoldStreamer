@@ -1,0 +1,133 @@
+﻿@model GoldStreamerWebApp.Models.TraderRegisterViewModel
+@using CaptchaMvc.HtmlHelpers
+@{
+    Layout = "~/Views/Shared/_LayoutInner.cshtml";
+    ViewBag.Title = Resources.General.RegisterNewUser;
+}
+@using (Html.BeginForm("TraderRegister", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    @*@Html.ValidationSummary()*@
+    @Html.HiddenFor(model => model.TypeFlag)
+    
+       
+           <h1><strong>تسجيل مستخدم جديد</strong></h1>
+                <div style="color:red" id="error">@ViewBag.error</div>
+    <div class="regMainInfo" style="border:none;">
+        <table width="100%" border="0" cellspacing="15" dir="rtl" style="text-align:right;">
+
+            <tr>
+                <td>@Resources.General.FirstName <label style="color: red">*</label></td>
+                <td>
+                    @Html.TextBoxFor(model => model.Name, new { name = "name", maxlength = 50, type = "text", placeholder = @Resources.General.FirstName })
+                    <label style="color :red;">@Html.ValidationMessageFor(model => model.Name) </label>
+
+                </td>
+
+                @*<input name="name" type="text" />*@
+                <td></td>
+
+                <td>@Resources.General.LastName</td>
+                <td>
+                    @Html.TextBoxFor(model => model.Family, new { name = "name", maxlength = 50, type = "text", placeholder = @Resources.General.LastName })
+                    <label style="color :red;">@Html.ValidationMessageFor(model => model.Family) </label>
+
+                <td></td>
+            </tr>
+
+
+            <tr>
+                <td>@Resources.General.Gender<label style="color: red">*</label></td>
+                <td>
+                    @Html.RadioButtonFor(model => model.Gender, "false")
+                    @Html.Label(@Resources.General.Female)
+                    @Html.RadioButtonFor(model => model.Gender, "true", new { @checked = true, id = "rbMale" })
+                    @Html.Label(@Resources.General.Male)
+                </td>
+                <td></td>
+
+                <td>@Resources.General.phone</td>
+                <td>
+                    @Html.TextBoxFor(model => model.Phone, new { name = "name", type = "text", maxlength = 11, placeholder = @Resources.General.phone })
+                    <label style="color :red;">@Html.ValidationMessageFor(model => model.Phone) </label>
+                </td>
+                <td></td>
+            </tr>
+
+            <tr>
+                <td>@Resources.General.Mobile</td>
+                <td>
+                    @Html.TextBoxFor(model => model.Mobile, new { name = "name", type = "text", maxlength = 15, placeholder = @Resources.General.Mobile })
+                    <label style="color :red;">@Html.ValidationMessageFor(model => model.Mobile) </label>
+                </td>
+                <td></td>
+
+                <td>@Resources.General.Email <label style="color: red">*</label></td>
+                <td>
+                    @Html.TextBoxFor(model => model.Email, new { name = "name", type = "text", placeholder = @Resources.General.Email })
+                    <label style="color :red;">@Html.ValidationMessageFor(model => model.Email) </label>
+                </td>
+                <td></td>
+            </tr>
+
+            <tr>
+                <td>@Resources.General.ReEmail <label style="color: red">*</label></td>
+                <td>
+                    @Html.TextBoxFor(model => model.ReEmail, new { name = "name", type = "text", placeholder = @Resources.General.ReEmail })
+                    <label style="color :red;">@Html.ValidationMessageFor(model => model.ReEmail) </label>
+                </td>
+                <td></td>
+
+                <td>@Resources.General.UserName <label style="color: red">*</label></td>
+                <td>
+                    @Html.TextBoxFor(m => m.UserName, new { name = "name", type = "text", @class = "form-control", placeholder = @Resources.General.UserName })
+                    <label style="color :red;">@Html.ValidationMessageFor(model => model.UserName) </label>
+                </td>
+                <td></td>
+            </tr>
+
+            <tr>
+                <td>@Resources.General.Password <label style="color: red">*</label></td>
+                <td>
+                    @Html.PasswordFor(m => m.Password, new { name = "name", type = "password", @class = "form-control", placeholder = @Resources.General.Password })
+                    <label style="color :red;">@Html.ValidationMessageFor(model => model.Password) </label>
+                </td>
+                <td></td>
+
+                <td>@Resources.General.ConfirmPassword <label style="color: red">*</label></td>
+                <td>
+                    @Html.PasswordFor(m => m.ConfirmPassword, new { name = "name", type = "password", @class = "form-control", placeholder = @Resources.General.ConfirmPassword })
+                    <label style="color :red;">@Html.ValidationMessageFor(model => model.ConfirmPassword) </label>
+                </td>
+                <td></td>
+            </tr>
+
+            <tr>
+                <td>@Resources.General.Captcha <label style="color: red">*</label></td>
+                <td>
+                    @Html.Captcha(Resources.General.RefreshCaptcha, Resources.General.EnterCaptcha, 6, Resources.General.EnterCaptcha, false)
+                    <div style="color: red">@ViewBag.Capatcha</div>
+                </td>
+                <td></td>
+            </tr>
+
+            <tr>
+                <td colspan="3" style="text-align:center;"><input class="btn" name="" type="submit" value="@Resources.General.Register" /></td>
+            </tr>
+
+        </table>
+
+    </div>
+}
+
+@section UpperBanner{
+
+
+    <div class="innerBanner">
+        <div class="banner"><img src="../../Content/Images/inner_banner.jpg" width="1050" height="180" alt="" /></div>
+    </div>
+}
+
+@section SideMenu{
+    @Html.Partial("_ContactSideMenue")
+}

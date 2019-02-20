@@ -1,0 +1,158 @@
+/* ==========================================================================
+   Author's custom styles
+   ========================================================================== */
+
+@font-face{font-family: 'DroidKufi-Bold';src: url('../../fonts/DroidKufi-Bold.eot');src: url('../../fonts/DroidKufi-Bold.eot?#iefix') format('embedded-opentype'),url('../../fonts/DroidKufi-Bold.woff') format('woff'),url('../../fonts/DroidKufi-Bold.ttf') format('truetype'),url('../../fonts/DroidKufi-Bold.svg#arimobold') format('svg');font-weight: 700;font-style: normal}
+@font-face{font-family: 'DroidKufi-Regular';src: url('../../fonts/DroidKufi-Regular.eot');src: url('../../fonts/DroidKufi-Regular.eot?#iefix') format('embedded-opentype'),url('../../fonts/DroidKufi-Regular.woff') format('woff'),url('../../fonts/DroidKufi-Regular.ttf') format('truetype'),url('../../fonts/DroidKufi-Regular.svg#arimobold') format('svg');font-weight: normal;font-style: normal}
+#dp_swf_engine{display: none}
+body{direction: rtl; font-family:DroidKufi-Regular }
+
+.full-overlay{width: 100%; height: 100%;z-index: 3; background-color: rgba(0,0,0,.5); position: fixed; top: 0; display: none}
+.full-overlay .message{position: relative; top: 50% }
+.full-overlay .fa-times-circle{color: #f12727; font-size: 50px}
+.full-overlay .fa-check-circle{color: #509900; font-size: 50px}
+.panel .btn{margin-bottom: 0; margin-right: 10px}
+.btn-danger{background-color: #f12727; }
+.btn.custom{background: #fff; color: #333}
+.btn-success{background-color:#509900 }
+.fa-search{cursor: pointer}
+.red-color{color: #da4453; margin-top: 5px; float: right; display: none}
+.absoluteInput{position: absolute;top: 3px; width: 80%;display: none}
+.absoluteInput input.search-query:first-child{border-top-right-radius: 5px;border-bottom-right-radius: 5px;}
+.absoluteInput .input-group-btn button{border-top-left-radius: 5px; border-bottom-left-radius: 5px;padding: 6px 10px;background-color: #fbaa19}
+
+/*Login Page*/
+body.login, header.gray, .gray-bg{background-color: #f6f6f6}
+body.login .container-fluid{width: 40%; margin-top: 10%}
+body.login header h1{margin: 0}
+body.login header div, header div.application-name {padding: 40px 0 0;font-family: DroidKufi-Regular;font-size: 18px}
+body.login .login-form{margin-top: 20px;padding:40px 35px;background-color: #fff;border: 1px solid #d0d0d0; border-radius: 3px}
+body.login .login-form label{font-family: 'DroidKufi-Bold'; font-weight: bold;font-size: 16px; color: #333333}
+body.login .login-form input[type='text'],body.login .login-form input[type='password']{height: 40px}
+body.login .form-group{margin-bottom: 20px}
+body.login .login-btn{margin-top: 20px}
+body.login .login-btn .btn{background-color: #0075a1;background-image: none; padding: 5px 50px; color: #fff; text-shadow: none}
+
+/**/
+body{font-family: 'DroidKufi-Regular'}
+h1, h2, h3, h4, h5, h6{margin: 0; font-weight: bold}
+h1, h3, h5, h6{color: #0075a1;}
+h2, h4{color: #fbaa19}
+h1{font-size: 50px}
+h2{font-size: 40px; margin-bottom: 10px}
+h3{font-size: 30px}
+h4{font-size: 19px}
+h5{font-size: 18px}
+h6{font-size: 14px}
+hr{color: #e6e9ed}
+.margin-top-60{margin-top: 60px}
+.fa{margin-left: 5px}
+.fa.fa-search,  .fa-times, .fa-plus-square{float: left; margin-left: 0}
+.fa-plus-square{color: #fbaa19; margin-top: 3px}
+.fa-plus-square.white{color: #fff; float: none}
+.fa-times{color: #a20505; font-size: 15px; cursor: pointer}
+.btn{background-image: none}
+.btn{padding:6px 30px; margin-bottom: 20px}
+.btn.defualt{ background-color: #d2d2d2;border-color: #d2d2d2}
+.btn-warning{padding: 0; margin-top: 10px;background-color: #fbaa19 }
+
+
+/*Company Configration pages*/
+.container-fluid{width: 85%}
+header h1{font-size: 0; margin: 10px 0}
+header div.application-name{padding: 30px 10px 0 0}
+header .dropdown-menu{background: #e7e5e5; border: 1px solid #000}
+.language{background-color: #0075a1;padding: 30px 15px; font-size:14px;font-family: DroidKufi-Regular;  margin-right: 40px}
+.language a{color: #fff}
+.user{font-size: 18px; color: #333333; padding-top: 30px }
+.user .fa-user{color:#0075a1; margin-left: 8px }
+.user .dropdown, .user .dropdown .fa-caret-down{margin-right: 5px}
+.user .dropdown a{color: #333333;}
+.zones .fa{margin-left: 5px;cursor: pointer;}
+.zones #Event .fa{margin-left: 20%;float: none; font-size: 25px}
+.zones a:last-child .fa{margin-left: 0}
+
+
+.page-content{margin-bottom: 30px}
+.content h1{margin-top: 30px}
+.content .zones-area {background-color: #f6f6f6; padding:15px 35px 10px; margin-top: 15px; position: relative}
+.content .zones-area h4{color: #666666; float: right; line-height: 25px}
+.content .zones-area .btn{float: left; margin-left: 25px; padding:6px 30px}
+.content .zones-area img{position: absolute; left: -35px;top: 0}
+.content .added-zones{background-color: #f6f6f6; height: 430px}
+.content .added-zones .title{background-color: #3bafda; color: #fff; padding: 10px 15px}
+
+.breadcrumb-arrow li a{background-color: #e6e9ed; border-color: #e6e9ed;color: #333333}
+.breadcrumb-arrow li.disable a{color: #999999}
+.breadcrumb-arrow li a:before{border-right-color: #e6e9ed}
+.breadcrumb-arrow li a:after{border-right-color: #ccc}
+.breadcrumb-arrow li a:focus, .breadcrumb-arrow li a:hover{background-color: #d2d2d2; border-color: #d2d2d2;border-color: #d2d2d2}
+.breadcrumb-arrow li a:focus:before, .breadcrumb-arrow li a:hover:before{border-right-color: #d2d2d2}
+.breadcrumb-arrow li.active a{background-color: #0075a1; border-color: #0075a1;color: #ffffff}
+.breadcrumb-arrow li.active a:before{border-right-color: #0075a1}
+.breadcrumb-arrow li.disable a{pointer-events: none;}
+.label-default{text-align: right;margin-top: 7px; line-height: 15px}
+.white-icon{color: #fff; float: none;}
+.branches-list .label-default{margin: 0px 0px 5px 0; padding-right: 15px }
+.fa-pencil{float: left; color:#009900; margin-top: 3px; margin-left: 8px}
+.branches{border-right: 3px solid #3bafda; padding: 0px 10px 0px 0; margin-bottom: 5px}
+
+/*Tree Styles*/
+/*.jqtree-element{border: 1px solid #ccc; border-radius: 3px; background-color: #fff; padding: 0px 3px; margin-top: 8px; font-size: 12px}
+*/
+.jqx-widget-header{display: none}
+.jqx-widget{}
+.jqx-widget-content{background: none; border: none;}
+.jqx-tree-dropdown-root{width: 100% !important}
+.jqx-tree-item{border: 1px solid #ccc;width: 89%; border-radius: 3px; background-color: #fff;padding: 0px 3px; margin-top: 8px; font-size: 12px;height: 15px}
+.jqx-disableselect > .jqx-tree-item{ border-right: 0;width: 80%; border-bottom-right-radius: 0; border-top-right-radius: 0; padding-left: 10px}
+[id^=arrowjqxWidget]{border: 1px solid #ccc !important;background-color: #fff !important;margin-top: 8px !important;border-left: 0!important;height: 15px; border-top-left-radius: 0; border-bottom-left-radius: 0}
+#Event{display: none; margin: 0 30px}
+[aria-selected="true"]>span,[aria-selected="true"]>div {background-color: #fbaa19 !important}
+.light{font-size: 12px; color: #999}
+.companyLogo{border: 1px solid #aab2bd;border-radius: 3px;padding: 25px 0;text-align: center; overflow: hidden; height: 95px}
+input[type=file]{position: relative; z-index: 2; opacity: 0;width: 65%;height: 35px;cursor: pointer}
+.fileStyle{position: relative}
+.fileStyle button{position: absolute; top: 0}
+
+.pagination>.active>a, .pagination>.active>a:focus, .pagination>.active>a:hover, .pagination>.active>span, .pagination>.active>span:focus, .pagination>.active>span:hover{color: #fff;background-color: #0075a1;border-color: #0075a1}
+
+footer{background-color: #333333; text-align: center; color: #999999; font-family: DroidKufi-Regular; padding: 20px 0; font-size: 14px}
+
+
+.icheckbox, .iradio_flat {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    padding: 0!important;
+    margin: 0;
+    vertical-align: middle;
+    cursor: pointer;
+    background: url(../img/check_flat/default.png) no-repeat;
+    border: none;
+}
+
+.grid{margin: 15px 0}
+.grid .grid-header{background: #3bafda; color: #fff; padding: 5px 0; line-height: 25px }
+.grid .grid-header a{color: #fff; margin-right: 10px}
+.grid .grid-header input[type="search"]{height: 25px; padding: 0 15px; line-height: 23px}
+.relativePosition{position: relative}
+.grid .grid-header .fa-search{position: absolute; top: 5px;left: 5px; font-size: 18px; color:#3bafda }
+.grid table tr td, .grid table th{padding-top: 10px; background-color: #f6f6f6}
+.grid table tr.odd td{background-color: #e6e9ed}
+.grid table th{border-bottom: 2px solid #c5c5c5}
+.grid table tr th:first-child, .grid table tr td:first-child{padding-right: 15px}
+.grid table td{border-bottom: 1px solid #c5c5c5}
+.grid table td .fa{float: right; margin-right: 10px;margin-top: 0; cursor: pointer}
+.grid .grid-footer .pager{text-align: right}
+.grid .grid-footer .pager ul{border: 1px solid #ccd1d9; border-radius: 5px; padding-right: 0; float: right; margin-top: 10px}
+.grid .grid-footer .pager li>a, .grid .grid-footer .pager li>a:focus, .grid .grid-footer .pager li>a:hover{color:#434a54;background-color: #fff; border: none; border-radius: 5px}
+.grid .grid-footer .pager li.active>a{color: #fff; background: #0075a1; border-radius:0}
+.grid .grid-footer .show{margin-top: 10px}
+.grid .grid-footer .show span{float: right;margin-right: 10px}
+.grid .grid-footer .show select{width: 60px}
+.grid .grid-footer .show .selecter-selected{padding: 6px 20px;}
+.grid .grid-footer .show span.padding5{padding-top: 5px}
+
+.grid table td .fa-unlock{color: #fbaa19}
+.grid table td .fa-lock{color: #999999}

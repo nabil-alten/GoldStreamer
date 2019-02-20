@@ -1,0 +1,55 @@
+﻿@model IEnumerable<BLL.DomainClasses.GlobalPrice>
+<table class="table">
+    <tr>
+        <th>
+            @Resources.General.PriceDate
+        </th>
+        <th>
+            @Resources.General.Ask
+        </th>
+        <th>
+            @Resources.General.Bid
+        </th>
+        <th>
+            @Resources.General.Open
+        </th>
+        <th>
+            @Resources.General.High
+        </th>
+        <th>
+            @Resources.General.Low
+        </th>
+        <th>
+            @Resources.General.Close
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.CaptureTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Ask)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Bid)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Open)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.High)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Low)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Close)
+            </td>
+            <td></td>
+        </tr>
+    }
+</table>

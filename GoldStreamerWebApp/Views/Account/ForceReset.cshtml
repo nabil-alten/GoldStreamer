@@ -1,0 +1,55 @@
+﻿@using Microsoft.AspNet.Identity
+@model GoldStreamerWebApp.Models.ManageUserViewModel
+@{
+    ViewBag.Title = Resources.General.ChangePassword;
+    Layout = "~/Views/Shared/_LayoutInner.cshtml";
+}
+<h1>@Resources.General.ChangePassword </h1>
+
+
+<p>@Resources.General.ContinueLogin <strong>@User.Identity.GetUserName()</strong>.</p>
+
+@using (Html.BeginForm("Manage", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    @*@Html.ValidationSummary()*@
+    <div class="form-group">
+        <div class="control-label col-md-2">
+            @Resources.General.CurrPassword 
+        </div>
+        <div class="col-md-10">
+            @Html.PasswordFor(m => m.OldPassword, new { placeholder = @Resources.General.CurrPassword, @class = "form-control", autofocus = "true" })
+            @Html.ValidationMessageFor(m => m.OldPassword)
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="control-label col-md-2">
+            @Resources.General.NewPassword
+        </div>
+        <div class="col-md-10">
+            @Html.PasswordFor(m => m.NewPassword, new { placeholder = @Resources.General.NewPassword, @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.NewPassword)
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="control-label col-md-2">
+            @Resources.General.ConfirmNewPassword
+        </div>
+        <div class="col-md-10">
+            @Html.PasswordFor(m => m.ConfirmPassword, new { placeholder = @Resources.General.ConfirmNewPassword, @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.ConfirmPassword)
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="@Resources.General.ChangePassword" class="btn" />
+        </div>
+    </div>
+}
+@section UpperBanner{
+    <div class="innerBanner">
+        <div class="banner"><img src="../../Content/Images/inner_banner.jpg" width="1050" height="180" alt="" /></div>
+
+    </div>
+}

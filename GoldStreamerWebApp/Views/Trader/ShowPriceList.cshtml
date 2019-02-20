@@ -1,0 +1,39 @@
+﻿@model IEnumerable<BLL.DomainClasses.Trader>
+
+@{
+    ViewBag.Title = @Resources.General.Trader;
+    Layout = "~/Views/Shared/_LayoutInner.cshtml";
+
+}
+
+<h2>@Resources.General.Trader</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Resources.General.TraderName
+        </th>
+        <th>
+            @Resources.General.ShowFavPrices
+        </th>
+        <th>
+            @Resources.General.MngFavList
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.ActionLink(item.Name, "PriceDetails", "Trader", new {id = item.ID}, null)
+            </td>
+            <td>
+                @Html.ActionLink(@Resources.General.ShowFavLstLink, "FavList", "Trader", new {id = item.ID}, null)
+            </td>
+            <td>
+                @Html.ActionLink(@Resources.General.AssignFavLink, "FavListAssign", "Trader", new { id = item.ID }, null)
+            </td>
+        </tr>
+    }
+
+</table>

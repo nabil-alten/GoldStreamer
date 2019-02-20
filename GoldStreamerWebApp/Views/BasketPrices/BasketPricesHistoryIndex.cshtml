@@ -1,0 +1,33 @@
+﻿@using BLL.DomainClasses
+@using Resources
+@model PagedList.IPagedList<BasketPrices>
+@{
+    ViewBag.Title = Resources.General.basketPriceHistory;
+    Layout = "~/Views/Shared/_LayoutInner.cshtml";
+}
+    <h1>@Resources.General.basketPriceHistory</h1>
+    <div  id="divList">
+    @Html.Action("_BasketPricesHistory")
+</div>
+
+    @if (GoldStreamer.Helpers.UserNavigation.IsSuperTrader())
+    {
+        @section SideMenu{
+            @Html.Partial("_SuperTraderMenu")
+        }
+    }
+    else if (GoldStreamer.Helpers.UserNavigation.IsTrader())
+    {
+        @section SideMenu{
+            @Html.Partial("_TraderSideMenu")
+        }
+    }
+    @section UpperBanner{
+
+
+        <div class="innerBanner">
+            <h1 class="banner_header">@Resources.General.basketPriceHistory</h1>
+
+            <div class="banner"><img src="../../Content/Images/inner_banner.jpg" width="1050" height="180" alt="" /></div>
+        </div>
+    }

@@ -1,0 +1,402 @@
+﻿@using GoldStreamer.Helpers
+@model GoldStreamerWebApp.Models.EditProfileViewModel
+@{
+    ViewBag.Title = @Resources.General.ProfileInfo;
+    string baseUrl = CultureHelper.GetBaseURL().ToLower();
+    Layout = "~/Views/Shared/_LayoutInner.cshtml";
+
+}
+<style>
+    .fixc {
+        position: fixed !important;
+        top: 40px;
+    }
+</style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script type="text/javascript" src="~/Scripts/accordion.js"></script>
+
+
+@section SideMenu{
+    @Html.Partial("_SuperTraderMenu")
+}
+@using (Html.BeginForm("EditSuperTraderProfile", "EditProfile", FormMethod.Post, new { id = "form" }))
+{
+    @Html.HiddenFor(model => model.ID)
+    
+    <div style="width:100%; min-height: 600px; overflow:auto;">
+
+            <h1>@Resources.General.ProfileInfo</h1>
+        
+            <p>
+                <br /><br />
+            </p>
+
+            <div class="acc-container">
+                <div class="acc-btn selected"><h1 class=" acchead acc_icon_header">@Resources.General.PersonalInformation</h1>
+                    <div class="acc_icon_img">
+                        <img width="25" src="/Content/Images/short_menu_icon.png" />
+                    </div>
+                </div>
+                <div class="acc-content open">
+                    <div class="acc-content-inner">
+                        <div class="contactHolder" style="height:160px;">
+                            <table border="0" style="text-align: right; width: 100%;" dir="rtl" margin-bottom:25px;">
+
+                                <tr>
+                                    <td width="15%">@Resources.General.FirstName<label style="color: red">*</label></td>
+                                    <td width="15%"> @Html.TextBoxFor(model => model.UserName, new { maxlength = 50, placeholder = @Resources.General.FirstName }) </td>
+                                    <td class="val" width="20%">@Html.ValidationMessageFor(model => model.UserName)  </td>
+
+
+                                    <td width="15%"><label>@Resources.General.LastName</label></td>
+                                    <td width="15%">@Html.TextBoxFor(model => model.Family, new { maxlength = 50, placeholder = @Resources.General.LastName })  </td>
+                                    <td class="val" width="20%">@Html.ValidationMessageFor(model => model.Family)  </td>
+
+                                </tr>
+
+                                <tr>
+                                    <td width="15%"><label>@Resources.General.Email</label></td>
+                                    <td width="15%">@Html.TextBoxFor(model => model.Email, new { placeholder = @Resources.General.Email, @readonly = "readonly" })  </td>
+                                    <td class="val" width="20%">@Html.ValidationMessageFor(model => model.Email)  </td>
+
+
+                                    <td width="15%">@Resources.General.Gender<label style="color: red">*</label></td>
+                                    <td>
+                                        @Html.RadioButtonFor(model => model.Gender, "true", new { id = "Male", name = "Gender" })
+                                        @Html.Label(@Resources.General.Male)
+                                        @Html.RadioButtonFor(model => model.Gender, "false", new { id = "Female", name = "Gender" })
+                                        @Html.Label(@Resources.General.Female)
+                                        @Html.ValidationMessageFor(model => model.Gender)
+                                    </td>
+                                    <td width="35%"></td>
+                                </tr>
+
+
+
+                                @*<td width="15%">  </td>
+            <td class="val" width="20%">  </td>*@
+
+                                <tr>
+                                    <td width="15%"><label>@Resources.General.phone</label></td>
+                                    <td width="15%">@Html.TextBoxFor(model => model.Phone, new { maxlength = 11, placeholder = @Resources.General.phone })  </td>
+                                    <td class="val" width="20%">@Html.ValidationMessageFor(model => model.Phone)  </td>
+
+                                    <td width="15%">@Resources.General.UserName</td>
+                                    <td><input id="lbl_Family" value=@Model.Name name="" readonly="readonly" type="text" placeholder='@Resources.General.UserName' /></td>
+                                    <td width="35%"></td>
+
+                                </tr>
+
+                                <tr>
+                                    <td width="15%"><label>@Resources.General.Mobile</label></td>
+                                    <td width="15%">@Html.TextBoxFor(model => model.Mobile, new { maxlength = 15, placeholder = @Resources.General.Mobile })  </td>
+                                    <td class="val" width="20%">@Html.ValidationMessageFor(model => model.Mobile)  </td>
+
+
+                                    <td width="15%">@Resources.General.Password</td>
+                                    <td width="15%">@Html.PasswordFor(m => m.Password, new { name = "name", type = "password", @class = "form-control", placeholder = @Resources.General.Password, maxlength = 20 })  </td>
+                                    <td class="val" width="20%">@Html.ValidationMessageFor(model => model.Password)  </td>
+
+                                </tr>
+                                <tr>
+                                    <td width="15%">@Resources.General.OldPassword</td>
+                                    <td width="15%">@Html.PasswordFor(m => m.OldPassword, new { name = "name", id = "OldPassword", type = "password", @class = "form-control", placeholder = @Resources.General.OldPassword, maxlength = 20 })  </td>
+                                    <td class="val" width="20%">@Html.ValidationMessageFor(model => model.OldPassword)  </td>
+
+
+                                    <td width="15%">@Resources.General.ConfirmPassword</td>
+                                    <td width="15%">@Html.PasswordFor(m => m.ConfirmPassword, new { name = "name", type = "password", @class = "form-control", placeholder = @Resources.General.ConfirmPassword, maxlength = 20 })  </td>
+                                    <td class="val" width="20%">@Html.ValidationMessageFor(model => model.ConfirmPassword)  </td>
+
+                                </tr>
+
+                                <tr>
+                                    <td colspan="4"></td>
+
+
+                                </tr>
+
+                                <tr>
+                                    <td colspan="4" id="passwordError" style="color:red"></td>
+                                </tr>
+
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="acc-btn"><h1 class="acchead acc_icon_header">@Resources.General.Tradedata</h1>
+                    <div class="acc_icon_img">
+                        <img width="25" src="/Content/Images/short_menu_icon.png" />
+                    </div></div>
+                <div class="acc-content">
+                    <div class="acc-content-inner">
+                        <div class="contactHolder">
+                            <table width="80%" border="0" align="right">
+                                <tr>
+                                    <td width="15%"><label>@Resources.General.StoreName</label></td>
+                                    <td>
+                                        @Html.TextBoxFor(model => model.ShopName, new { placeholder = @Resources.General.StoreName })
+                                        @Html.ValidationMessageFor(model => model.ShopName)
+                                    </td>
+                                    <td width="15%"><label>@Resources.General.Governorate</label></td>
+                                    <td>
+                                        @Html.DropDownList("Governorate", new SelectList(Model.Governorates, "ID", "Name"), @Resources.General.select)
+                                    </td>
+
+                                </tr>
+                                <tr>
+
+                                    <td width="15%"><label>@Resources.General.City</label></td>
+                                    <td>
+                                        @Html.DropDownList("City", new SelectList(Model.Cities, "ID", "Name"), @Resources.General.select)
+                                    </td>
+                                    <td width="15%"><label>@Resources.General.Region</label></td>
+                                    <td>
+                                        @Html.DropDownList("District", new SelectList(Model.Districts, "ID", "Name"), @Resources.General.select)
+                                    </td>
+                                </tr>
+                                <tr style="height:20px;"></tr>
+                                
+
+                                @*<tr>
+                                    <td align="center" colspan="4">
+                                        
+                                    </td>
+                                </tr>*@
+
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <br />@*<hr style="width: 500px;" />*@<br />
+
+                <table style="width:100%;">
+                  
+
+
+                    <tr>
+                        <td align="right" >
+                            @Html.CheckBoxFor(model => model.IsPublicProfile, new { @checked = "checked" })
+                            @Html.Label(@Resources.General.AllowGeneralProfile)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="right" >
+                            @Html.CheckBoxFor(model => model.IsRegistered, new { @checked = "checked" })
+                            @Html.Label(@Resources.General.RegisterInNews)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="center">
+                            <input type="button" value="@Resources.General.Save" id="update" class="btn center-block" />
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+}
+
+
+
+<script>
+
+    $(function () {
+
+        $("#div_editProfile").addClass("menuItemactive");
+
+        $("#Governorate").change(function () {
+            var selectedItem = $(this).val();
+            var ddlCity = $("#City");
+            ddlCity.html('');
+            $("#District").html('');
+            if (selectedItem == "")
+                return false;
+
+            $.ajax({
+                cache: false,
+                type: "GET",
+                url: '@(baseUrl)/' + '/Trader/GetCity/',
+                data: { "govId": selectedItem },
+                success: function (data) {
+
+                    ddlCity.html('');
+                    $("#District").html('');
+                    $.each(data.city, function (id, option) {
+                        ddlCity.append($('<option></option>').val(option.ID).html(option.Name));
+                    });
+
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    alert('Failed to retrieve states.');
+
+                }
+            });
+        });
+
+        $("#City").change(function () {
+            var selectedItem = $(this).val();
+            var ddlDistrict = $("#District");
+
+            $.ajax({
+                cache: false,
+                type: "GET",
+                url: '@(baseUrl)/' + '/Trader/GetRegion/',
+                data: { "cityId": selectedItem },
+                success: function (data) {
+
+                    ddlDistrict.html('');
+                    $.each(data.district, function (id, option) {
+                        ddlDistrict.append($('<option></option>').val(option.ID).html(option.Name));
+                    });
+
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    alert('Failed to retrieve states.');
+
+                }
+            });
+        });
+    });
+
+
+    $('#update').click(function (e) {
+
+        if (!CheckPasswords()) {
+            event.preventDefault();
+
+            var oldPassword = $("#OldPassword").val();
+            var paswordValue = $("#Password").val();
+            var confirmPassword = $("#ConfirmPassword").val();
+
+            if (paswordValue == "")
+                $("#passwordError").html('@Resources.Messages.PasswordValidationMsg');
+            else if (confirmPassword == "")
+                $("#passwordError").html('@Resources.Messages.RePasswordValidationMsg');
+            else
+                $("#passwordError").html('@Resources.Messages.PasswordErrorMsg');
+        }
+
+        else {
+            $("#passwordError").html('');
+            if (!$("#form").valid()) return false;
+
+            var id = $("#ID").val();
+            var name = $("#Name").val();
+            var family = $("#Family").val();
+            var gender = $('input[name="Gender"]:checked').val(); $("#Gender").val();
+            var phone = $("#Phone").val();
+            var mobile = $("#Mobile").val();
+            var email = $("#Email").val();
+            var shopName = $("#ShopName").val();
+            var oldPassword = $("#OldPassword").val();
+            var password = $("#Password").val();
+            var confirmPassword = $("#ConfirmPassword").val();
+            var username = $("#UserName").val();
+
+            var governorate = $('#Governorate').val() == '0' ? null : $('#Governorate').val();
+            var city = $('#City').val() == '0' ? null : $('#City').val();
+            var district = $('#District').val() == '0' ? null : $('#District').val();
+            var IsPublicProfile = document.getElementById('IsPublicProfile').checked;
+            var IsRegistered = document.getElementById('IsRegistered').checked;
+
+            //var sortOrder = document.getElementById('SortOrder').value;
+            //var isActive = document.getElementById('IsActive').checked;
+            $.ajax({
+                url: '@(baseUrl)/EditProfile/UpdateSuperTrader/',
+                type: "POST",
+                data: JSON.stringify({
+                    'ID': id,
+                    'Name': name,
+                    'Family': family,
+                    'Gender': gender,
+                    "Phone": phone,
+                    "Mobile": mobile,
+                    "Email": email,
+                    "ShopName": shopName,
+                    "Governorate": governorate,
+                    "City": city,
+                    "District": district,
+                    "Name": username,
+                    "IsPublicProfile": IsPublicProfile,
+                    "IsRegistered": IsRegistered,
+                    "TypeFlag": 1,
+                    "ReEmail": email,
+                    'OldPassword': oldPassword,
+                    'Password': password,
+                    'ConfirmPassword': confirmPassword
+                }),
+                cache: false,
+                contentType: "application/json; charset=utf-8",
+
+                success: function (data, xhr, textStatus) {
+                    toastr.success('@Resources.Messages.Saved');
+                },
+                error: function (data, xhr, textStatus) {
+                    debugger;
+                    if (data.status === 1)
+                        toastr.error('@Resources.Messages.EmailExists');
+                    else if (data.status === 2)
+                        toastr.error('@Resources.Messages.OrderExists');
+                    else if (data.status === 3)
+                        toastr.error('@Resources.Messages.TraderNameExists');
+                    else if (data.status === 4)
+                        toastr.error('@Resources.Messages.TraderMobileExists');
+                    else if (data.status === 5)
+                        toastr.error('@Resources.Messages.TraderShopExists');
+                    else if (data.status === 6)
+                        toastr.error('@Resources.Messages.TraderPhoneExists');
+                    else if (data.status === 7)
+                        toastr.error('@Resources.Messages.InvalidOldPassword');
+                    else if (data.status === 8)
+                        toastr.error('@Resources.Messages.PasswordGeneralError');
+                    else
+                        toastr.error(textStatus);
+                }
+            });
+        }
+    });
+
+    function CheckPasswords() {
+        var oldPassword = $("#OldPassword").val();
+        var paswordValue = $("#Password").val();
+        var confirmPassword = $("#ConfirmPassword").val();
+
+        if (paswordValue == "" && confirmPassword == "" && oldPassword == "")
+            return true;
+
+        if (paswordValue != "" && confirmPassword != "" && oldPassword != "")
+            return true;
+
+        if (paswordValue == "" && confirmPassword == "" && oldPassword != "")
+            return true;
+
+        else
+            return false;
+    }
+
+
+
+    var wrap = $("#wrap");
+    var test1 = $("#test1");
+    wrap.on("scroll", function (e) {
+
+        if (this.scrollTop > 220) {
+            test1.addClass("fixc");
+        } else {
+            test1.removeClass("fixc");
+        }
+
+    });
+</script>
+@Scripts.Render("~/bundles/jqueryval")
+@section UpperBanner{
+
+
+    <div class="innerBanner">
+        <h1 class="banner_header">@Resources.General.ProfileInfo</h1>
+
+        <div class="banner"><img src="../../Content/Images/inner_banner.jpg" width="1050" height="180" alt="" /></div>
+    </div>
+}

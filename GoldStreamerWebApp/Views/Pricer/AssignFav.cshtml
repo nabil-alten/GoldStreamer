@@ -1,0 +1,26 @@
+﻿@using Resources
+
+@{
+    ViewBag.Title = "title";
+    Layout = "~/Views/Shared/_LayoutInner.cshtml";
+
+    
+}
+<input hidden="hidden" id="confirmRedirect" value="@Messages.AssingToFavRequired" />
+<script type="text/javascript">
+    $(function() {
+        var actionSelected = confirm(document.getElementById('confirmRedirect').value);
+        if (actionSelected)
+            window.location.href = "@Url.Action("AssignTraders", "FavorateList")";
+        else
+            history.go(-1);
+    });
+
+</script>
+@section UpperBanner{
+
+
+    <div class="innerBanner">
+        <div class="banner"><img src="../../Content/Images/inner_banner.jpg" width="1050" height="180" alt="" /></div>
+    </div>
+}

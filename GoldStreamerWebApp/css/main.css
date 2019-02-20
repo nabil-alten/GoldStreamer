@@ -1,0 +1,134 @@
+/* ==========================================================================
+   Author's custom styles
+   ========================================================================== */
+
+@font-face{font-family: 'Arimo';src: url('../fonts/Arimo-regular.eot');src: url('../fonts/Arimo-regular.eot?#iefix') format('embedded-opentype'),url('../fonts/Arimo-regular.woff') format('woff'),url('../fonts/Arimo-regular.ttf') format('truetype'),url('../fonts/Arimo-regular.svg#arimoregular') format('svg');font-weight: normal;font-style: normal}
+@font-face{font-family: 'Arimo-bold';src: url('../fonts/Arimo-bold.eot');src: url('../fonts/Arimo-bold.eot?#iefix') format('embedded-opentype'),url('../fonts/Arimo-bold.woff') format('woff'),url('../fonts/Arimo-bold.ttf') format('truetype'),url('../fonts/Arimo-bold.svg#arimobold') format('svg');font-weight: 700;font-style: normal}
+@font-face{font-family: 'DroidKufi-Bold';src: url('../fonts/DroidKufi-Bold.eot');src: url('../fonts/DroidKufi-Bold.eot?#iefix') format('embedded-opentype'),url('../fonts/DroidKufi-Bold.woff') format('woff'),url('../fonts/DroidKufi-Bold.ttf') format('truetype'),url('../fonts/DroidKufi-Bold.svg#arimobold') format('svg');font-weight: 700;font-style: normal}
+@font-face{font-family: 'DroidKufi-Regular';src: url('../fonts/DroidKufi-Regular.eot');src: url('../fonts/DroidKufi-Regular.eot?#iefix') format('embedded-opentype'),url('../fonts/DroidKufi-Regular.woff') format('woff'),url('../fonts/DroidKufi-Regular.ttf') format('truetype'),url('../fonts/DroidKufi-Regular.svg#arimobold') format('svg');font-weight: normal;font-style: normal}
+#dp_swf_engine{display: none}
+
+.full-overlay{width: 100%; height: 100%;z-index: 3; background-color: rgba(0,0,0,.5); position: fixed; top: 0; display: none}
+.full-overlay .message{position: relative; top: 50% }
+.full-overlay .fa-times-circle{color: #f12727; font-size: 50px}
+.full-overlay .fa-check-circle{color: #509900; font-size: 50px}
+.panel .btn{margin-bottom: 0; margin-left: 10px}
+.btn-danger{background-color: #f12727; }
+.btn.custom{background: #fff; color: #333}
+.btn-success{background-color:#509900 }
+.fa-search{cursor: pointer}
+.red-color{color: #da4453; margin-top: 5px; float: left; display: none}
+.absoluteInput{position: absolute;top: 3px; width: 80%;display: none}
+.absoluteInput input.search-query:first-child{border-top-left-radius: 5px;border-bottom-left-radius: 5px;}
+.absoluteInput .input-group-btn button{border-top-right-radius: 5px; border-bottom-right-radius: 5px;padding: 6px 10px;background-color: #fbaa19}
+
+/*Login Page*/
+body.login, header.gray, .gray-bg{background-color: #f6f6f6}
+body.login .container-fluid{width: 40%; margin-top: 10%}
+body.login header h1{margin: 0}
+body.login header div, header div.application-name {padding: 40px 0 0;font-family: 'Arimo', sans-serif;font-size: 18px}
+body.login .login-form{margin-top: 20px;padding:40px 35px;background-color: #fff;border: 1px solid #d0d0d0; border-radius: 3px}
+body.login .login-form label{font-family: 'Arimo-bold',sans-serif; font-weight: bold;font-size: 16px; color: #333333}
+body.login .login-form input[type='text'],body.login .login-form input[type='password']{height: 40px}
+body.login .form-group{margin-bottom: 20px}
+body.login .login-btn{margin-top: 20px}
+body.login .login-btn .btn{background-color: #0075a1;background-image: none; padding: 5px 50px; color: #fff; text-shadow: none}
+
+/**/
+body{font-family: 'Arimo', sans-serif; }
+h1, h2, h3, h4, h5, h6{margin: 0; font-weight: bold}
+h1, h3, h5, h6{color: #0075a1;}
+h2, h4{color: #fbaa19}
+h1{font-size: 50px}
+h2{font-size: 40px; margin-bottom: 10px}
+h3{font-size: 30px}
+h4{font-size: 19px}
+h5{font-size: 18px}
+h6{font-size: 14px}
+hr{color: #e6e9ed}
+.margin-top-60{margin-top: 60px}
+.fa{margin-right: 5px}
+.fa.fa-search,  .fa-times, .fa-plus-square{float: right; margin-right: 0}
+.fa-plus-square{color: #fbaa19; margin-top: 3px}
+.fa-plus-square.white{color: #fff; float: none}
+.fa-times{color: #a20505; font-size: 15px; cursor: pointer}
+.btn{background-image: none}
+.btn{padding:6px 30px; margin-bottom: 20px}
+.btn.defualt{ background-color: #d2d2d2;border-color: #d2d2d2}
+.btn-warning{padding: 0; margin-top: 10px;background-color: #fbaa19 }
+
+
+/*Company Configration pages*/
+.container-fluid{width: 85%}
+header h1{font-size: 0; margin: 10px 0}
+header div.application-name{padding: 30px 0 0 10px}
+header .dropdown-menu{background: #e7e5e5; border: 1px solid #000}
+.language{background-color: #0075a1;padding: 30px 15px; font-size:14px;font-family: DroidKufi-Regular;  margin-left: 40px}
+.language a{color: #fff}
+.user{font-size: 18px; color: #333333; padding-top: 30px }
+.user .fa-user{color:#0075a1; margin-right: 8px }
+.user .dropdown, .user .dropdown .fa-caret-down{margin-left: 5px}
+.user .dropdown a{color: #333333;}
+.zones .fa{margin-right: 5px;cursor: pointer;}
+.zones #Event .fa{margin-right: 20%;float: none; font-size: 25px}
+.zones a:last-child .fa{margin-right: 0}
+
+
+.page-content{margin-bottom: 30px}
+.content h1{margin-top: 30px}
+.content .zones-area {background-color: #f6f6f6; padding:15px 35px 10px; margin-top: 15px; position: relative}
+.content .zones-area h4{color: #666666; float: left; line-height: 25px}
+.content .zones-area .btn{float: right; margin-right: 25px; padding:6px 30px}
+.content .zones-area img{position: absolute; right: -35px;top: 0}
+.content .added-zones{background-color: #f6f6f6; height: 430px}
+.content .added-zones .title{background-color: #3bafda; color: #fff; padding: 10px 15px}
+
+.breadcrumb-arrow li a{background-color: #e6e9ed; border-color: #e6e9ed;color: #333333}
+.breadcrumb-arrow li.disable a{color: #999999}
+.breadcrumb-arrow li a:before{border-left-color: #e6e9ed}
+.breadcrumb-arrow li a:after{border-left-color: #ccc}
+.breadcrumb-arrow li a:focus, .breadcrumb-arrow li a:hover{background-color: #d2d2d2; border-color: #d2d2d2;border-color: #d2d2d2}
+.breadcrumb-arrow li a:focus:before, .breadcrumb-arrow li a:hover:before{border-left-color: #d2d2d2}
+.breadcrumb-arrow li.active a{background-color: #0075a1; border-color: #0075a1;color: #ffffff}
+.breadcrumb-arrow li.active a:before{border-left-color: #0075a1}
+.breadcrumb-arrow li.disable a{pointer-events: none;}
+.label-default{text-align: left;margin-top: 7px; line-height: 15px}
+.white-icon{color: #fff; float: none;}
+.branches-list .label-default{margin: 0px 0 5px 0px; padding-left: 15px }
+.fa-pencil{float: right; color:#009900; margin-top: 3px; margin-right: 8px}
+.branches{border-left: 3px solid #3bafda; padding: 0px 0 0px 10px; margin-bottom: 5px}
+
+/*Tree Styles*/
+/*.jqtree-element{border: 1px solid #ccc; border-radius: 3px; background-color: #fff; padding: 0px 3px; margin-top: 8px; font-size: 12px}
+*/
+.jqx-widget-header{display: none}
+.jqx-widget{}
+.jqx-widget-content{background: none; border: none;}
+.jqx-tree-dropdown-root{width: 100% !important}
+.jqx-tree-item{border: 1px solid #ccc;width: 89%; border-radius: 3px; background-color: #fff;padding: 0px 3px; margin-top: 8px; font-size: 12px;height: 15px}
+.jqx-disableselect > .jqx-tree-item{ border-left: 0;width: 80%; border-bottom-left-radius: 0; border-top-left-radius: 0; padding-right: 10px}
+[id^=arrowjqxWidget]{border: 1px solid #ccc !important;background-color: #fff !important;margin-top: 8px !important;border-right: 0!important;height: 15px; border-top-right-radius: 0; border-bottom-right-radius: 0}
+#Event{display: none; margin: 0 30px}
+[aria-selected="true"]>span,[aria-selected="true"]>div {background-color: #fbaa19 !important}
+.light{font-size: 12px; color: #999}
+.companyLogo{border: 1px solid #aab2bd;border-radius: 3px;padding: 25px 0;text-align: center; overflow: hidden; height: 95px}
+input[type=file]{position: relative; z-index: 2; opacity: 0;width: 65%;height: 35px;cursor: pointer}
+.fileStyle{position: relative}
+.fileStyle button{position: absolute; top: 0}
+
+.pagination>.active>a, .pagination>.active>a:focus, .pagination>.active>a:hover, .pagination>.active>span, .pagination>.active>span:focus, .pagination>.active>span:hover{color: #fff;background-color: #0075a1;border-color: #0075a1}
+
+footer{background-color: #333333; text-align: center; color: #999999; font-family: Arial; padding: 20px 0; font-size: 14px}
+
+
+.icheckbox, .iradio_flat {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    padding: 0!important;
+    margin: 0;
+    vertical-align: middle;
+    cursor: pointer;
+    background: url(../img/check_flat/default.png) no-repeat;
+    border: none;
+}

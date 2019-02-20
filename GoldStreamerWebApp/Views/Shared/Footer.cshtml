@@ -1,0 +1,61 @@
+﻿@using Microsoft.AspNet.Identity
+@{
+    var controller = ViewContext.RouteData.GetRequiredString("controller");
+    var action = ViewContext.RouteData.GetRequiredString("action");
+
+
+}
+<div class="footerLinks">
+    <ul>
+
+        <li>@Html.ActionLink(Resources.General.Home, "Home", "Home", null, new { title = @Resources.General.Home })</li>
+        <li>@Html.ActionLink(@Resources.General.AboutUs, "About", "Home", null, new { title = @Resources.General.Home })</li>
+        @*@if (User.Identity.GetUserName() == null)
+        {
+            <li>@Html.ActionLink(@Resources.General.TraderOnly, "Login", "Account", null, new { title = @Resources.General.TraderOnly })</li>
+        }
+        else
+        {
+            if (GoldStreamer.Helpers.UserNavigation.IsTrader())
+            {
+                <li>@Html.ActionLink(@Resources.General.TraderOnly, "TraderDashboard", "Home", null, new { title = @Resources.General.TraderOnly })</li>
+            }
+            else if (GoldStreamer.Helpers.UserNavigation.IsSuperTrader())
+            {
+                <li>@Html.ActionLink(@Resources.General.TraderOnly, "SuperTraderDashboard", "Home", null, new { title = @Resources.General.TraderOnly })</li>
+            }
+        }*@
+        <li>
+            <a href="~/GlobalPrice" class="@(controller == "GlobalPrice"  ? "active" : "")"> @Resources.General.GlobalGoldPrices</a>
+        </li>
+        <li>
+            <a href="~//TraderPricesChart/GlobalPricesIndex" class="@(controller == "TraderPricesChart" ? "active" : "")"> @Resources.General.GlobalChart</a>
+        </li>
+        <li>@Html.ActionLink(Resources.General.NewsCategoryText, "Index", "News", null, new { title = @Resources.General.NewsCategoryText })</li>
+        <li>@Html.ActionLink(Resources.General.FAQ, "Index", "FAQ", null, new { title = @Resources.General.FAQ })</li>
+
+        <li>@Html.ActionLink(Resources.General.Feedback, "Index", "Feedback", null, new { title = @Resources.General.Feedback })</li>
+    </ul>
+</div>
+
+
+
+<div class="footerData">
+    <div class="copy_rights">
+        <p>
+            حقوق الملكية محفوظة
+            2015 - 2016
+        </p>
+    </div>
+    <div class="social_icons">
+        <a href="#" class="face"></a>
+        <a href="#" class="twitter"></a>
+        <a href="#" class="google"></a>
+    </div>
+    <div class="left" style="margin-left:20px;">
+        <a href="http://www.techvision-eg.com" target="_new" >
+            <img src="/Content/images/techVisionLogo.png" alt="TechVision" width="174" height="56" />
+        </a>
+    </div>
+</div>
+

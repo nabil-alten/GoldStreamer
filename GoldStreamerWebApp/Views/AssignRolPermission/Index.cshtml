@@ -1,0 +1,85 @@
+﻿@using GoldStreamer.Helpers
+@model IEnumerable<GoldStreamer.Models.ViewModels.RolePermissionViewModel>
+@{
+    ViewBag.Title = Resources.General.ManageUsers;
+
+    string baseUrl = CultureHelper.GetBaseURL().ToLower();
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+
+@section SideMenu{
+    @Html.Partial("_AdminSideMenu")
+}
+<script>
+    $(function () {
+        $("#div_ar").addClass("menuItemactive");
+    });
+</script>
+@section UpperBanner{
+
+
+    <div class="innerBanner">
+        <div class="banner">
+            <h1 class="banner_header">@Resources.General.ManageUsers</h1>
+
+            <img src="../../Content/Images/inner_banner.jpg" width="1050" height="180" alt="" />
+        </div>
+    </div>
+}
+
+@using (Html.BeginForm("Index", "AssignRolPermission", FormMethod.Post, new { id = "form", dir = "rtl" }))
+{
+
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <div style="display:inline;">
+                <label>@Resources.General.UserType</label>
+            </div>
+            <div style="display:inline;">
+                
+                <select id="Types" style="width:200px;">
+                    <option value="1" selected>@Resources.General.SuperTrader</option>
+                    <option value="2">@Resources.General.TraderText</option>
+                    <option value="3">@Resources.General.UserText</option>
+                </select>
+            </div>
+        </div>
+    </div>
+     <br />
+    <br />
+    <div id="divList" style="margin-top: 30px;">
+
+        @Html.Action("_List")
+    </div>
+}
+
+<script type="text/javascript">
+    $(document).ready(
+        function () {
+            $('#Types').on('change', function () {
+
+                var typeId = $('#Types option:selected').val();
+
+                var url = "@(baseUrl)/AssignRolPermission/LoadAssignedRoles";
+                $.ajax({
+                    type: "POST",
+                    url: url,
+                    async: false,
+                    cache: false,
+                    data: { typeId: typeId },
+                    success: function (data, statusText, xhr) {
+                        $('#divList').html(data)
+                    },
+                    error: function (data, statusText, xhr) {
+                        toastr.error('Error');
+                    }
+                });
+                return false;
+
+            });
+        });
+
+
+</script>

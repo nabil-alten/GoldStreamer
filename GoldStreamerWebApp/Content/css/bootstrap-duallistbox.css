@@ -1,0 +1,93 @@
+.bootstrap-duallistbox-container .buttons {
+    margin-bottom: 6px;
+    width: 70%;
+    margin-right: 115px;
+    margin-top: 16px;
+}
+
+.bootstrap-duallistbox-container label {
+  display: block;
+  margin-right: 174px;
+}
+
+.bootstrap-duallistbox-container .info {
+  display: inline-block;
+  margin-bottom: 5px;
+  font-size: 11px;
+  direction:ltr;
+      width: 17%;
+}
+
+.bootstrap-duallistbox-container .clear1,
+.bootstrap-duallistbox-container .clear2 {
+  display: none;
+  font-size: 10px;
+}
+
+.bootstrap-duallistbox-container .box1.filtered .clear1,
+.bootstrap-duallistbox-container .box2.filtered .clear2 {
+  display: inline-block;
+}
+
+.bootstrap-duallistbox-container .move,
+.bootstrap-duallistbox-container .remove {
+  width: 31%;
+}
+
+.bootstrap-duallistbox-container .btn-group .btn {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+.bootstrap-duallistbox-container select {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+.bootstrap-duallistbox-container .moveall,
+.bootstrap-duallistbox-container .removeall {
+  width: 31%;
+}
+
+.bootstrap-duallistbox-container.bs2compatible .btn-group > .btn + .btn {
+  margin-left: 0;
+}
+
+.bootstrap-duallistbox-container select {
+  width: 100%;
+  height: 300px;
+  padding: 0;
+}
+
+.bootstrap-duallistbox-container .filter {
+     display: inline-block;
+    width: 50%;
+    height: 31px;
+    margin: 32px -75px -63px 0;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.bootstrap-duallistbox-container .filter.placeholder {
+  color: #aaa;
+}
+
+.bootstrap-duallistbox-container.moveonselect .move,
+.bootstrap-duallistbox-container.moveonselect .remove {
+  display:none;
+}
+
+.bootstrap-duallistbox-container.moveonselect .moveall,
+.bootstrap-duallistbox-container.moveonselect .removeall {
+  width: 100%;
+}
+.gg{
+     position: relative;
+    top: -3px;
+    display: inline-block;
+    font-family: 'Glyphicons Halflings';
+    -webkit-font-smoothing: antialiased;
+    font-style: normal;
+    font-weight: normal;
+    line-height: 1;
+}

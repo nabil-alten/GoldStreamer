@@ -1,0 +1,30 @@
+﻿@using Microsoft.AspNet.Identity
+@using GoldStreamer.Helpers
+
+@{
+    string baseUrl = CultureHelper.GetBaseURL().ToLower();
+}
+
+
+
+@if (Request.IsAuthenticated)
+{
+    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+    {  @Html.AntiForgeryToken()
+    <div class="left"><a href="javascript:document.getElementById('logoutForm').submit()">@Resources.General.Logout</a> </div>
+
+    }
+    <div class="sep left">|</div>
+    <div class="left">  <a href="~/EditProfile">@Resources.General.Hello @User.Identity.GetUserName()</a> </div>
+}
+else
+{
+    <div class="left"> <img src="~/Content/images/lock.png" width="14" height="19" /> <a href="~/Account/Login" >@Resources.General.Login</a> </div>
+    <div class="sep left">|</div>
+    <div class="left"> <img src="~/Content/images/profile.png" /> <a href="@baseUrl/Account/Register">@Resources.General.Register</a> </div>
+}
+
+
+
+
+

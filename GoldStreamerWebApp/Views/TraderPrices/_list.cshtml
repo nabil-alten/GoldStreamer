@@ -1,0 +1,48 @@
+﻿@model PagedList.IPagedList<BLL.DomainClasses.TraderPrices>
+
+@using PagedList.Mvc;
+
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+
+@using (Html.BeginForm("_list", "TraderPrices", FormMethod.Post))
+{
+
+
+    <table style="width:100%; text-align:center;" class="data_table">
+        <tr>
+            <th scope="col">@Html.Label(@Resources.General.SellPrice)</th>
+            <th scope="col">@Html.Label(@Resources.General.BuyPrice)</th>
+            <th scope="col">@Html.Label(@Resources.General.PriceDate)</th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+           
+            <tr class="clr_tr">
+                <td>
+                    @String.Format("{0:0,0.00}", item.SellPrice)
+                </td>
+                <td>
+                    @String.Format("{0:0,0.00}", item.BuyPrice)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.priceDate)
+                </td>
+
+            </tr>
+
+        }
+        <tr>
+            <td>
+                @if (Model.PageCount > 1)
+                {
+                    <span>@Resources.General.Page</span> @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)    <span> @Resources.General.From </span>@Model.PageCount
+
+                    @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+                }
+            </td>
+        </tr>
+
+    </table>
+
+}

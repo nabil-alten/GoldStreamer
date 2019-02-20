@@ -1,0 +1,11 @@
+﻿
+
+@{
+    ViewBag.Title = "Warning";
+    Layout = "~/Views/Shared/_LayoutInner.cshtml";
+}
+
+@*<h1 class="text-danger">Error.</h1>*@
+<h2 class="text-danger">@(ViewBag.Message == null ? Resources.Messages.GeneralError : ViewBag.Message)</h2>
+@ViewBag.Message
+

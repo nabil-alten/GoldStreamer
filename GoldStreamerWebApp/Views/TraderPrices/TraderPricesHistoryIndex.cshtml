@@ -1,0 +1,43 @@
+﻿@using BLL.DomainClasses
+@using Resources
+@model PagedList.IPagedList<BasketPrices>
+@{
+    ViewBag.Title = Resources.General.TraderPriceHistory;
+    Layout = "~/Views/Shared/_LayoutInner.cshtml";
+
+}
+<h1 style="margin-bottom:20px;">@Resources.General.TraderPriceHistory</h1>
+
+@*@Html.ActionLink(@Resources.General.Basket, "Index", "Basket", null, new { title = @Resources.General.BasketPrices })*@
+<div id="divList" style ="width:100% ;">
+    @Html.Action("_TraderPricesHistory")
+</div> 
+
+@section UpperBanner{
+    <div class="innerBanner">
+        <h1 class="banner_header">@Resources.General.TraderPriceHistory</h1>
+
+        <div class="banner"><img src="../../Content/Images/inner_banner.jpg" width="1050" height="180" alt="" /></div>
+
+    </div>
+}
+
+@if (GoldStreamer.Helpers.UserNavigation.IsSuperTrader())
+{
+    @section SideMenu{
+        @Html.Partial("_SuperTraderMenu")
+    }
+}
+else if (GoldStreamer.Helpers.UserNavigation.IsTrader())
+{
+    @section SideMenu{
+        @Html.Partial("_TraderSideMenu")
+    }
+}
+
+
+<script>
+    $(function () {
+        $("#div_PricesOffers").addClass("menuItemactive");
+    });
+</script>

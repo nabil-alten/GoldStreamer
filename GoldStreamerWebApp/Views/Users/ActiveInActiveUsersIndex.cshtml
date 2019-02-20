@@ -1,0 +1,39 @@
+﻿
+@{
+    ViewBag.Title = Resources.General.Users;
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+
+}
+@section SideMenu{
+    @Html.Partial("_AdminSideMenu")
+}
+<script>
+    $(function () {
+        $("#div_ai").addClass("menuItemactive");
+    });
+</script>
+@section UpperBanner{
+
+
+    <div class="innerBanner">
+        <div class="banner">
+            <h1 class="banner_header">@Resources.General.Users</h1>
+
+            <img src="../../Content/Images/inner_banner.jpg" width="1050" height="180" alt="" />
+        </div>
+    </div>
+}
+
+
+
+
+    <div class="bank">
+        @*<h2><i class="fa fa-bank"></i> @Resources.General.Bank</h2>*@
+       
+        <div id="divList">
+            @{Html.RenderPartial("_ActiveInActiveList");}
+        </div>
+    </div>
+
+
+ 

@@ -1,0 +1,52 @@
+﻿@model IEnumerable<BLL.DomainClasses.Basket>
+
+@{
+    Layout = "~/Views/Shared/_LayoutInner.cshtml";
+
+    ViewBag.Title = @Resources.General.Basket + (Session["traderName"] != null ? " - " + Session["traderName"].ToString() : "");
+}
+<div style="width:100%; min-height: 600px; overflow:auto;">
+
+    
+
+       
+        @{Html.RenderPartial("_Add", new BLL.DomainClasses.Basket());}
+
+        <br />
+        <div class="headerTitle">
+            <h1 style="color:#fff;">@Resources.General.Baskets</h1>
+        </div>
+        <br />
+
+        <div id="divList" style="width:100%">
+            @Html.Action("_list")
+        </div>
+
+
+    </div>
+@if (GoldStreamer.Helpers.UserNavigation.IsSuperTrader())
+{
+    @section SideMenu{
+        @Html.Partial("_SuperTraderMenu")
+    }
+}
+else if (GoldStreamer.Helpers.UserNavigation.IsTrader())
+{
+    @section SideMenu{
+        @Html.Partial("_TraderSideMenu")
+    }
+}
+@section UpperBanner{
+
+
+    <div class="innerBanner">
+        <h1 class="banner_header">@Resources.General.Baskets</h1>
+
+        <div class="banner"><img src="../../Content/Images/inner_banner.jpg" width="1050" height="180" alt="" /></div>
+    </div>
+}
+<script>
+    $(function () {
+        $("#div_basket").addClass("menuItemactive");
+    });
+</script>

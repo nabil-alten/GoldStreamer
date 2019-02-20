@@ -1,0 +1,288 @@
+﻿@using System.Configuration
+@using GoldStreamer.Helpers
+@using Resources
+@model BLL.DomainClasses.News
+
+@{
+    string baseUrl = CultureHelper.GetBaseURL().ToLower();
+    ViewBag.Title = Resources.General.AddNews;
+    int maxOrder = Convert.ToInt32(ConfigurationManager.AppSettings["NewsOrder"].ToString());
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+
+
+}
+@section SideMenu{
+    @Html.Partial("_AdminSideMenu")
+}
+<script>
+    $(function () {
+        $("#div_nm").addClass("menuItemactive");
+    });
+</script>
+@section UpperBanner{
+
+
+    <div class="innerBanner">
+        <div class="banner">
+            <h1 class="banner_header">@Resources.General.AddNews</h1>
+
+            <img src="../../Content/Images/inner_banner.jpg" width="1050" height="180" alt="" />
+        </div>
+    </div>
+}
+ @*new date time picker*@
+<script src="~/Scripts/GoldStreamer/jquery.datetimepicker.js"></script>
+<link href="~/Content/css/jquery.datetimepicker.css" rel="stylesheet" />
+
+<script type="text/javascript">
+
+
+
+    function fileCheck(file) {
+        debugger;
+
+        var _validFileExtensions = [".jpg", ".jpeg", ".bmp", ".gif", ".png"];
+        var sFileName = file.value;
+        if (sFileName == "")
+            return false;
+        var blnValid = false;
+        for (var j = 0; j < _validFileExtensions.length; j++) {
+            var sCurExtension = _validFileExtensions[j];
+            if (sFileName.substr(sFileName.length - sCurExtension.length, sCurExtension.length).toLowerCase() == sCurExtension.toLowerCase()) {
+                blnValid = true;
+                break;
+            }
+        }
+
+        if (!blnValid) {
+            alert("Sorry, " + sFileName + " is invalid, allowed extensions are: " + _validFileExtensions.join(", "));
+            return false;
+        }
+        return true;
+        $.ajax({
+
+            cache: false,
+            type: "GET",
+            url: '@(baseUrl)/' + '/NewsCategory/CheckPhoto/',
+            data: { "mainCategory": selectedItem },
+            success: function (data) {
+
+                debugger;
+                $.each(data.newscategory, function (id, option) {
+                    debugger;
+                    ddlCategory.append($('<option></option>').val(option.Id).html(option.CategoryName));
+                });
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                alert('Failed to retrieve states.');
+            }
+        });
+    }
+</script>
+@*<script type="text/javascript">
+    $(function () {
+        $('#Order').change(function () {
+            var order = $(this).val();
+            if(order>maxOrder)
+                {alert('Cant do')}
+        });
+    });
+</script>*@
+
+
+@using (Html.BeginForm("add", "News", FormMethod.Post, new { enctype = "multipart/form-data", id = "form" }))
+{
+    @Html.AntiForgeryToken()
+    <div id="errors">@ViewBag.ErrorMessage</div>
+
+        @Html.ValidationSummary(true)
+
+
+        <table style="width:100%;text-align:right;">
+            <tr>
+                <td><b>@General.NewsTitle:</b></td>
+                <td>@Html.TextBoxFor(model => model.Title, new { maxlength = 50, placeholder = General.NewsTitle, autofocus = true })
+
+</td>
+               </tr> 
+            <tr>
+                <td></td>
+                <td class="message-label">@Html.ValidationMessageFor(model => model.Title)</td>
+            </tr>
+              <tr>
+
+                <td><b>@General.NewsSummary</b></td>
+                <td>@Html.TextBoxFor(model => model.Summary, new { maxlength = 100, placeholder = General.NewsSummary })
+</td>
+            </tr>
+
+            <tr>
+                <td><b>@General.Upload</b></td>
+                <td><input type="file" name="File1" id="File1" onchange="fileCheck(this)" /></td>
+
+                </tr>
+            <tr>
+
+                <td><b>@General.NewsDate:</b></td>
+                <td>@Html.TextBoxFor(n => n.Date, new { type = "text", placeholder = General.NewsDate })
+</td>
+            </tr>
+
+            <tr>
+                <td></td>
+                <td class="message-label">@Html.ValidationMessageFor(model => model.Date)</td>
+            </tr>
+
+            <tr>
+                <td><b>@General.NewsMainCategory:</b></td>
+                <td>@Html.DropDownList("MainCategory", (SelectList)ViewBag.newsMainCategories, General.select)
+
+</td>
+                </tr>
+
+            <tr>
+                <td></td>
+                <td class="message-label">@Html.ValidationMessageFor(model => model.CategoryId)</td>
+            </tr>
+                <tr>
+
+                <td><b>@General.NewsCategory:</b></td>
+                <td>@Html.DropDownList("CategoryId", Enumerable.Empty<SelectListItem>(), General.select)
+
+</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td class="message-label">@Html.ValidationMessageFor(model => model.CategoryId)</td>
+            </tr>
+            <tr>
+                <td><b>@General.ActiveState:</b></td>
+                <td>@Html.CheckBoxFor(model => model.IsActive, new { @checked = "checked" })
+</td>
+
+               </tr>
+            <tr>
+
+                <td><b>@General.IsLatest:</b></td>
+                <td>@Html.CheckBoxFor(model => model.IsLatest, new { @checked = "checked" })
+</td>
+            </tr>
+
+            <tr>
+                <td><b>@General.NewsDetails:</b></td>
+                <td>@Html.TextAreaFor(model => model.Body, new { cols = "70", rows = "10", placeholder = General.NewsDetails })
+
+</td>
+                </tr>
+
+            <tr>
+                <td></td>
+                <td class="message-label">@Html.ValidationMessageFor(model => model.Body)</td>
+            </tr>
+                <tr>
+
+                <td><b>@General.NewsSource:</b></td>
+                <td>@Html.TextBoxFor(model => model.SourceName, new { placeholder = General.NewsSource })
+
+</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td class="message-label">@Html.ValidationMessageFor(model => model.SourceName)</td>
+            </tr>
+            <tr>
+                <td><b>@General.NewsSourceURL:</b></td>
+                <td>@Html.TextBoxFor(model => model.SourceUrl, new { placeholder = General.NewsSourceURL })
+
+</td>
+
+               </tr>
+
+            <tr>
+                <td></td>
+                <td class="message-label">@Html.ValidationMessageFor(model => model.SourceUrl)</td>
+            </tr>
+            <tr>
+
+                <td><b>@General.NewsOrder:</b></td>
+                <td class="message-label">
+                    @Html.TextBoxFor(model => model.Order, new { placeholder = General.NewsOrder})
+          
+            </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td class="message-label">@Html.ValidationMessageFor(model => model.Order)</td>
+            </tr>
+            <tr>
+                <td>
+
+                </td>
+                <td style="text-align:right;">
+                    <input type="submit" id="btnReceive" value="@General.Save" class="btn" />
+
+                </td>
+            </tr>
+        </table>
+
+
+}
+@{ Html.RenderPartial("AlertPartialView"); }
+
+@*<div>
+    @Html.ActionLink(General.NewsList, "ListIndex")
+</div>*@
+
+<script>
+    $(function () {
+
+        $("#MainCategory").change(function () {
+            debugger;
+            var selectedItem = $(this).val();
+            var ddlCategory = $("#CategoryId");
+            //var statesProgress = $("#states-loading-progress");
+            //statesProgress.show();
+            ddlCategory.html('');
+            if (selectedItem == "")
+                return false;
+            $.ajax({
+                cache: false,
+                type: "GET",
+                url: '@(baseUrl)/' + '/NewsCategory/GetCategory/',
+                data: { "mainCategory": selectedItem },
+                success: function (data) {
+
+                    $.each(data.newscategory, function (id, option) {
+                        ddlCategory.append($('<option></option>').val(option.Id).html(option.CategoryName));
+                    });
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    alert('Failed to retrieve states.');
+                }
+            });
+        });
+
+
+    });
+</script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        //$("#Date").datepicker({ Format: 'dd/MM/yyyy', maxDate: "+0D" });
+        $('#Date').datetimepicker({
+            dayOfWeekStart: 1,
+            lang: 'ar',
+            step: 15,
+            maxDate: "+0D"
+        });
+
+
+        $('#IsLatest').click(function () {
+            $("#Order").val(1);
+            $("#orders").toggle(this.checked);
+
+        });
+
+    });
+</script>

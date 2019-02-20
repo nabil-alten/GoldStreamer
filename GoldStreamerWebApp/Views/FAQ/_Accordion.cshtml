@@ -1,0 +1,66 @@
+﻿@{
+    var firstRow = true;
+}
+
+
+
+
+
+<h1>اسئلة شائعة</h1>
+<p>
+    نظمت عمادة خدمة المجتمع والتعليم المستمر بجامعة الأميرة نورة بنت عبدالرحمن برنامجا تدريبيا بعنوان (ممارسة الخدمة الاجتماعية في مجالات العمل الاجتماعي) انطلاقا من مبدأ التعاون بين الجامعات ومؤسسات المجتمع و ضمن خطة العمادة في تدريب وتأهيل كافة شرائح المجتمع؛ حيث استهدف البرنامج موظفات وزارة...
+    <br /><br />
+</p>
+
+<iframe style="margin:auto; width:560px; display:block;" width="560" height="315" src="https://www.youtube.com/embed/IU5a0nrW4k8" frameborder="0" allowfullscreen></iframe>
+<br /> <br />
+
+
+<div class="acc-container">
+    @foreach (var item in Model.QuestionsList)
+{
+    var containerCss = "";
+    var headingCss = "";
+    if (firstRow == true)
+    {
+        containerCss = "acc-content open";
+        headingCss = "acchead selected";
+        firstRow = false;
+    }
+    else
+    {
+        containerCss = "acc-content";
+        headingCss = "acchead";
+    }
+
+    <div class="acc-btn @headingCss">
+        <h1 class="acchead" style="width: 60%; float: right;">@item.QuestionText</h1>
+        @if (item.VideoLink != "")
+        {
+            <div style="float: left; width: 50px; height: 36px; padding-top: 7px;">
+                <img width="35" src="~/Content/Images/video_icon.png" />
+            </div>
+        }
+    </div>      
+    <div class="@containerCss">
+        <div class="acc-content-inner">
+            @if (item.VideoLink != "")
+            {
+                <p style="width:50%; float:right; margin:0px">@item.Answer</p>
+
+                <iframe style="display: block; margin-right:30px;float:right" width="350" height="215" src="@item.VideoLink" frameborder="0" allowfullscreen></iframe>
+                 <div class="clr"></div>
+            }
+            else
+            {
+                <p style="width:100%; float:right;">@item.Answer</p>
+                <div class="clr"></div>
+            }
+        </div>
+    </div>
+    }
+</div>
+
+<h1>اترك سؤالك </h1>
+<div class="clr"></div>
+<div style="padding: 20px; background: rgb(248, 248, 248); overflow:hidden;">@Html.Action("UserQuestion", "Question")</div>

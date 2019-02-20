@@ -1,0 +1,135 @@
+﻿@using GoldStreamer.Helpers
+@model IEnumerable<BLL.DomainClasses.Basket>
+@{
+    string baseUrl = CultureHelper.GetBaseURL().ToLower();
+    string trClass = "";
+}
+<table style="width:100%; text-align:right;" class="data_table">
+    <tr>
+        <th width="27.5%" scope="col">
+            @*@Resources.General.Basket*@
+            @Html.ActionLink(@Resources.General.Basket, "Index", new { @style = "color:#304D5D ", sortOrder = ViewBag.nameSorting })
+        </th>
+        <th width="15%" scope="col">
+            @*@Resources.General.BuyPrice*@
+            @Html.ActionLink(@Resources.General.BuyPrice, "Index", new { sortOrder = ViewBag.buyPriceSorting ,  })
+        </th>
+        <th width="15%">
+            @*@Resources.General.SellPrice*@
+            @Html.ActionLink(@Resources.General.SellPrice, "Index", new { sortOrder = ViewBag.sellPriceSorting })
+        </th>
+        <th width="15%">
+            @*@Resources.General.PriceDate*@
+            @Html.ActionLink(@Resources.General.PriceDate, "Index", new { sortOrder = ViewBag.timeSorting })
+        </th>
+        <th width="27.5%">@Resources.General.Procedures</th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr class="@trClass">
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @if (item.BasketPrices[0].BuyPrice != 0)
+                {
+                    @String.Format("{0:0,0.00}", item.BasketPrices[0].BuyPrice)
+                    @*@Html.DisplayFor(modelItem => item.BasketPrices[0].BuyPrice)*@
+                }
+                else
+                {
+                    @Html.Label("---")
+                }
+            </td>
+            <td>
+                @if (item.BasketPrices[0].SellPrice != 0)
+                {
+                    @String.Format("{0:0,0.00}", item.BasketPrices[0].SellPrice)
+                    @*@Html.DisplayFor(modelItem => item.BasketPrices[0].SellPrice)*@
+                }
+                else
+                {
+                    @Html.Label("---")
+                }
+            </td>
+            <td>
+                @if (item.BasketPrices[0].SellPrice != 0)
+                {
+                    @Html.DisplayFor(modelItem => item.BasketPrices[0].PriceDate)
+                }
+                else
+                {
+                    @Html.Label("---")
+                }
+            </td>
+            <td>
+                
+                @*@Html.ActionLink(@Resources.General.Edit, "BasketAssignedTraders", new { id = @item.ID, owner = @item.BasketOwner })|*@
+                
+
+                <a href="javascript:DeleteBasket(@item.ID);" title="@Resources.General.Delete"><img src="~/Content/Images/del.png" width="30" /></a>
+                <a href="@Url.Action("BasketAssignedTraders", "Basket", new { id = @item.ID, owner = @item.BasketOwner })" title="@Resources.General.Edit"><img src="~/Content/Images/edit_1.png" width="30" /></a>
+                <a href="@Url.Action("UpdatePrice", "Basket", new { id = @item.ID })" title="@Resources.General.updatePrice">
+                <img src="~/Content/Images/Refresh.png" width="27" /></a>
+
+</td>
+        </tr>
+                if (trClass == "clr_tr")
+                {
+                    trClass = "";
+                }
+                else
+                {
+                    trClass = "clr_tr";
+                }
+    }
+    
+
+</table>
+<script>
+    function DeleteBasket(id) {
+        var r = confirm("@Resources.Messages.SureDelete");
+
+        if (r === true) {
+            $.ajax({
+
+                url: "@(baseUrl)/Basket/Delete/" + id,
+
+                type: 'Post',
+
+                contentType: "application/json; charset=utf-8",
+
+                success: function (data) {
+
+                    toastr.success('@Resources.Messages.Deleted');
+
+                    $('#divList').html(data);
+
+                },
+
+                error: function () {
+
+                    toastr.error('@Resources.Messages.UnableToDelete');
+
+                }
+
+            });
+
+        }
+    }
+
+    @*function AssignUserBasket(id) {
+
+                $.ajax({
+
+                    url: "@(baseUrl)/Basket/BasketAssignedTraders/" + id,
+
+                    type: 'Post',
+
+                    contentType: "application/json; charset=utf-8",
+
+
+                });
+        }*@
+</script>

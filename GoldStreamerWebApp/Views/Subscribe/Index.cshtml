@@ -1,0 +1,92 @@
+﻿@model BLL.DomainClasses.Subscribe
+@using GoldStreamer.Helpers
+@{
+    string baseUrl = CultureHelper.GetBaseURL().ToLower();
+    string culture = CultureHelper.GetCurrentCulture().ToLower();
+    string primaryCulture = CultureHelper.GetPrimaryCulture().ToLower();
+
+    
+
+}
+<form  id="form" method="POST">
+ 
+    <table class="msgBoxTable" border="0" cellpadding="10">
+        <tr>
+            
+            <td>
+                @Html.TextBoxFor(model => model.Name, new { @class="txtBox", @type = "text" , maxLength = "50", @placeHolder = @Resources.General.Name })
+                <br />   @Html.ValidationMessageFor(model => model.Name, null, new {@type = "text", @style = "color:red" })
+            </td>
+        </tr>
+        <tr>
+           
+            <td>
+                @Html.TextBoxFor(model => model.Email, new { @class = "txtBox", @placeHolder = @Resources.General.Email })
+               <br /> @Html.ValidationMessageFor(model => model.Email, null, new { @style = "color:red" })
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <input type="button" id="btnSave" class="btn btn-primary" value='@Resources.General.subscribebtn' />
+            </td>
+        </tr>
+    </table>
+
+
+    @*</div>*@
+ </form>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+        $('#btnSave').click(function (e) {
+            debugger;
+            try {
+                e.preventDefault();
+
+                var Name = document.getElementById('Name').value;
+                var Email = document.getElementById('Email').value;
+             
+                if ($("#form").valid()) {
+                    $.ajax({
+                        url: "@(baseUrl)/Subscribe/_Add/",
+                        type: "Post",
+                        async: false,
+                        cache: false,
+                        contentType: "application/json; charset=utf-8",
+                        data: JSON.stringify({ 'Name': Name, 'Email': Email }),
+                        success: function (data, statusText, xhr) {
+                            debugger;
+
+                            if (data.StatusCode == 200 || data.StatusCode == null) {
+
+                                alert(data.StatusDescription);
+                                clearFrom();
+                            }
+                            else {
+                                alert(data.StatusDescription);
+                            }
+
+
+                        },
+                        error: function (data, statusText, xhr) {
+                            debugger;
+                           alert(data.StatusDescription);
+                        }
+                    });
+                }
+
+            }
+            catch (err) { }
+            return false;
+        });
+        });
+        function clearFrom() {
+            try {
+                document.getElementById('Name').value = "";
+                document.getElementById('Email').value = "";
+               
+            }
+            catch (err) { }
+        }
+    </script>
+@Scripts.Render("~/bundles/jqueryval")

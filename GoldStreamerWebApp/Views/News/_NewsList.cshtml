@@ -1,0 +1,113 @@
+﻿@using System.Configuration
+@using GoldStreamer.Helpers
+@{
+    string baseUrl = CultureHelper.GetBaseURL().ToLower();
+    int pageSize = Convert.ToInt32(ConfigurationManager.AppSettings["NewsPaging"]);
+}
+<div class="headerTitle">
+    <h1 id="CategoryLabel" style="color:#fff;">@ViewBag.subCategoryName</h1>
+</div>
+
+
+@foreach (var item in Model)
+{
+    <div class="news_container">
+
+        <div class="news_panal">
+            <a href="@(baseUrl)News/Details?newsId=@item.Id">
+    <div class="news_img">
+        <img src='~/Uploads/News/@(item.Photo ?? "camera.png")' id="imgNews" class="news_img" />
+    </div>
+    <div class="news_data">
+        <p>
+            <strong>@item.Title </strong> <br />
+
+            @item.Summary...
+            <span style="color: #0963BD;">
+                @*@Html.ActionLink(@Resources.General.ReadMore, "Details", new { newsId = item.Id })*@
+            </span>
+        </p>
+        @(item.Date.Date == DateTime.Now.Date ? (Resources.General.Since + (Convert.ToInt32((DateTime.Now - item.Date).Hours)>0?((DateTime.Now - item.Date).Hours + Resources.General.Hours):"" )+ " " + (DateTime.Now - item.Date).Minutes + Resources.General.Minutes) : item.Date)
+    </div>
+</a>
+        </div>
+        
+    </div>
+
+
+
+}
+
+<div style="text-align: center; margin-top: 20px;" id="paging">
+    <input type="button" value="@Resources.General.Next" id="next" class="btn" />
+    <input type="button" value="@Resources.General.Previous" id="pervious" class="btn" />
+</div>
+
+
+
+<script>
+    $(document).ready(function () {
+
+        $(window).load(function () {
+            var totalCnt = parseInt('@ViewBag.totalCount');
+            var pageNo = parseInt('@ViewBag.pageNo');
+            var PageSize = parseInt('@pageSize');
+            if (totalCnt <= PageSize)
+                $("#paging").hide();
+            if (pageNo == 0)
+                $("#pervious").hide();
+        });
+
+
+        $('#next').click(function (event) {
+            var id = event.target.id;
+
+            var pageNo = parseInt('@ViewBag.pageNo') + 1;
+            var totalCnt = parseInt('@ViewBag.totalCount');
+            var date = '@ViewBag.newsDate';
+            var url = '@(baseUrl)' + "/News/_NewsList" + "?subCategoryId=" + '@ViewBag.subCategoryId' + "&newsDate=" + date + "&indx=" + '@ViewBag.selected' + "&pageNo=" + pageNo;
+            $.ajax({
+                url: decodeURIComponent(url),
+                type: 'Get',
+                async: false,
+                cache: false,
+                //data: { 'SearchText': searchText, 'pageSize': pageSize,'sortOrder': sortOrder,'pageNumber':1 },
+                success: function (data) {
+                    debugger;
+                    var PageSize = parseInt('@pageSize');
+                    $('#divList').html(data);
+                    if (totalCnt <= (pageNo + 1) * PageSize) {
+                        debugger;
+                        $('#next').hide();
+}
+                },
+                error: function () {
+
+                }
+            });
+        });
+
+        $('#pervious').click(function (event) {
+            var id = event.target.id;
+
+            var pageNo = parseInt('@ViewBag.pageNo') - 1;
+
+            $.ajax({
+                url: '@(baseUrl)' + "/News/_NewsList" + "?subCategoryId=" + '@ViewBag.subCategoryId' + "&newsDate=" + '@ViewBag.newsDate' + "&indx=" + '@ViewBag.selected' + "&pageNo=" + pageNo,
+                type: 'Get',
+                async: false,
+                cache: false,
+                //data: { 'SearchText': searchText, 'pageSize': pageSize,'sortOrder': sortOrder,'pageNumber':1 },
+                success: function (data) {
+                    $('#divList').html(data);
+                    if (pageNo < 1)
+                        $('#pervious').hide();
+                },
+                error: function () {
+
+                }
+            });
+        });
+
+    });
+</script>

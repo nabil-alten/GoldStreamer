@@ -1,0 +1,365 @@
+﻿@*@model BLL.DomainClasses.Trader*@
+@using GoldStreamer.Helpers
+@model GoldStreamer.Models.ViewModels.TraderViewModel
+@{
+    ViewBag.Title = @Resources.General.STUpdate;
+    string baseUrl = CultureHelper.GetBaseUrlWithoutAreaAndCulture().ToLower();
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+
+}
+
+<script src="~/Scripts/PartialViewsJSHelper.js"></script>
+<script>
+    $(function () {
+        $("#div_st").addClass("menuItemactive");
+    });
+</script>
+@section SideMenu{
+    @Html.Partial("_AdminSideMenu")
+}
+@Scripts.Render("~/bundles/jqueryval")
+
+@section UpperBanner{
+
+
+    <div class="innerBanner">
+        <div class="banner">
+            <h1 class="banner_header">@Resources.General.STUpdate</h1>
+
+            <img src="@(baseUrl)/Content/Images/inner_banner.jpg" width="1050" height="180" alt="" />
+        </div>
+    </div>
+}
+
+
+
+
+@using (Html.BeginForm("Edit", "Trader", FormMethod.Post, new { id = "form" }))
+{
+    @Html.AntiForgeryToken()
+    
+    <table style="width:100%; text-align:right;">
+        <tr>
+            <td>@Resources.General.FirstName:</td>
+            <td>@Html.TextBoxFor(model => model.Name, new { maxlength = 50, placeholder = @Resources.General.FirstName })
+
+</td>
+            <td></td>
+            <td>@Resources.General.LastName:
+</td>
+            <td>@Html.TextBoxFor(model => model.Family, new { maxlength = 50, placeholder = @Resources.General.LastName })
+
+</td>
+        </tr>
+
+
+        <tr>
+            <td></td>
+            <td class="message-label">@Html.ValidationMessageFor(model => model.Name)</td>
+            <td></td>
+            <td></td>
+            <td class="message-label">@Html.ValidationMessageFor(model => model.Family)</td>
+        </tr>
+        <tr>
+            <td>
+                @Resources.General.Gender:
+            </td>
+            <td>@Html.RadioButtonFor(model => model.Gender, "true", new { id = "rbMale" })
+@Html.Label(@Resources.General.Male)
+@Html.RadioButtonFor(model => model.Gender, "false")
+@Html.Label(@Resources.General.Female)
+            </td>
+            
+            <td>
+</td>
+            <td>@Resources.General.phone:</td>
+            <td>@Html.TextBoxFor(model => model.Phone, new { maxlength = 11, placeholder = @Resources.General.phone })</td>
+
+        </tr>
+
+
+        <tr>
+            <td></td>
+            <td class="message-label">@Html.ValidationMessageFor(model => model.Gender)</td>
+            <td></td>
+            <td></td>
+            <td class="message-label">@Html.ValidationMessageFor(model => model.Phone)</td>
+        </tr>
+
+        <tr>
+            <td>@Resources.General.Mobile:</td>
+            <td>@Html.TextBoxFor(model => model.Mobile, new { maxlength = 15, placeholder = @Resources.General.Mobile })
+</td>
+
+            <td></td>
+
+            <td>@Resources.General.Email:</td>
+            <td>@Html.TextBoxFor(model => model.Email, new { placeholder = @Resources.General.Email })
+</td>
+        </tr>
+
+    
+        <tr>
+            <td></td>
+            <td class="message-label">@Html.ValidationMessageFor(model => model.Mobile)</td>
+            <td></td>
+            <td></td>
+            <td class="message-label">@Html.ValidationMessageFor(model => model.Email)</td>
+        </tr>
+
+        <tr>
+            <td>@Resources.General.ReEmail:
+</td>
+            <td>@Html.TextBoxFor(model => model.ReEmail, new { placeholder = @Resources.General.ReEmail })
+</td>
+
+            <td></td>
+
+            <td>@Resources.General.StoreName:</td>
+            <td>@Html.TextBoxFor(model => model.ShopName, new { placeholder = @Resources.General.StoreName })
+</td>
+        </tr>
+
+    
+    
+     <tr>
+            <td></td>
+            <td class="message-label">@Html.ValidationMessageFor(model => model.ReEmail)</td>
+            <td></td>
+            <td></td>
+            <td class="message-label">@Html.ValidationMessageFor(model => model.ShopName)</td>
+        </tr>
+        <tr>
+            <td>@Resources.General.Governorate:</td>
+            <td>@Html.DropDownList("Governorate", (SelectList)ViewBag.govs, @Resources.General.select)</td>
+            <td></td>
+            <td>@Resources.General.City:
+</td>
+            <td>@if (Model.Governorate > 0)
+{
+    @Html.DropDownList("City", @Resources.General.select)
+}
+else
+{
+    @Html.DropDownList("City", Enumerable.Empty<SelectListItem>(), @Resources.General.select)
+}</td>
+        </tr>
+
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+
+        <tr>
+            <td>@Resources.General.Region:
+</td>
+            <td>@if (Model.Governorate > 0 && Model.City > 0)
+{
+    @Html.DropDownList("District", @Resources.General.select)
+}
+else
+{
+    @Html.DropDownListFor(model => model.District, Enumerable.Empty<SelectListItem>(), @Resources.General.select)
+}</td>
+
+            <td></td>
+
+            <td>@Resources.General.STraderOrder
+:</td>
+            <td>@Html.TextBoxFor(model => model.SortOrder, new { placeholder = @Resources.General.STraderOrder })
+
+</td>
+        </tr>
+
+    
+      <tr>
+            <td></td>
+            <td class="message-label"></td>
+            <td></td>
+            <td></td>
+            <td class="message-label">@Html.ValidationMessageFor(model => model.SortOrder)</td>
+        </tr>
+        <tr>
+            <td>@Resources.General.Active
+</td>
+            <td>@Html.CheckBoxFor(model => model.IsActive, new { @checked = "checked" })
+@Html.Label(@Resources.General.ActiveState)
+</td>
+            <td></td>
+            <td></td>
+            <td></td>
+       </tr>
+    
+    
+      <tr>
+            <td></td>
+            <td class="message-label">@Html.ValidationMessageFor(model => model.IsActive)</td>
+            <td></td>
+            <td></td>
+            <td class="message-label"></td>
+        </tr>
+       
+        <tr>
+            <td style="text-align: center;" colspan="5"> <input type="submit" value="@Resources.General.Save" id="update" class="btn" />
+</td>
+        </tr>
+    </table>
+    
+}
+
+
+
+<script>
+    //var placeholder = 'placeholder' in document.createElement('input');
+    //if (!placeholder) {
+    //    $.getScript("../Scripts/jquery.placeholder.js", function () {
+    //        $(":input").each(function () {   // this will work for all input fields
+    //            $(this).placeHolder();
+    //        });
+    //    });
+    //}
+</script>
+
+
+<script>
+
+    $(function () {
+        //$(":input").each(function () {   // this will work for all input fields
+        //               $(this).placeHolder();
+        //            });
+        
+        $("#Governorate").change(function () {
+            var selectedItem = $(this).val();
+            var ddlCity = $("#City");
+            ddlCity.html('');
+            $("#District").html('');
+            if (selectedItem == "")
+                return false;
+            var statesProgress = $("#states-loading-progress");
+            statesProgress.show();
+            $.ajax({
+                cache: false,
+                type: "GET",
+                url: '@(baseUrl)/' + '/Trader/GetCity/',
+                data: { "govId": selectedItem },
+                success: function (data) {
+
+                    ddlCity.html('');
+                    $("#District").html('');
+                    $.each(data.city, function (id, option) {
+                        ddlCity.append($('<option></option>').val(option.ID).html(option.Name));
+                    });
+                    statesProgress.hide();
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    alert('Failed to retrieve states.');
+                    statesProgress.hide();
+                }
+            });
+        });
+
+        $("#City").change(function () {
+            var selectedItem = $(this).val();
+            var ddlDistrict = $("#District");
+            var statesProgress = $("#states-loading-progress");
+            statesProgress.show();
+            $.ajax({
+                cache: false,
+                type: "GET",
+                url: '@(baseUrl)/' + '/Trader/GetRegion/',
+                data: { "cityId": selectedItem },
+                success: function (data) {
+
+                    ddlDistrict.html('');
+                    $.each(data.district, function (id, option) {
+                        ddlDistrict.append($('<option></option>').val(option.ID).html(option.Name));
+                    });
+                    statesProgress.hide();
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    alert('Failed to retrieve states.');
+                    statesProgress.hide();
+                }
+            });
+        });
+    });
+    //--------------------------------
+    $('#update').click(function (e) {
+        e.preventDefault(); // <------------------ stop default behaviour of button
+        if (!$("#form").valid()) return false;
+        //Name Family rbMale Phone Mobile Email ShopName Governorate City District SortOrder IsActive
+        var id = document.getElementById('ID').value;
+        var name = document.getElementById('Name').value;
+        var family = document.getElementById('Family').value;
+        var rbMale = document.getElementById('rbMale').checked;
+        var phone = document.getElementById('Phone').value;
+        var mobile = document.getElementById('Mobile').value;
+        var email = document.getElementById('Email').value;
+        var shopName = document.getElementById('ShopName').value;
+
+        var governorate = $('#Governorate').val() == '0' ? null : $('#Governorate').val(); //document.getElementById('Governorate').value;
+        var city = $('#City').val() == '0' ? null : $('#City').val(); //document.getElementById('City').value;
+        var district = $('#District').val() == '0' ? null : $('#District').val(); //document.getElementById('District').value;
+        var sortOrder = document.getElementById('SortOrder').value;
+        var isActive = document.getElementById('IsActive').checked;
+        $.ajax({
+            url: '@(baseUrl)/Trader/Edit/',
+            type: "POST",
+            data: JSON.stringify({
+                'ID': id,
+                'Name': name,
+                'Family': family,
+                'Gender': rbMale == true ? true : false,
+                "Phone": phone,
+                "Mobile": mobile,
+                "Email": email,
+                "ShopName": shopName,
+                "Governorate": governorate,
+                "City": city,
+                "District": district,
+                "SortOrder": sortOrder,
+                "IsActive": isActive,
+                "TypeFlag": 1,
+                "ReEmail": email
+            }),
+            cache: false,
+            contentType: "application/json; charset=utf-8",
+
+            success: function (data, xhr, textStatus) {
+                toastr.success('@Resources.Messages.Saved');
+                @*$.ajax({
+                    cache: false,
+                    type: "GET",
+                    url: '@(baseUrl)/' + '/Trader/Index/',
+                    success: function (data) {
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        alert('Failed to retrieve states.');
+                    }
+                });*@
+            },
+            error: function (data, xhr, textStatus) {
+                if (data.status === 1)
+                    toastr.error('@Resources.Messages.EmailExists');
+                else if (data.status === 2)
+                    toastr.error('@Resources.Messages.OrderExists');
+                else if (data.status === 3)
+                    toastr.error('@Resources.Messages.TraderNameExists');
+                else if (data.status === 4)
+                    toastr.error('@Resources.Messages.TraderMobileExists');
+                else if (data.status === 5)
+                    toastr.error('@Resources.Messages.TraderShopExists');
+                else if (data.status === 6)
+                    toastr.error('@Resources.Messages.TraderPhoneExists');
+                else
+                    toastr.error(textStatus);
+            }
+        });
+        //return false;
+    }
+
+  );
+</script>

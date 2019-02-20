@@ -1,0 +1,283 @@
+﻿@model PagedList.IPagedList<BLL.DomainClasses.TraderPrices>
+
+@using GoldStreamer.Helpers
+@using PagedList.Mvc;
+
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+@Scripts.Render("~/bundles/jqwidgetscss")
+@Scripts.Render("~/bundles/jqwidgets")
+<script type="text/javascript" src="~/Scripts/jqwidgets/globalization/globalize.js"></script>
+<script type="text/javascript" src="~/scripts/jqwidgets/jqxbuttons.js"></script>
+<link rel="stylesheet" href="~/scripts/jqwidgets/styles/jqx.base.css" type="text/css" />
+
+@{
+    string baseUrl = CultureHelper.GetBaseURL().ToLower();
+    string culture = CultureHelper.GetCurrentCulture().ToLower();
+    string trClass = "clr_tr";
+}
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        if ('@culture' == 'en-us') {
+            $.getScript('../Scripts/jqwidgets/globalization/globalize.culture.en-US.js', function () {
+                $("#jqOpenDate").jqxDateTimeInput({ culture: 'en-US' });
+
+
+            });
+        } else if ('@culture' == 'ar-eg') {
+            $.getScript('../Scripts/jqwidgets/globalization/globalize.culture.ar-EG.js', function () {
+                $("#jqOpenDate").jqxDateTimeInput({ culture: 'ar-EG' });
+
+
+            });
+        }
+    });
+</script>
+@{
+    int Months = DateTime.Now.Month - 1;
+    int CurrentMonth = DateTime.Now.Month - 1;
+    int CurrentDay = DateTime.Now.Day;
+
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $("#jqOpenDate").jqxDateTimeInput({ width: '250px', height: '25px', showCalendarButton: true, allowKeyboardDelete: true, allowNullDate: false, value: null });
+        $('#jqOpenDate ').jqxDateTimeInput('setMaxDate', new Date('@DateTime.Now.Year', '@CurrentMonth', '@CurrentDay'));
+        $('#jqOpenDate').jqxDateTimeInput({ value: new Date('@DateTime.Now.Year', '@Months', '@DateTime.Now.Day') });
+
+    });
+</script>
+@using (Html.BeginForm("_TraderPricesHistory", "TraderPrices", FormMethod.Get))
+{
+
+
+    <table class="data_table" id="list" style="width:100%; text-align:right ; ">
+
+        <tr>
+            <td style="width:15%"> أختر التاريخ </td>
+            <td style="width:20%;">
+                <div id='jqOpenDate'>
+                </div>
+            <td>
+                <input class="btn" id="btnSearch" type="button" value=@Resources.General.Filter>
+            </td>
+        </tr>
+
+        <tr>
+            <td style="width:15%"></td>
+            <td>
+                <div style="display: none" id="validateddl">
+                    @Html.Label("ValidateddlDate", @Resources.Messages.Required, new { @class = "field-validation-error", style = "font-weight: normal;color:red" })
+                </div>
+            <td></td>
+        </tr>
+        <tr>
+            <td colspan="3">
+                <div id="bestP">
+                    @{Html.RenderAction("_BestPrice");}
+                </div>
+            </td>
+        </tr>
+        @if (Model.Count() == 0)
+        {
+            <tr>
+                <td colspan="3">
+                    @Html.Label("lblMSGsearch", Resources.Messages.NoData)
+                </td>
+            </tr>
+
+        }
+
+        else
+        {
+
+            <tr>
+                <th width="33%" style="direction: rtl; text-align: center;">
+                    @Html.Label(@Resources.General.BuyPrice)
+                </th>
+                <th width="33%" style="direction: rtl; text-align: center;">
+                    @Html.Label(@Resources.General.SellPrice)
+                </th>
+                <th width="33%" style="direction: rtl; text-align: center;">
+                    @Html.Label(@Resources.General.PriceDate)
+                    @Html.Hidden("TraderID", Model[0].TraderID)
+                </th>
+
+            </tr>
+
+            foreach (var item in Model)
+            {
+                <tr style="direction: rtl; text-align: center;" class="@trClass">
+                    <td>
+                        @String.Format("{0:0,0.00}", item.BuyPrice)
+
+                    </td>
+                    <td>
+                        @String.Format("{0:0,0.00}", item.SellPrice)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.priceDate)
+                    </td>
+
+                </tr>
+                if (trClass == "clr_tr") { trClass = ""; }
+                else
+                {
+                    trClass = "clr_tr";
+                }
+            }
+            <tr>
+                <td colspan="3" style="text-align:center">
+
+                    @if (Model.PageCount > 1)
+                    {
+                        @Html.PagedListPager(Model, page => ("javascript:gotoPage('" + page + "','" + ViewBag.searchtxt + "','" + ViewBag.pageSize + "')"))
+                    }
+                </td>
+
+            </tr>
+            <tr>
+                <td></td>
+                <td style="direction: rtl; text-align: center;">
+                    <input id="PrintPreview" type="button" value='@Resources.General.Print' class="btn" />
+                </td>
+                <td></td>
+            </tr>
+        }
+
+    </table>
+
+}
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $('#btnSearch').on('click', function () {
+
+            var value = $('#jqOpenDate').jqxDateTimeInput('getDate');
+            var total = null;
+            if (value == null) {
+                $("#form").valid();
+                $('#validateddl').show();
+                return false;
+            }
+            if (value != null) {
+                var dd = value.getDate();
+                if (dd < "10") {
+                    dd = "0" + dd;
+                }
+                var mm = parseInt(value.getMonth() + 1);
+                if (mm < "10") {
+                    mm = "0" + mm;
+                }
+                var yy = value.getFullYear();
+                total = dd + "/" + mm + "/" + yy;
+
+            }
+
+            $.ajax({
+                url: "@(baseUrl)/TraderPrices/Search",
+                type: 'Get',
+                async: false,
+                cache: false,
+                contentType: "application/json; charset=utf-8",
+                data: { searchtxt: total },
+                success: function (data) {
+                    $('#divList').html(data);
+                    $('#jqOpenDate').jqxDateTimeInput({ value: new Date(yy, mm - 1, dd) });
+                },
+                error: function (xhr, textStatus) {
+                    toastr.error('Error!');
+                }
+            });
+            return false;
+        });
+
+        $('#PrintPreview').on('click', function (e) {
+
+            e.preventDefault(); // <------------------ stop default behaviour of button
+            var value = $('#jqOpenDate').jqxDateTimeInput('getDate');
+            var total = null;
+            if (value == null) {
+                $("#form").valid();
+                $('#validateddl').show();
+                return false;
+            }
+            if (value != null) {
+                var dd = value.getDate();
+                if (dd < "10") {
+                    dd = "0" + dd;
+                }
+                var mm = parseInt(value.getMonth() + 1);
+                if (mm < "10") {
+                    mm = "0" + mm;
+                }
+                var yy = value.getFullYear();
+                total = mm + "/" + dd + "/" + yy;
+
+            }
+            var trader = document.getElementById("TraderID").value;
+            debugger;
+            $.ajax({
+                url: "@(baseUrl)/ExportToPDF/TraderPricesHistoryPrint",
+                type: 'Get',
+                async: false,
+                cache: false,
+                contentType: "application/json; charset=utf-8",
+                data: { date: total, print: false, tr: trader },
+                success: function (data) {
+                    debugger;
+                    $('body').html(data);
+                    //$('#jqOpenDate').jqxDateTimeInput({ value: new Date(yy, mm - 1, dd) });
+                },
+                error: function (xhr, textStatus) {
+                    debugger;
+                    toastr.error('Error!');
+                }
+            });
+            return false;
+        });
+
+
+    });
+
+    function gotoPage(pageNumber, searchText, pageSize) {
+        if (pageSize == null || pageSize == "" || pageSize == "Undefigned") {
+            pageSize = 1;
+        }
+        var value = $('#jqOpenDate').jqxDateTimeInput('getDate');
+        if (value != null) {
+            var dd = value.getDate();
+            if (dd < "10") {
+                dd = "0" + dd;
+            }
+            var mm = parseInt(value.getMonth() + 1);
+            if (mm < "10") {
+                mm = "0" + mm;
+            }
+            var yy = value.getFullYear();
+
+
+        }
+
+        $.ajax({
+            url: "@(baseUrl)/TraderPrices/Search/",
+            data: { searchtxt: searchText, page: pageNumber },
+            contentType: "application/json; charset=utf-8",
+            success: function (data) {
+                $('#divList').html(data);
+                $('#jqOpenDate').jqxDateTimeInput({ value: new Date(yy, mm - 1, dd) });
+            },
+            error: function () {
+                toastr.error('Error');
+            }
+        });
+    }
+
+
+
+</script>

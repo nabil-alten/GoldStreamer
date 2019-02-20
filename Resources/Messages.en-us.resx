@@ -1,0 +1,477 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Deleted" xml:space="preserve">
+    <value>Deleted successfully</value>
+  </data>
+  <data name="DeleteFailed" xml:space="preserve">
+    <value>Delete Faild</value>
+  </data>
+  <data name="NoData" xml:space="preserve">
+    <value>No results to display</value>
+  </data>
+  <data name="NoPriceBefore" xml:space="preserve">
+    <value>Please enter the buying and selling price for beginning of the day</value>
+  </data>
+  <data name="Saved" xml:space="preserve">
+    <value>Saved successfully</value>
+  </data>
+  <data name="SaveFailed" xml:space="preserve">
+    <value>Save failed</value>
+  </data>
+  <data name="Updated" xml:space="preserve">
+    <value>update successfully</value>
+  </data>
+  <data name="UpdateFailed" xml:space="preserve">
+    <value>Update Failed</value>
+  </data>
+  <data name="ZeroPrice" xml:space="preserve">
+    <value>Zero value not allowed here</value>
+  </data>
+  <data name="nullablePrices" xml:space="preserve">
+    <value>Please enter the buying or selling price</value>
+  </data>
+  <data name="decimalPointValidation" xml:space="preserve">
+    <value>put only two decimal points</value>
+  </data>
+  <data name="PriceRangeVal" xml:space="preserve">
+    <value>Price value must be less than one million</value>
+  </data>
+  <data name="BasketNameLengthVal" xml:space="preserve">
+    <value>Two - character minimum</value>
+  </data>
+  <data name="BasketNameVal" xml:space="preserve">
+    <value>Please enter value you can't leave this empty</value>
+  </data>
+  <data name="BasketNameDuplicate" xml:space="preserve">
+    <value>Please try again ,the data already defined</value>
+  </data>
+  <data name="SureDelete" xml:space="preserve">
+    <value>Are you sure you want to delete ?</value>
+  </data>
+  <data name="BasketNameNoNum" xml:space="preserve">
+    <value>Name can't allow numbers</value>
+  </data>
+  <data name="Relogin" xml:space="preserve">
+    <value>Please re-login</value>
+  </data>
+  <data name="UnableToDelete" xml:space="preserve">
+    <value>Unable to delete record , related data exist</value>
+  </data>
+  <data name="NotBetterBuy" xml:space="preserve">
+    <value>Please note that the buy price is less than the buy price for traders outside the basket,Are you sure?</value>
+  </data>
+  <data name="NotBetterPrices" xml:space="preserve">
+    <value>Please note that these prices are equal to prices for traders outside the basket,Are you sure?</value>
+  </data>
+  <data name="NotBetterSell" xml:space="preserve">
+    <value>Please note that the sell price is greater than the sell price for traders outside the basket,Are you sure?</value>
+  </data>
+  <data name="Required" xml:space="preserve">
+    <value>Please enter value you can't leave this empty.</value>
+  </data>
+  <data name="MsgContinue" xml:space="preserve">
+    <value>Do you want to continue?</value>
+  </data>
+  <data name="EnglishCharactersandNumbersOnly" xml:space="preserve">
+    <value>Please use only letters (a-z), numbers and full stops.</value>
+  </data>
+  <data name="MinLengthThree" xml:space="preserve">
+    <value>Minimum three charaters</value>
+  </data>
+  <data name="ActivateUsr" xml:space="preserve">
+    <value>Are you sure you will be activate the user on the system?</value>
+  </data>
+  <data name="DeAtivateUsr" xml:space="preserve">
+    <value>Are you sure you will be deactivate the user on the system?</value>
+  </data>
+  <data name="regeneratePassword" xml:space="preserve">
+    <value>Are you sure you want to regenerate password?</value>
+  </data>
+  <data name="AssingToFavRequired" xml:space="preserve">
+    <value>You have to assign traders to your fav. list first..continue?</value>
+  </data>
+  <data name="MinLengthSix" xml:space="preserve">
+    <value>Six characters  minimum</value>
+  </data>
+  <data name="ConfirmPassword" xml:space="preserve">
+    <value>These passwords don't match. Please  try again?</value>
+  </data>
+  <data name="MailExpErr" xml:space="preserve">
+    <value>E-mail format not valid</value>
+  </data>
+  <data name="TraderNameVal" xml:space="preserve">
+    <value>Please enter trader name</value>
+  </data>
+  <data name="MobileVal" xml:space="preserve">
+    <value>Please check the mobile number</value>
+  </data>
+  <data name="phoneVal" xml:space="preserve">
+    <value>Please check phone number</value>
+  </data>
+  <data name="CityVal" xml:space="preserve">
+    <value>Please choose city</value>
+  </data>
+  <data name="ConfirmMailVal" xml:space="preserve">
+    <value>E-mail confirmation don't match the E-mail</value>
+  </data>
+  <data name="EmailRequired" xml:space="preserve">
+    <value>Please enter e-mail</value>
+  </data>
+  <data name="GovVal" xml:space="preserve">
+    <value>Please choose governorate</value>
+  </data>
+  <data name="mobileReq" xml:space="preserve">
+    <value>Please enter mobile number</value>
+  </data>
+  <data name="NumbersOnly" xml:space="preserve">
+    <value>Please enter numbers only</value>
+  </data>
+  <data name="orderReq" xml:space="preserve">
+    <value>Please enter trader order</value>
+  </data>
+  <data name="PhoneLengthVal" xml:space="preserve">
+    <value>6 numbers minimum</value>
+  </data>
+  <data name="RegionVal" xml:space="preserve">
+    <value>Please choose region</value>
+  </data>
+  <data name="EmailExists" xml:space="preserve">
+    <value>Email exists before</value>
+  </data>
+  <data name="OrderExists" xml:space="preserve">
+    <value>Order exists before</value>
+  </data>
+  <data name="OperationFailed" xml:space="preserve">
+    <value>Operation Failed</value>
+  </data>
+  <data name="TraderMobileExists" xml:space="preserve">
+    <value>Please try again, Trader mobile no. exists before</value>
+  </data>
+  <data name="TraderNameExists" xml:space="preserve">
+    <value>Please try again, Trader name exists before</value>
+  </data>
+  <data name="TraderShopExists" xml:space="preserve">
+    <value>Please try again, Trader shop exists before</value>
+  </data>
+  <data name="TraderPhoneExists" xml:space="preserve">
+    <value>Please try again, Trader phone no. exists before</value>
+  </data>
+  <data name="MobileLengthVal" xml:space="preserve">
+    <value>11 numbers minimum</value>
+  </data>
+  <data name="OperationDesc" xml:space="preserve">
+    <value>Operation Desc</value>
+  </data>
+  <data name="OperationMainCategory" xml:space="preserve">
+    <value>Main Category</value>
+  </data>
+  <data name="OperationName" xml:space="preserve">
+    <value>Operation Name</value>
+  </data>
+  <data name="UserNotAuthorized" xml:space="preserve">
+    <value>User Not Authorized</value>
+  </data>
+  <data name="SamePasswordError" xml:space="preserve">
+    <value>Password has been used before</value>
+  </data>
+  <data name="CaptchaError" xml:space="preserve">
+    <value>Verification code is not right.please try again</value>
+  </data>
+  <data name="NewTokenGenerated" xml:space="preserve">
+    <value>Another token was generated.You Can't use this one now</value>
+  </data>
+  <data name="TokenExpired" xml:space="preserve">
+    <value>Token Expired</value>
+  </data>
+  <data name="VerifiedBefore" xml:space="preserve">
+    <value>Verified Before</value>
+  </data>
+  <data name="ConfirmationMessage" xml:space="preserve">
+    <value>Thank you for confirming your email. Please</value>
+  </data>
+  <data name="InvalidUserName" xml:space="preserve">
+    <value>Invalid username or password</value>
+  </data>
+  <data name="Userinactive" xml:space="preserve">
+    <value>User inactive</value>
+  </data>
+  <data name="PasswordChangedBefore" xml:space="preserve">
+    <value>Password Changed Before</value>
+  </data>
+  <data name="GeneralError" xml:space="preserve">
+    <value>An error occurred while processing your request.</value>
+  </data>
+  <data name="passwordSet" xml:space="preserve">
+    <value>passwordSet</value>
+  </data>
+  <data name="EmailFormat" xml:space="preserve">
+    <value>Invalid Email Format</value>
+  </data>
+  <data name="FeedbackAutoMail" xml:space="preserve">
+    <value>Thanks for your feedback </value>
+  </data>
+  <data name="maxFifty" xml:space="preserve">
+    <value>Maximum 50 letters</value>
+  </data>
+  <data name="MaxTwoHundred" xml:space="preserve">
+    <value>Maximum 200 letters</value>
+  </data>
+  <data name="Mintwo" xml:space="preserve">
+    <value>minimum 2 letters</value>
+  </data>
+  <data name="LettersAndNumbersOnly" xml:space="preserve">
+    <value>Letters And Numbers Only</value>
+  </data>
+  <data name="LettersOnly" xml:space="preserve">
+    <value> Only Letters</value>
+  </data>
+  <data name="QuestionGroupVal" xml:space="preserve">
+    <value>Please enter value,can't leave this empty.</value>
+  </data>
+  <data name="NoSelected" xml:space="preserve">
+    <value>No Selected</value>
+  </data>
+  <data name="sent" xml:space="preserve">
+    <value>Sent Successfully</value>
+  </data>
+  <data name="CharsOnly" xml:space="preserve">
+    <value>Only characters are allowed </value>
+  </data>
+  <data name="DeleteQuestionGroupVal" xml:space="preserve">
+    <value>Cant delete this group as it has assigned questions.</value>
+  </data>
+  <data name="CompanyLogoLength" xml:space="preserve">
+    <value>Photo shouldn't be exceed 4 MB</value>
+  </data>
+  <data name="CompanyLogoType" xml:space="preserve">
+    <value>company Logo should be of type png or jpg or jpeg or bmp or gif or tiff</value>
+  </data>
+  <data name="NewsMainCategoryMaxVal" xml:space="preserve">
+    <value>You have exceed the max no of main categories.</value>
+  </data>
+  <data name="OrderErrorMsg" xml:space="preserve">
+    <value>Order number can not exceed total numer of main categories</value>
+  </data>
+  <data name="OrderCategoryErrorMsg" xml:space="preserve">
+    <value>Order number can not exceed total numer of categories</value>
+  </data>
+  <data name="CategoryErrorMsg" xml:space="preserve">
+    <value>You should add main category first</value>
+  </data>
+  <data name="NotActiveUser" xml:space="preserve">
+    <value>This user is not active, please contact with the site administrator</value>
+  </data>
+  <data name="NewsCategoryMaxVal" xml:space="preserve">
+    <value>You have exceed the max no of categories</value>
+  </data>
+  <data name="SetAsMainUser" xml:space="preserve">
+    <value>set As Main User ?</value>
+  </data>
+  <data name="NewsPicRequired" xml:space="preserve">
+    <value>Please choose a picture</value>
+  </data>
+  <data name="ActivateNews" xml:space="preserve">
+    <value>ActivateNews</value>
+  </data>
+  <data name="DeAtivateUNews" xml:space="preserve">
+    <value>DeAtivateUNews</value>
+  </data>
+  <data name="subscribesuccess" xml:space="preserve">
+    <value>subscribe success</value>
+  </data>
+  <data name="MinLengthTwenty" xml:space="preserve">
+    <value>MinLengthTwenty</value>
+  </data>
+  <data name="NewsOrder" xml:space="preserve">
+    <value>Order number can not exceed total numer of news</value>
+  </data>
+  <data name="LatestNewsLimit" xml:space="preserve">
+    <value>Latest news number can not exceed total numer of news</value>
+  </data>
+  <data name="ActivateQuestion" xml:space="preserve">
+    <value>ActivateQuestion</value>
+  </data>
+  <data name="DeAtivateQuestion" xml:space="preserve">
+    <value>DeAtivate Question</value>
+  </data>
+  <data name="SendReplyConfirm" xml:space="preserve">
+    <value>SendReplyConfirm</value>
+  </data>
+  <data name="ReplayQuestionagain" xml:space="preserve">
+    <value>ReplayQuestionagain</value>
+  </data>
+  <data name="noansertoreply" xml:space="preserve">
+    <value>noansertoreply</value>
+  </data>
+  <data name="FeedError" xml:space="preserve">
+    <value>Can not update the feed now</value>
+  </data>
+  <data name="NoPermissionToEditProfile" xml:space="preserve">
+    <value>This user is not allowed to edit profile</value>
+  </data>
+  <data name="Canotsavequestion" xml:space="preserve">
+    <value>Please Enter Answer And Select Group</value>
+  </data>
+  <data name="ConfirmActive" xml:space="preserve">
+    <value>this is repeated question activate before?</value>
+  </data>
+  <data name="EnterGroupandanswer" xml:space="preserve">
+    <value>Please enter answer and select group</value>
+  </data>
+  <data name="PasswordErrorMsg" xml:space="preserve">
+    <value>please enter old password</value>
+  </data>
+  <data name="InvalidOldPassword" xml:space="preserve">
+    <value>Invalid old password</value>
+  </data>
+  <data name="negativeVal" xml:space="preserve">
+    <value>Value can't be negative</value>
+  </data>
+  <data name="PasswordValidationMsg" xml:space="preserve">
+    <value>please enter your password</value>
+  </data>
+  <data name="RePasswordValidationMsg" xml:space="preserve">
+    <value>please enter confirm password</value>
+  </data>
+  <data name="UserNameRepeated" xml:space="preserve">
+    <value>UserName Repeated</value>
+  </data>
+  <data name="OrderNoErrorMsg" xml:space="preserve">
+    <value>This order exsists</value>
+  </data>
+  <data name="PasswordGeneralError" xml:space="preserve">
+    <value>Please complete password information</value>
+  </data>
+  <data name="SuperTraderType" xml:space="preserve">
+    <value>user is super trader</value>
+  </data>
+  <data name="UserInCorrect" xml:space="preserve">
+    <value>User Name is incorrect</value>
+  </data>
+  <data name="userNotExsist" xml:space="preserve">
+    <value>User Name is not exsist</value>
+  </data>
+  <data name="VerifyAccount" xml:space="preserve">
+    <value>Please verify your account first</value>
+  </data>
+  <data name="verifyUserName" xml:space="preserve">
+    <value>Please verify user name</value>
+  </data>
+</root>

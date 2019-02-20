@@ -1,0 +1,100 @@
+﻿@using GoldStreamer.Helpers
+@{
+    ViewBag.Title = Resources.General.Dashboard;
+    Layout = "~/Views/Shared/_LayoutInner.cshtml";
+
+    string baseUrl = CultureHelper.GetBaseURL().ToLower();
+}
+<script type="text/javascript">
+    function changeImage(imgId,imgName) {
+        debugger;
+        image = document.getElementById(imgId);
+        image.src = "@(baseUrl)Content/Images/" + imgName;
+    }
+
+</script>
+
+
+<div class="mainContainer" id="wrap" style="min-height: 200px; overflow: auto;">
+
+
+
+            <a href="~/QuestionGroups/QuestionGroups">
+                <div class="dash_box" >
+                    <img src="~/Content/Images/q_group.png" id="questionGroup" onmouseover="changeImage(this.id, 'q_group_sc.png')" onmouseout="changeImage(this.id, 'q_group.png')" />
+                </div>
+            </a>
+
+            <a href="~/Question">
+                <div class="dash_box">
+                    <img src="~/Content/Images/admin_questions.png" id="adminQuestions" onmouseover="changeImage(this.id, 'admin_questions_sc.png')" onmouseout="changeImage(this.id, 'admin_questions.png')" />
+                </div>
+            </a>
+
+            <a href="~/AssignRolPermission/Index">
+                <div class="dash_box">
+                    <img src="~/Content/Images/permissions.png" id="permissions" onmouseover="changeImage(this.id, 'permissions_sc.png')" onmouseout="changeImage(this.id, 'permissions.png')" />
+
+                </div>
+            </a>
+
+            <a href="~/Users/ActiveInActiveUsersIndex">
+                <div class="dash_box">
+                    <img src="~/Content/Images/users.png" id="users" onmouseover="changeImage(this.id, 'users_sc.png')" onmouseout=" changeImage(this.id, 'users.png')" />
+
+                </div>
+            </a>
+
+            <a href="~/SuperTrader/Index">
+                <div class="dash_box" >
+                    <img src="~/Content/Images/super_trader.png" id="superTrader" onmouseover="changeImage(this.id, 'super_trader_sc.png')" onmouseout="    changeImage(this.id, 'super_trader.png')" />
+
+                </div>
+            </a>
+            
+            <a href="~/Subscribe/AdminSubscribe">
+                <div class="dash_box">
+                    <img src="~/Content/Images/contact_users.png" id="contactUsers" onmouseover="changeImage(this.id, 'contact_users_sc.png')" onmouseout="    changeImage(this.id, 'contact_users.png')" />
+                </div>
+            </a>
+
+            <a href="~/NewsMainCategory/NewsMainCategory">
+                <div class="dash_box">
+                    <img src="~/Content/Images/news.png" id="news" onmouseover="changeImage(this.id, 'news_sc.png')" onmouseout="    changeImage(this.id, 'news.png')" />
+                </div>
+            </a>
+
+
+            <a href="~/News/ListIndex">
+                <div class="dash_box">
+                    <img src="~/Content/Images/search_news.png" id="searchNews" onmouseover="changeImage(this.id, 'search_news_sc.png')" onmouseout="    changeImage(this.id, 'search_news.png')" />
+
+                </div>
+            </a>
+
+        
+            
+        </div>
+
+
+
+
+@section UpperBanner{
+
+
+    <div class="innerBanner">
+        <div class="banner">
+            <h1 class="banner_header">@Resources.General.Dashboard</h1>
+
+            <img src="../../Content/Images/inner_banner.jpg" width="1050" height="180" alt="" />
+        </div>
+    </div>
+}
+@section SideMenu{
+    @Html.Partial("_AdminSideMenu")
+}
+
+
+
+
+

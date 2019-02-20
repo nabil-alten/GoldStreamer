@@ -1,0 +1,65 @@
+﻿
+    @{
+        Layout = "~/Views/Shared/_LayoutInner.cshtml";
+        ViewBag.Title = @Resources.General.Register;
+    }
+   @using GoldStreamerWebApp.Models
+@model GoldStreamerWebApp.Models.TraderRegisterViewModel
+
+<style>
+    .innerData {
+        width: 100% !important;
+    }
+</style>
+    <div class="regArea">
+        <div style="margin-left:15px;">
+            <div class="regSec">
+                @Resources.General.TraderRegister
+                <div class="regInfo">
+                    <img src="~/Content/Images/trader_icon_1.png" />
+                </div>
+
+                <a href="_TraderRegister " class="abtn">@Resources.General.RegisterNow</a>
+                <div class="regInfo spec" style="height: 355px;">
+                    <ul>
+                        <li>متابعة اخبار الذهب لحظة بلحظة</li>
+                        <li>متابعة اسعار الذهب العالمية لحظة بلحظة</li>
+                        <li>متابعة مؤشرات الذهب العالمية لحظة بلحظة</li>
+                        <li>التسجيل عبر الموقع لتصلك اهم الاخبار والاحداث</li>
+                        <li>متابعة حية لاسعار الذهب المحلية لحظة بلحظة</li>
+                        <li class="end_li">تواصل مباشر مع التجار</li>
+                       
+                    </ul>
+                </div>
+            </div>
+
+
+            <div class="regSec">
+                التسجيل الاساسي
+                <div class="regInfo">
+                    <img src="~/Content/Images/user_icon_1.png" />
+                </div>
+                <a href="_UserRegister" class="abtn">@Resources.General.RegisterNow</a>
+                <div class="regInfo spec">
+                    <ul>
+                       
+                        <li>متابعة اخبار الذهب لحظة بلحظة</li>
+                        <li>متابعة اسعار الذهب العالمية لحظة بلحظة</li>
+                        <li>متابعة مؤشرات الذهب العالمية لحظة بلحظة</li>
+                        <li class="end_li">التسجيل عبر الموقع لتصلك اهم الاخبار والاحداث</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    @section UpperBanner{
+
+
+        <div class="innerBanner">
+            <h1 class="banner_header">@Resources.General.Register</h1>
+
+            <div class="banner"><img src="../../Content/Images/inner_banner.jpg" width="1050" height="180" alt="" /></div>
+        </div>
+    }

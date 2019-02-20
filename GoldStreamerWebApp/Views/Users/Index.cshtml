@@ -1,0 +1,43 @@
+﻿@*@model BLL.DomainClasses.Users*@
+
+@{
+    ViewBag.Title = Resources.General.AddTraderUsers;
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+
+}
+
+
+@section UpperBanner{
+
+
+    <div class="innerBanner">
+        <h1 class="banner_header">@Resources.General.AddTraderUsers</h1>
+
+        <div class="banner"><img src="../../Content/Images/inner_banner.jpg" width="1050" height="180" alt="" /></div>
+    </div>
+}
+<script>
+    $(function () {
+        $("#div_st").addClass("menuItemactive");
+    });
+</script>
+
+@section SideMenu{
+    @Html.Partial("_AdminSideMenu")
+}
+
+@Scripts.Render("~/bundles/modernizr")
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/jqueryval")
+
+<div id="AjaxResult">
+    @Html.Action("_Add")
+</div>
+<br/>
+<br/>
+<div id="divList">
+    @Html.Action("_List")
+</div> 
+
+
+

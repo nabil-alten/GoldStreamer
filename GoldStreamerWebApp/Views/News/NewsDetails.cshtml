@@ -1,0 +1,52 @@
+﻿@model BLL.DomainClasses.News
+@{
+    ViewBag.Title = Model.Title;
+    Layout = "~/Views/Shared/_LayoutInner.cshtml";
+}
+
+
+@*<h2>@Resources.General.NewsDetails</h2>*@
+<link href="~/Content/css/style.css" rel="stylesheet" />
+
+<h1>@Model.Title</h1>
+<div class="inner_news_details">
+    <div class="inner_news_details_info">@Resources.General.NewsDate :@Model.Date</div>
+    <div class="inner_news_details_info" style="width: 150px;">@Resources.General.ViewsNo : @Model.ViewCount مرة</div>
+    <div class="inner_news_details_info" hidden="@(Model.SourceName=="")">@Resources.General.NewsSource : <a href="@Model.SourceUrl">@Model.SourceName</a></div>
+    <div class="inner_news_details_info" style="margin-top: 4px; margin-left: 4px; float: left; ">
+        <div class="addthis_toolbox addthis_default_style addthis_32x32_style">
+            <a class="addthis_button_preferred_1"></a>
+            <!--<a class="addthis_button_preferred_2"></a>-->
+            <a class="addthis_button_preferred_3"></a>
+            <a class="addthis_button_preferred_4"></a>
+            <a class="addthis_button_compact"></a>
+            <!--<a class="addthis_counter addthis_bubble_style"></a>-->
+        </div>
+        <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5593d57931038fec" async="async"></script>
+    </div>
+
+</div>
+
+
+<div class="clr"></div>
+
+<div style="width:500px; height:400px; border:solid 1px #ccc; margin:0px auto;">
+    <img src='~/Uploads/News/@(Model.Photo ?? "camera.png")' id="imgNews" style="width: 500px; height: 400px; border: solid 1px #ccc; margin: 0px auto;" />
+</div>
+<p>
+    @Model.Body
+</p>
+
+@{ Html.RenderAction("_RelatedNews", new { categoryId = Model.CategoryId, newsId = Model.Id }); }
+@section SideAddArea{
+    <div class="ads_area">
+        <img src="~/Content/images/ads_area.png" width="170" alt="" style="margin-top:100px;" />
+    </div>
+}
+@section UpperBanner{
+  <div class="innerBanner">
+      <h1 class="banner_header">@Resources.General.NewsCategoryText</h1>
+
+    <div class="banner"><img src="../../Content/Images/inner_banner.jpg" width="1050" height="180" alt="" /></div>
+</div>
+}

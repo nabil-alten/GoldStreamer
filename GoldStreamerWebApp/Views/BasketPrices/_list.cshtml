@@ -1,0 +1,63 @@
+﻿
+@model PagedList.IPagedList<BLL.DomainClasses.BasketPrices>
+
+@using PagedList.Mvc;
+
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+
+@using (Html.BeginForm("_list", "BasketPrices", FormMethod.Post))
+{
+    
+<table style="width:100%; text-align:right;" class="data_table">
+    <tr>
+    <th scope="col">@Html.Label(@Resources.General.BuyPrice)</th>
+    <th scope="col">@Html.Label(@Resources.General.SellPrice)</th>
+     <th scope="col">@Html.Label(@Resources.General.PriceDate)</th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr >
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr class="clr_tr">
+            <td>
+                @String.Format("{0:0,0.00}", item.BuyPrice)
+
+            </td>
+            <td>
+                @String.Format("{0:0,0.00}", item.SellPrice)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PriceDate)
+            </td>
+
+        </tr>
+
+    }
+    <tr>
+        <td>
+             @if (Model.PageCount > 1)
+            {
+                        <span>@Resources.General.Page</span> @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)
+                        <span> @Resources.General.From </span>@Model.PageCount
+
+                        @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+            }
+        </td>
+    </tr>
+
+      </table>    
+    
+    
+    
+    
+    
+    
+    
+        }
+<div>
+    @Html.ActionLink(@Resources.General.BackToBasket, "Index", "Basket")
+</div>

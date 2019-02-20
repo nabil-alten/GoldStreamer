@@ -1,0 +1,128 @@
+﻿    @{
+        ViewBag.Title = Resources.General.ComonQuestions;
+        Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+
+@section SideMenu{
+   @Html.Partial("_AdminSideMenu")
+}
+<script>
+    $(function () {
+        $("#div_aq").addClass("menuItemactive");
+    });
+</script>
+@section UpperBanner{
+
+
+    <div class="innerBanner">
+        <div class="banner">
+            <h1 class="banner_header">@Resources.General.AdminQuestions</h1>
+
+            <img src="../../Content/Images/inner_banner.jpg" width="1050" height="180" alt="" />
+        </div>
+    </div>
+}
+
+<div id="AjaxResult" style="overflow:auto; margin-bottom: 30px;">
+    @Html.Action("_Add", new BLL.DomainClasses.Question())
+</div>
+<br />
+<form id="indexform">
+
+        <table style="width:100%">
+            <tr>
+
+               
+                <td></td>
+            
+                <td style="width: 17%;">
+                    <label id="lbl">@Resources.General.QuesrtionSearch</label>
+                </td>
+                <td>
+                    @Html.TextBox("txtSearch", ViewBag.SearchText as string, new { @placeholder = Resources.General.Search + "...", @Value = "", @class = "form-control search-query" })
+                </td>
+         
+                <td></td>
+
+                <td>
+                    <input type="radio" name="Request" checked id="All" value="3" />
+                    <label class="radio-inline">
+
+                        @Resources.General.All
+                    </label>
+                    <input type="radio" name="Request" id="Active" value="1" />
+                    <label class="radio-inline">
+
+                        @Resources.General.ActiveState
+                    </label>
+                    <input type="radio" name="Request" id="Deactive" value="2" />
+                    <label class="radio-inline">
+
+                        @Resources.General.deactive
+                    </label>
+
+
+                </td>
+                <td>
+                    <label id="rr">@Resources.General.QuestionType :</label>
+                </td>
+                <td style="text-align: right;">
+                    @Html.CheckBox("UserQuestion")@Resources.General.userquestioncheck
+
+                </td>
+               
+
+                <td>
+                    <input type="button" id="btnSearch" class="btn" value='@Resources.General.Filter' />
+
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+
+                <td style="text-align: right;">
+                    <div id="divUserQuestion" style="display: none; text-align: right; display: block; margin: -2px 0px 0px -40px;">
+                        @Html.CheckBox("NoCategoryQuestions")@Resources.General.NoCategoryQuestions
+                        <br />
+                        @Html.CheckBox("NoAnswersQuestions")@Resources.General.NoAnswersQuestions
+                        <br />
+                        @Html.CheckBox("QuestionsNoAnswer")@Resources.General.QuestionsNoAnswer
+                    </div>
+                </td>
+                <td></td>
+
+                
+            </tr>
+           
+
+        </table>
+
+
+
+        <br />
+
+</form>
+<br />
+
+<div  id="divList">
+    @{Html.RenderPartial("_List");}
+
+</div>
+<script>
+    $(document).ready(function () {
+        $('#divUserQuestion').hide();
+        $('#btnSearch').on('click', function () {
+            search(1);
+        });
+    });
+</script>

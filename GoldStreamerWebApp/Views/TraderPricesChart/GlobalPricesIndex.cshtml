@@ -1,0 +1,94 @@
+﻿@{
+    ViewBag.Title = @Resources.General.GlobalChart;
+    string baseUrl = CultureHelper.GetBaseURL().ToLower();
+    Layout = "~/Views/Shared/_LayoutInner.cshtml";
+}
+@using GoldStreamer.Helpers
+
+<script>
+    function setChartType() {
+        setJQChartType();
+    }
+    function setJQChartType() {
+        var pricetype = $("#Pricetype").val();
+        var datetype = $("#Datetype").val();
+        var charttype = $("#ChartType").val();
+        var url = '@(baseUrl)/' + '/TraderPricesChart/_GoldPricesChart/?chartType=' + charttype + '&pricetype=' + pricetype + '&datetype=' + datetype + '&global=1';
+        $.ajax({
+            url: url,
+            type: "Get",
+            contentType: "application/html; charset=utf-8",
+            success: function (data) {
+                $("#jqChartHolder").html(data);
+            },
+            error: function (data) {
+
+            }
+        });
+    }
+   
+</script>
+<div style="width:100%; min-height: 600px; overflow:auto;">
+
+   
+    <div>
+
+      
+            <table style="width:100%; text-align:right;" cellpadding="7">
+                <tr>
+                    <td>@Resources.General.Price :</td>
+                    <td>
+                        <select id="Pricetype">
+                            <option value="1">@Resources.General.AveragePrice</option>
+                            <option value="2">@Resources.General.Close</option>
+                        </select>
+                    </td>
+                    <td>@Resources.General.period :</td>
+                    <td>
+                        <select id="Datetype">
+                            <option value="1">@Resources.General.Week</option>
+                            <option value="2">@Resources.General.Month</option>
+                            <option value="3">@Resources.General.MonthWeek</option>
+                            <option value="4">@Resources.General.YearMonth</option>
+                        </select>
+                    </td>
+                    <td>
+                        @Resources.General.showtype :
+                    </td>
+                    <td>
+                        <select id="ChartType">
+                            <option value="Line">@Resources.General.Line</option>
+                            <option value="Column">@Resources.General.Bar</option>
+                            <option value="Scatter">@Resources.General.ScatterLine</option>
+
+
+                        </select>
+
+                    </td>
+
+                    <td>
+                        <button class="btn" id="save" onclick="setChartType();">@Resources.General.show</button>
+                    </td>
+                </tr>
+            </table>
+            <div class="clr"></div>
+            <div class="headerTitle" style="background-color:transparent;">
+                <div style="width:800px; margin:auto;" id="jqChartHolder">@Html.Action("_GoldPricesChart", new { global = 1 })</div> 
+            </div>
+    </div>
+
+</div>
+
+@section SideAddArea{
+    <div class="ads_area">
+        <img src="~/Content/images/ads_area.png" width="170" alt="" style="margin-top:100px;" />
+    </div>
+}
+
+@section UpperBanner{
+    <div class="innerBanner">
+        <h1 class="banner_header">@Resources.General.GlobalChart</h1>
+
+        <div class="banner"><img src="../../Content/Images/inner_banner.jpg" width="1050" height="180" alt="" /></div>
+    </div>
+}

@@ -1,0 +1,130 @@
+﻿@using GoldStreamer.Helpers
+@model IEnumerable<GoldStreamer.Models.ViewModels.RolePermissionViewModel>
+@{
+    ViewBag.Title = Resources.General.ManageUsers;
+
+    string baseUrl = CultureHelper.GetBaseURL().ToLower();
+}
+
+<link href="~/Content/bootstrap.css" rel="stylesheet" />
+<link href="~/Content/css/bootstrap-duallistbox.css" rel="stylesheet" />
+<script src="~/Scripts/jquery.bootstrap-duallistbox.js"></script>
+<link href="~/Content/css/style.css" rel="stylesheet" />
+
+<style>
+    .innerBanner {
+        margin-top: 0px;
+    }
+
+    .innerNav {
+        height: 40px;
+    }
+
+    .innerInfo {
+        height: 40px;
+    }
+    .bootstrap-duallistbox-container .buttons {
+        width: 67.5%;
+    }
+
+    .bootstrap-duallistbox-container .filter {
+        margin: 32px -76px -63px 15px;
+    }
+    .row {
+        margin-right: 130px;
+        width: 75%;
+    }
+    .bootstrap-duallistbox-container .info {
+        width: 20%;
+    }
+</style>
+
+
+    @using (Html.BeginForm("Update", "AssignRolPermission", FormMethod.Post, new { id = "form" }))
+    {
+        <select id="RolesList" multiple="multiple">
+            @foreach (var item in Model)
+            {
+                if (item.Selected)
+                {
+                    <option value="@item.Id" selected="selected">
+                        @item.Name
+                    </option>
+                }
+                else
+                {
+                    <option value="@item.Id">
+                        @item.Name
+                    </option>
+                }
+            }
+        </select>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input style="margin-right: 472px; margin-top: 32px;" type="submit" id="Create" value="@Resources.General.Save" class="btn" />
+            </div>
+        </div>
+
+
+    }
+    
+    @*<script src="~/js/vendor/dual-list-box.min.js"></script>*@
+    <script>
+        if ($('#RolesList').length > 0) {
+            $('#RolesList').bootstrapDualListbox({
+                nonSelectedListLabel: '@Resources.General.Available',
+                selectedListLabel: '@Resources.General.Chossen',
+                //preserveSelectionOnMove: 'moved',
+                moveOnSelect: false,
+                nonSelectedFilter: '',
+                selectedFilter: '',
+                filterPlaceHolder: '@Resources.General.Search',
+                infoText: '@Resources.General.NoOfmovements1',
+                selectorMinimalHeight: 300,
+                filterTextClear: '@Resources.General.CancelSearch',
+                moveAllLabel: '@Resources.General.AddAll',
+                moveSelectedLabel: '@Resources.General.AddChoosen',
+                removeSelectedLabel: '@Resources.General.DeleteChoosen',
+                removeAllLabel: '@Resources.General.DeleteAll',
+
+                preserveSelectionOnMove: false,                                                     // 'all' / 'moved' / false
+                helperSelectNamePostfix: '_helper',                                                 // 'string_of_postfix' / false
+                showFilterInputs: true,                                                             // whether to show filter inputs
+
+                infoTextFiltered: '<span class="label label-warning">النتائج</span> {0} @Resources.General.From  ' + '{1}', // when not all of the options are visible due to the filter
+                infoTextEmpty: '@Resources.General.NoOfmovements'
+            });
+        }
+        $(document).ready(
+              function () {
+                  $('#Create').click(function (e) {
+                      // <------------------ stop default behaviour of button
+                      debugger;
+                      var foo = [];
+                      $('#RolesList :selected').each(function (i, selected) {
+                          foo[i] = selected.value;
+                      });
+
+                      //if (!$("#form").valid()) return false;
+                      $.ajax({
+                          url: '@(baseUrl)/' + '/AssignRolPermission/Update/',
+                          type: "POST",
+                          data: JSON.stringify({ 'rolesIds': foo, 'typeId': $('#Types').val() }),
+                          cache: false,
+                          contentType: "application/json; charset=utf-8",
+
+                          success: function () {
+                              toastr.success('@Resources.Messages.Saved');
+                          },
+                          error: function (data, xhr, textStatus) {
+                              if (data.status === 1)
+                                  toastr.error('@Resources.Messages.BasketNameDuplicate');
+                              else
+                                  toastr.error(textStatus);
+                          }
+                      });
+                      return false;
+                  });
+              });
+    </script>
+

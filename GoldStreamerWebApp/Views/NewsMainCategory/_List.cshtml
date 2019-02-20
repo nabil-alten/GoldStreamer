@@ -1,0 +1,156 @@
+﻿@using GoldStreamer.Helpers
+@model IEnumerable<BLL.DomainClasses.NewsMainCategory>
+@{ string baseUrl = CultureHelper.GetBaseURL().ToLower();
+   string trClass = "clr_tr";
+ }
+
+
+<script src="~/Scripts/GoldStreamer/ListFunctionsHelper.js"></script>
+<br />
+    <div class="input-group absoluteInput form-search">
+        @Html.TextBox("txtSearch", ViewBag.GroupsSearchText as string, new { @placeholder = Resources.General.Search + "...", @class = "form-control search-query", @style = "margin-right: -268px;" })
+        <i id="btnSearch" class="btn btn-default" style=" margin-right: 207px;" title="@Resources.General.Search" data-url="@baseUrl/NewsMainCategory/_List" data-container="divList">@Resources.General.Search</i>
+        @*<div id="searchValidator" style="color: red; display: none; text-align: center">@Resources.Messages.BasketNameLengthVal</div>*@
+    </div>
+
+
+<table style="width:100%" class="data_table">
+    @if (Model.Count() == 0)
+    {
+        <tr>
+            <td colspan="3">
+                @Html.Label("lblMSGsearch", Resources.Messages.NoData)
+            </td>
+        </tr>
+    }
+
+    else
+    {
+        <tr>
+            <td><div style="text-align:right;" class="counter_div">الأخبار  :<span>6 </span></div>
+</td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <th>
+                @Resources.General.NewsMainCategoryName
+            </th>
+            <th>
+                @Resources.General.NewsMainCategoryOrder
+            </th>
+            <th>@Resources.General.Procedures</th>
+        </tr>
+
+        foreach (var item in Model)
+        {
+            <tr class="@trClass">
+                <td>
+                    @Html.DisplayFor(modelItem => item.MainCategoryName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MainCategoryOrder)
+                </td>
+
+                <td>
+                    <a href="javascript:UpdateMainCategory(@item.ID);" title="@Resources.General.Edit"><img src="~/Content/Images/edit_1.png" width="30"  /></a>
+                    <a href="javascript:DeleteMainCategory(@item.ID);" title="@Resources.General.Delete"><img src="~/Content/Images/del.png" width="30"  /></a>
+                    <a href="javascript:AddCategory(@item.ID);" title="@Resources.General.AddNewCategory"><img src="~/Content/Images/add_icon.png" width="30" /></a>
+
+                </td>
+            </tr>
+        
+            if (trClass == "")
+            {
+                trClass = "clr_tr";
+
+            }
+            else
+            {
+                trClass = "";
+
+            }
+        }
+    }
+</table>
+
+
+<script>
+
+    function AddCategory(id) {
+        var targetUrl = '/NewsCategory/NewsCategory/?MainCategoryID=' + id.toString();
+            top.location.href = targetUrl;
+    }
+
+        var elementID;
+        function UpdateMainCategory(id) {
+            elementID = id;
+
+
+            $.ajax({
+                url: '@(baseUrl)/' + '/NewsMainCategory/GetMainCategoryInfo/',
+                type: "POST",
+                data: JSON.stringify({ 'id': id }),
+                cache: false,
+                contentType: "application/json; charset=utf-8",
+
+                success: function (data) {
+                    var result = data.toString().split(",");
+                    document.getElementById('MainCategoryName').value = result[0].split(':')[1];
+                    document.getElementById('MainCategoryOrder').value = result[1].split(':')[1];
+                },
+                error: function (data, xhr, textStatus) {
+                    toastr.error(textStatus);
+                }
+            });
+        }
+
+
+    function DeleteMainCategory(id) {
+        var r = confirm("@Resources.Messages.SureDelete");
+
+        if (r === true) {
+            $.ajax({
+
+                url: "@(baseUrl)/NewsMainCategory/Delete/" + id,
+                type: 'Post',
+                contentType: "application/json; charset=utf-8",
+
+                success: function (data) {
+                    toastr.success('@Resources.Messages.Deleted');
+
+                    $.ajax({
+                        url: '@(baseUrl)/' + '/NewsMainCategory/_List/',
+                        type: "POST",
+                        success: function (data) {
+
+                            document.getElementById('MainCategoryName').value = '';
+                            document.getElementById('MainCategoryOrder').value = '';
+                            elementID = 0;
+                            var x = navigator.userAgent.indexOf('CLR');//IE
+                            if (x > 0) {
+                                $('#divList').html(data);
+                                $('#divList').show();
+                            }  
+                            else
+                                $('#divList').html(data);
+
+                            $.ajax({
+                                url: '@(baseUrl)/' + '/NewsMainCategory/_Save/',
+                                type: "Get",
+                                success: function (data) {
+                                    $('#divResult').html(data);
+
+                                }
+                            });
+                        }
+                    });
+                },
+                error: function () {
+                    toastr.error('@Resources.Messages.UnableToDelete');
+                }
+            });
+        }
+    }
+
+</script>

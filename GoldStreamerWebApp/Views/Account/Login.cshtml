@@ -1,0 +1,85 @@
+﻿@model GoldStreamerWebApp.Models.LoginViewModel
+
+@{
+    ViewBag.Title = Resources.General.Login;
+    Layout = "~/Views/Shared/_LayoutInner.cshtml";
+
+}
+
+
+<div class="loginBorder">
+
+    <div class="headerTitle" style="margin-bottom:15px;">
+        <h1 style="color:#fff;text-align:center;">@Resources.General.Login</h1>
+    </div>
+
+    <section id="loginForm">
+        @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+        {
+            @Html.AntiForgeryToken()
+
+
+
+            <table cellspacing="10" style="width: 100%; margin: auto;text-align:right">
+                <tr>
+                    <td>@Resources.General.UserName :</td>
+                    <td>
+                        @Html.TextBoxFor(m => m.UserName, new { @class = "form-control", autofocus = "true" })
+                        <br /> <label style="color :red;">@Html.ValidationMessageFor(m => m.UserName)</label>
+                    </td>
+                    <td></td>
+                </tr>
+
+                <tr>
+                    <td>@Resources.General.Password :</td>
+                    <td>
+                        @Html.PasswordFor(m => m.Password, new { @class = "form-control", maxlength = 20 })
+                        <br /> <label style="color :red;">@Html.ValidationMessageFor(m => m.Password)</label>
+                    </td>
+                    <td></td>
+                </tr>
+                <tr>
+
+                    <td colspan="3" style="text-align:center;" ><input type="submit" class="btn" value=@Resources.General.Login /></td>
+                </tr>
+                <tr>
+                    <td colspan="3" style="text-align:center;">@Html.ActionLink(@Resources.General.ForgotPassword, "ForgetPassword", "Account", new { @class = "login_link" })</td>
+                </tr>
+                <tr>
+                    <td colspan="3" style="text-align:center;">
+                        @Html.ValidationSummary(true)
+
+                    </td>
+                </tr>
+            </table>
+
+
+        }
+    </section>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+@section UpperBanner{
+
+
+    <div class="innerBanner">
+        <div class="banner"><img src="../../Content/Images/inner_banner.jpg" width="1050" height="180" alt="" /></div>
+    </div>
+}
+
+@section SideMenu{
+    @Html.Partial("_ContactSideMenue")
+}

@@ -1,0 +1,39 @@
+﻿@model List<BLL.DomainClasses.News>
+
+<div class="headerTitle">
+    <h1 id="CategoryLabel" style="color:#fff;">@Resources.General.NewsMostViewed</h1>
+</div>
+
+<div class="news_container">
+    @foreach (var item in Model)
+    {
+        @*<tr>
+                <td>
+                    @Html.ActionLink(item.Title, "Details", new { newsId = item.Id })
+                </td>
+            </tr>*@
+
+
+
+        <div class="news_panal" style="padding:0px; width:auto; padding:15px 0px; height:80px;">
+            <a href="@Url.Action("Details", new { newsId = item.Id })">
+                <div class="news_img" style="width:83px; height:auto;">
+                    <img src='~/Uploads/News/@(item.Photo ?? "camera.png")' id="imgNews" class="news_img" style="width:83px; height:auto;" />
+                </div>
+                <div class="news_data" style="width: 60%; height:75px;">
+                    <p style="line-height:normal; font-size:10px;">
+                        <strong style="font-size:12px;">@item.Title </strong> <br />
+
+                        @item.Summary...
+                        <span style="color: #0963BD;">
+                            @*@Html.ActionLink(@Resources.General.ReadMore, "Details", new { newsId = item.Id })*@
+                        </span>
+                    </p>
+                    
+                </div>
+            </a>
+        </div>
+
+
+    }
+</div>

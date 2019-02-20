@@ -1,0 +1,50 @@
+﻿
+
+
+@if (TempData.ContainsKey(GoldStreamerWebApp.Helpers.AlertStyles.Success))
+{
+    foreach (var value in TempData.Values)
+    {
+        <script>
+
+            toastr.success("@value.ToString()");
+        </script>
+
+    }
+    TempData.Remove(GoldStreamerWebApp.Helpers.AlertStyles.Success);
+
+}
+
+@if (TempData.ContainsKey(GoldStreamerWebApp.Helpers.AlertStyles.Error))
+{
+    foreach (var value in TempData.Values)
+    {
+        <script>
+            toastr.error("@value.ToString()");
+        </script>
+    }
+    TempData.Remove(GoldStreamerWebApp.Helpers.AlertStyles.Error);
+}
+
+@if (TempData.ContainsKey(GoldStreamerWebApp.Helpers.AlertStyles.Information))
+{
+    foreach (var value in TempData.Values)
+    {
+        <script>
+            toastr.warning("@value.ToString()");
+        </script>
+    }
+    TempData.Remove(GoldStreamerWebApp.Helpers.AlertStyles.Information);
+}
+
+@if (TempData.ContainsKey(GoldStreamerWebApp.Helpers.AlertStyles.Warning))
+{
+    foreach (var value in TempData.Values)
+    {
+        <script>
+
+            toastr.warning("@value.ToString()");
+        </script>
+    }
+    TempData.Remove(GoldStreamerWebApp.Helpers.AlertStyles.Warning); 
+}

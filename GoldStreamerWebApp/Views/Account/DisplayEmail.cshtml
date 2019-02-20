@@ -1,0 +1,62 @@
+﻿@model GoldStreamerWebApp.Models.LoginViewModel
+@{
+    ViewBag.Title = Resources.General.Register;
+    Layout = "~/Views/Shared/_LayoutInner.cshtml";
+
+    
+}
+
+@if (!Model.Resend)
+{
+        if (!string.IsNullOrEmpty(Model.UserName))
+        {
+            <div class="msg_con">
+    <div class="msg_img"><img src="~/Content/Images/success.jpg" width="150"  alt="" /> </div>
+    <div class="msg_txt">
+   	<h1>تم الأرسال</h1>
+    <p>
+        @Resources.General.CheckMailPassword   </p>
+    <a href="#" style="float:left;">الذهاب الي الصفحة الرئيسية</a>
+    </div>
+  </div>
+           
+        }
+        else
+        {
+            
+             <div class="msg_con">
+    <div class="msg_img"><img src="~/Content/Images/success.jpg" width="150" alt="" /> </div>
+    <div class="msg_txt">
+   	<h1>تم الأرسال</h1>
+    <p>
+@Resources.General.CheckMail    </p>
+    <a href="#" style="float:left;">الذهاب الي الصفحة الرئيسية</a>
+    </div>
+  </div>
+            
+        }
+}
+else
+{
+    using (Html.BeginForm("ReSendConfirmation", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+    {
+        <p class="text-danger">
+
+            @ViewBag.Message
+            @Html.HiddenFor(model => model.UserName)
+            <input type="submit" class="btn" value="@Resources.General.Resend" />
+        </p>
+    }
+}
+@section SideMenu{
+    @Html.Partial("_ContactSideMenue")
+}
+@section UpperBanner{
+
+
+    <div class="innerBanner">
+        <h1 class="banner_header">@Resources.General.ForgotPassword</h1>
+
+        <div class="banner"><img src="../../Content/Images/inner_banner.jpg" width="1050" height="180" alt="" /></div>
+    </div>
+}

@@ -1,0 +1,123 @@
+﻿@model IEnumerable<BLL.DomainClasses.GlobalPrice>
+@{
+    Layout = "~/Views/Shared/_LayoutInner.cshtml";
+    ViewBag.Title = Resources.General.GlobalGoldPrices;
+    string baseUrl = GoldStreamer.Helpers.CultureHelper.GetBaseURL().ToLower();
+}
+
+<style >
+
+   .innerData {
+       width:98.5% !important ;
+   }
+</style>
+<h1 style=" margin-bottom:20px;">
+    @Resources.General.GlobalGoldPrices
+</h1>
+    <script src="~/Scripts/jquery-1.10.2.js"></script>
+    <script src="~/Scripts/jquery.signalR-2.2.0.js"></script>
+    <script src="~/signalr/hubs" type="text/javascript"></script>
+
+
+    <div>
+        <table class="table" style="width: 70%; text-align: center;">
+          
+                <tr>
+                <td style="text-align: center;"> <h2>@Resources.General.Carat24 </h2></td>
+                <td style="text-align: center; "> <h2>@Resources.General.carat22</h2></td>
+                <td style="text-align: center; "><h2>@Resources.General.Carat21</h2></td>
+                <td style="text-align: center; "><h2>@Resources.General.Carat18</h2></td>
+                <td style="text-align: center; "><h2>@Resources.General.Carat14</h2></td>
+                <td style="text-align: center; "><h2>@Resources.General.Carat10</h2></td>
+            </tr>
+           
+            <tr>
+                <td id="carat24" style="text-align: center;"></td>
+                <td id="carat22" style="text-align: center;"></td>
+                <td id="carat21" style="text-align: center;"></td>
+                <td id="carat18" style="text-align: center;"></td>
+                <td id="carat14" style="text-align: center;"></td>
+                <td id="carat10" style="text-align: center;"></td>
+
+            </tr>
+        </table>
+        <br />
+        <table style="width:70%;" border="0" class="data_table" id="tblGlobalPrices">
+   
+
+        </table>
+
+     
+    </div>
+
+    <script type="text/javascript">
+
+        $(function () {
+            var job = $.connection.globalPriceHub;
+            job.client.loadGlobalPrices = function () {
+                getData();
+            };
+            $.connection.hub.start();
+            getData();
+        });
+
+        function getData() {
+
+            var $tbl = $('#tblGlobalPrices');
+            $.ajax({
+                url: '@baseUrl/GlobalPrice/Get',
+                type: 'GET',
+                datatype: 'json',
+                async: false,
+                cache: false,
+                contentType: "application/json; charset=ISO-8601",
+                success: function (data) {
+
+                    $tbl.empty();
+                    //
+
+                    $.each(data, function (id, value) {
+
+                        var date = new Date(parseInt(value.CaptureTime.substr(6)));
+                        date = date.toLocaleTimeString().substr(0, 8) + " " + date.toLocaleDateString();
+                        $tbl.prepend(' <tr class="clr_tr"><td>' + value.Bid + '</td><td>' + value.Ask + '</td><td style="text-align:center;">' + date + '</td><tr> ');
+                        updateGoldPrice(value.Bid);
+                    });
+                    $tbl.prepend(' <tr class="clr_tr"><th width="33.33%">@Resources.General.Bid </th> <th width="33.33%">@Resources.General.Ask</th><th>@Resources.General.PriceDate </th></tr> ');
+
+                }
+            });
+        }
+
+    function updateGoldPrice(globalPrice) {
+        debugger;
+        var carat = globalPrice * 7.83 / 31.1035;
+
+            //var carat24 = carat.toString().substr(0, (carat.toString().indexOf(".")) + 3);
+            $('#carat24').html((carat ) .toFixed(2));
+
+            var carat22 = (carat * 22 / 24).toFixed(2);//.toString().substr(0, ((carat * 22 / 24).toString().indexOf(".")) + 3);
+            $('#carat22').html(carat22);
+
+            var carat21 = (carat * 21 / 24).toFixed(2);//.toString().substr(0, ((carat * 21 / 24).toString().indexOf(".")) + 3);
+            $('#carat21').html(carat21);
+
+            var carat18 = (carat * 18 / 24).toFixed(2);//.toString().substr(0, ((carat * 18 / 24).toString().indexOf(".")) + 3);
+            $('#carat18').html(carat18);
+
+            var carat14 = (carat * 14 / 24).toFixed(2);//.toString().substr(0, ((carat * 14 / 24).toString().indexOf(".")) + 3);
+            $('#carat14').html(carat14);
+
+            var carat10 = (carat * 10 / 24).toFixed(2);//.toString().substr(0, ((carat * 10 / 24).toString().indexOf(".")) + 3);
+            $('#carat10').html(carat10);
+        };
+    </script>
+@section UpperBanner{
+
+
+    <div class="innerBanner">
+        <h1 class="banner_header">@Resources.General.GlobalGoldPrices</h1>
+
+        <div class="banner"><img src="../../Content/Images/inner_banner.jpg" width="1050" height="180" alt="" /></div>
+    </div>
+}

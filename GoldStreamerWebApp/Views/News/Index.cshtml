@@ -1,0 +1,113 @@
+﻿@model List<BLL.DomainClasses.News>
+
+@{
+    ViewBag.Title = Resources.General.NewsCategoryText;
+}
+@using System.Globalization
+@using GoldStreamer.Helpers
+@{
+    Layout = "~/Views/Shared/_LayoutInner.cshtml";
+    string baseUrl = CultureHelper.GetBaseURL().ToLower();
+    string culture = CultureHelper.GetCurrentCulture().ToLower();
+    string primaryCulture = CultureHelper.GetPrimaryCulture().ToLower();
+    string trClass = "odd";
+    int defaultPageSize = int.Parse(System.Configuration.ConfigurationManager.AppSettings["DefaultPageSize"].ToString());
+    string[] pagingOptions = UsefulMethods.GetPagingOptions();
+}
+<script src="~/Scripts/GoldStreamer/jcarousellite.js"></script>
+<style>
+    .fixc {
+        position: fixed !important;
+        top: 40px;
+    }
+</style>
+
+<script type="text/javascript">
+    jQuery(document).ready(function () {
+        $(".main .jCarouselLite").jCarouselLite({
+            btnNext: ".next",
+            btnPrev: ".prev",
+            speed: 500,
+            visible: 12
+        });
+    });
+</script>
+@section SideMenu{
+    <div class="innerMenu" style="height: 351px; ">
+        <div class="menuItem">
+            @Html.ActionLink(Resources.General.All, "Index", new {subCategoryId =-1})
+
+        </div>
+
+        @foreach (var item1 in new DAL.UnitOfWork.UnitOfWork().NewsRepo.GetCategoriesWithNews())
+        {
+            <div class="menuItem">
+                @Html.ActionLink(item1.CategoryName, "Index", new {subCategoryId = item1.Id})
+
+            </div>
+
+        }
+    </div>
+}
+
+<h1>@Resources.General.ChooseDate</h1>
+<div class="dates">
+    <div class="f_banners">
+        <span class="next"><img alt="" src="~/Content/Images/pixel.png" /></span>
+        <div id="jCarouselLiteDemo" dir="ltr">
+            <div class="carousel main">
+                <div class="jCarouselLite">
+                    <ul>
+                        @for (int i = 0; i < 12; i++)
+                        {
+                            <li>
+                                <div class=@(i == ViewBag.selected ? "div_sc dateDiv" : "dateDiv")>
+                                    <table>
+                                        <tr>
+                                            <td>
+                                               
+                                                <a href="@Url.Action("Index", "News", new { subCategoryId = ViewBag.subCategoryId, newsDate = @DateTime.Now.AddMonths(-i).ToShortDateString(), indx = i }) "
+                                                   id="date@(i)" data-date="@DateTime.Now.AddMonths(-i)"><label class="lbl_calendar_year">@DateTime.Now.AddMonths(-i).ToString("yyyy", CultureInfo.CurrentCulture)</label></a>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <a href="@Url.Action("Index", "News", new { subCategoryId = ViewBag.subCategoryId, newsDate = @DateTime.Now.AddMonths(-i).ToShortDateString(), indx = i }) "
+                                                   id="date@(i)" data-date="@DateTime.Now.AddMonths(-i)">
+                                                    <label class="lbl_calendar_month">@DateTime.Now.AddMonths(-i).ToString("MMM", CultureInfo.CurrentCulture)</label>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                     </div>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <span class="prev"><img alt="" src="~/Content/Images/pixel.png" /></span>
+        <div class="clr"></div>
+    </div>
+</div>
+
+<div class="divList3" id="divList">
+    @*@{Html.Action("NewsList");}*@
+    @{Html.RenderAction("_NewsList"); }
+
+</div>
+
+<div class="divList2" id="divList2">
+    @{ Html.RenderAction("_MostViewed", new { subCat=ViewBag.subCategoryId }); }
+
+</div>
+@section UpperBanner{
+
+
+    <div class="innerBanner">
+        <h1 class="banner_header">@Resources.General.NewsCategoryText</h1>
+
+        <div class="banner"><img src="../../Content/Images/inner_banner.jpg" width="1050" height="180" alt="" /></div>
+    </div>
+}

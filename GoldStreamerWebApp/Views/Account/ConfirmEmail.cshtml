@@ -1,0 +1,22 @@
+﻿@{
+    ViewBag.Title = @Resources.General.ConfirmMail;
+    Layout = "~/Views/Shared/_LayoutInner.cshtml";
+
+}
+
+<h2>@ViewBag.Title.</h2>
+<div>
+
+
+    <div class="msg_con">
+        <div class="msg_img"><img src="~/Content/Images/success.jpg" width="150" alt="" /> </div>
+        <div class="msg_txt">
+            <h1>تم الأرسال</h1>
+            <p>
+                @Resources.Messages.ConfirmationMessage @Html.ActionLink(Resources.General.loginLink, "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })
+            </p>
+            <a href="#" style="float:left;">الذهاب الي الصفحة الرئيسية</a>
+        </div>
+    </div>
+   
+</div>

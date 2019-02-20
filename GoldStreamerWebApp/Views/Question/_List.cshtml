@@ -1,0 +1,597 @@
+﻿@using GoldStreamer.Helpers
+@model PagedList.IPagedList<BLL.DomainClasses.Question>
+@using PagedList.Mvc;
+@using System.Web.Configuration;
+
+@{
+    string baseUrl = CultureHelper.GetBaseURL().ToLower();
+    int defaultPageSize = int.Parse(System.Configuration.ConfigurationManager.AppSettings["DefaultPageSize"].ToString());
+    string[] pagingOptions = UsefulMethods.GetPagingOptions();
+    string trClass = "clr_tr";
+}
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+
+
+@*<script src="~/Scripts/GoldStreamer/ListFunctionsHelper.js"></script>*@
+@*<script src="~/Scripts/jquery.placeholder.js"></script>*@
+
+
+
+
+@if (@Model.Count() == 0)
+{
+    <table>
+        <tr>
+            <td colspan="3">
+                <div>
+                    @Html.Label("lblMSGsearch", Resources.Messages.NoData)
+                </div>
+            </td>
+        </tr>
+    </table>
+}
+
+
+else
+{
+    <div class="counter_div">@Resources.General.NumberOfQuestions :<span>@Model.TotalItemCount </span></div>
+
+    <table class="data_table" style="width:100%">
+        <tr>
+            <th style="width:57%;">@Resources.General.Question</th>
+            <th>@Resources.General.Group </th>
+            <th>@Resources.General.Procedures </th>
+            <th>الحالة </th>
+
+
+        </tr>
+
+        @foreach (var item in Model.OrderBy(o => o.ReadingCounter))
+        {
+            <tr class="@trClass">
+                <td>
+                    @Html.DisplayFor(modelItem => item.QuestionText)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.QuestionGroup)
+                </td>
+                <td>
+                    @*<a href="#" id="@item.ID" class="Editquestion">@Resources.General.Edit</a>|
+            <a href="#" id="@item.ID" class="DeleteQuestion">@Resources.General.Delete</a>|*@
+
+                    <a href="#" id="@item.ID" class="Editquestion" title="@Resources.General.Edit"><img src="~/Content/Images/edit_1.png" width="30" /></a>
+                    <a href="#" id="@item.ID" class="DeleteQuestion" title="@Resources.General.Delete"><img src="~/Content/Images/del.png" width="30" /></a>
+                    @if (item.IsActive)
+                    {
+                        <a href="#" id="@item.ID" data-id="@item.ID" data-checked="@item.IsActive" class="checkboxActive" title="@Resources.General.notactive">
+                            <img src="~/Content/Images/active.png" width="40" />
+                        </a>
+
+                    }
+                    else
+                    {
+                        <a href="#" id="@item.ID" data-id="@item.ID" data-checked="@item.IsActive" class="checkboxActive" title="@Resources.General.Activate">
+                            <img src="~/Content/Images/de-active.png" width="40" />
+                        </a>
+                    }
+
+
+
+                    @if (item.IsUserQuestion)
+                    {
+                        <a href="#" id="@item.ID" data-id="@item.ID" class="Sendcheckbox" title="@Resources.General.SendReply">
+                            <img src="~/Content/Images/send-comment.png" width="40" />
+                        </a>
+                    }
+
+
+
+                </td>
+                <td>
+                    @if (item.IsUserQuestion && item.IsReplied)
+                    {
+                        <label id="replied">@Resources.General.replied</label>
+                    }
+                    else if (item.IsUserQuestion && !item.IsReplied)
+                    {
+                        <label id="notreplied">@Resources.General.notreplied</label>
+                    }
+                    else
+                    {
+                        <label id="notreplied">@Resources.General.AdminQuestions</label>
+                    }
+                </td>
+            </tr>
+                    if (trClass == "")
+                    {
+                        trClass = "clr_tr";
+
+                    }
+                    else
+                    {
+                        trClass = "";
+
+                    }
+        }
+
+        <tr>
+            <td colspan="4">
+                <div class="" id="pager" data-url="@(baseUrl)/Question/_List/" data-container="divList" data-search="@ViewBag.SearchText" data-isactive="@ViewBag.isActive" data-userquestion="@ViewBag.UserQuestion" data-nocategoryquestions="@ViewBag.NoCategoryQuestions" data-noanswersquestions="@ViewBag.NoAnswersQuestions" data-questionsnoanswers="@ViewBag.QuestionsNoAnswer" data-sort="@ViewBag.CurrentSort" data-page-size="@ViewBag.PageSize">
+                    @*@if (Model.PageCount > 1)
+                        {
+
+                            <span>@Resources.General.Page</span>
+                            @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)
+                            <span> @Resources.General.From </span>
+                            @Model.PageCount
+
+                        }*@
+
+                    @if (Model.PageCount > 1)
+                    {
+                        @Html.PagedListPager(Model, page => ("javascript:gotoPage('" + page + "')"))
+                    }
+
+                    @* @if (Model.Count > 0)
+                        {
+                            <div class="pull-right show">
+                                <span class="padding5">@Resources.General.PageSizeChoose</span>
+                                <span>
+                                    <select id="SelectPageSize" data-url="@(baseUrl)/Question/_List" data-container="divList" data-search="@ViewBag.SearchText" data-isactive="@ViewBag.isActive" data-userquestion="@ViewBag.UserQuestion" data-nocategoryquestions="@ViewBag.NoCategoryQuestions" data-noanswersquestions="@ViewBag.NoAnswersQuestions" data-questionsnoanswers="@ViewBag.QuestionsNoAnswer" data-sort="@ViewBag.CurrentSort" data-page-size="@ViewBag.PageSize">
+                                        @for (int i = 0; i < pagingOptions.Length; i++)
+                                        {
+                                            if (ViewBag.PageSize != null && ViewBag.PageSize == int.Parse(pagingOptions[i]))
+                                            {
+                                                <option value="@pagingOptions[i]" selected>@pagingOptions[i]</option>
+                                            }
+                                            else if (defaultPageSize == int.Parse(pagingOptions[i]))
+                                            {
+                                                <option value="@pagingOptions[i]" selected>@pagingOptions[i]</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@pagingOptions[i]">@pagingOptions[i]</option>
+                                            }
+                                        }
+
+                                    </select>
+
+                                </span>
+                            </div>
+
+                        }*@
+                </div>
+
+
+
+            </td>
+        </tr>
+    </table>
+}
+
+
+<script>
+    $(document).ready(function () {
+        $('#UserQuestion').on('change', function () {
+            debugger;
+            var isChecked = $(this).prop('checked');
+            if (isChecked == true) {
+                $('#divUserQuestion').show();
+
+            } else {
+                $('#divUserQuestion').hide();
+            }
+        });
+
+        $(".Editquestion").on('click', function (event) {
+            debugger;
+            var questionId = $(this).attr("id"); //event.target.id;
+
+            $.ajax({
+                url: "@(baseUrl)/Question/_Edit/",
+                type: 'Get',
+                data: { questionId: questionId },
+                async: false,
+                cache: false,
+                success: function (data) {
+                    $('#AjaxResult').html(data);
+                    if ($('#QuestionGroupId').val() == "") {
+                        $('#drpGroups').val(0);
+                    }
+                    else {
+                        $('#drpGroups').val($('#QuestionGroupId').val());
+                    }
+                },
+                error: function () {
+                }
+            });
+        });
+
+
+        $(".DeleteQuestion").on('click', function (event) {
+            debugger;
+            var pagenumber = 1;
+            if ('@ViewBag.PageNumber' != null && '@ViewBag.PageNumber' != "" && '@ViewBag.PageNumber' != '') {
+                pagenumber = '@ViewBag.PageNumber';
+            }
+
+            var Conf = confirm("@Resources.Messages.SureDelete");
+            var pageSize = $('#SelectPageSize').val();
+            if (Conf == true) {
+                var questionId = $(this).attr("id"); //event.target.id;
+                $.ajax({
+                    url: "@(baseUrl)/Question/Delete/",
+                    type: 'Get',
+                    data: { questionId: questionId, 'pageSize': pageSize, pageNumber: pagenumber },
+                    async: false,
+                    cache: false,
+                    success: function (data) {
+                        $('#divList').html(data);
+                        toastr.success('@Resources.Messages.Deleted');
+                        $("#drpGroups").val('0');
+                        $("#questiontxt").val('');
+                        $("#answertxt").val('');
+                        $('#divList').html(data);
+                        $("#answerValidator").text('');
+                        $("#questionValidator").text('');
+                        $("#VideoLinktxt").text('');
+                        $("#VideoLinktxt").val('');
+                        $("#ID").val(0);
+                        search(pagenumber);
+                    },
+                    error: function () {
+                        toastr.error('@Resources.Messages.UnableToDelete');
+                    }
+                });
+            }
+
+        });
+    });
+</script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#SelectPageSize').change(function (event) {
+            debugger;
+            var id = event.target.id;
+            var url = $(this).attr('data-url');
+            var container = $(this).attr('data-container');
+
+            var searchText = $(this).attr('data-search');
+            var isactive = $(this).attr('data-isactive');
+            var userquestion = $(this).attr('data-userquestion');
+            var nocategoryquestions = $(this).attr('data-nocategoryquestions');
+            var noanswersquestions = $(this).attr('data-noanswersquestions');
+            var questionsnoanswers = $(this).attr('data-questionsnoanswers');
+            if (searchText.length > 0) {
+                searchText = searchText.trim();
+            }
+
+            // custom paramter
+            var customParm = $(this).attr('data-customparm');
+            var customParmValues = getCustomParms(customParm);
+            //
+            //var sortOrder = $(this).attr('data-sort');
+            var pageSize = '@defaultPageSize';
+            if (document.getElementById("SelectPageSize") != null && document.getElementById("SelectPageSize").value != "") {
+                pageSize = document.getElementById('SelectPageSize').value;
+            }
+            $.ajax({
+                url: url + "?searchText=" + encodeURIComponent(searchText) + "&isActive=" + isactive + "&UserQuestion=" + userquestion + "&NoCategoryQuestions=" + nocategoryquestions + "&NoAnswersQuestions=" + noanswersquestions + "&QuestionsNoAnswer=" + questionsnoanswers + "&pageSize=" + pageSize + '&pageNumber=1' + customParmValues,
+                type: 'Get',
+                async: false,
+                cache: false,
+                //data: { 'SearchText': searchText, 'pageSize': pageSize,'sortOrder': sortOrder,'pageNumber':1 },
+                success: function (data) {
+                    $('#divList').html(data);
+                },
+                error: function () {
+
+                }
+            });
+        });
+    });
+
+    function search(pagenumber) {
+        debugger;
+        var searchText = $('#txtSearch').val();
+        //var isActive = $('#ActiveSearch').prop('checked');
+        var UserQuestion = $('#UserQuestion').prop('checked');
+        var NoCategoryQuestions = $('#NoCategoryQuestions').prop('checked');
+        var NoAnswersQuestions = $('#NoAnswersQuestions').prop('checked');
+        var QuestionsNoAnswer = $('#QuestionsNoAnswer').prop('checked');
+        var radioval = $('input[name=Request]:checked', '#indexform').val();
+
+        var customParm = $(this).attr('data-customparm');
+        var customParmValues = getCustomParms(customParm);
+        //
+        var pageSize = '@defaultPageSize';
+        if (document.getElementById("SelectPageSize") != null && document.getElementById("SelectPageSize").value != "") {
+            pageSize = document.getElementById('SelectPageSize').value;
+        }
+        $.ajax({
+            url: "@(baseUrl)/Question/_List",
+            type: 'Get',
+            async: false,
+            cache: false,
+            contentType: "application/json; charset=utf-8",
+            data: { searchText: searchText, isActive: radioval, UserQuestion: UserQuestion, NoCategoryQuestions: NoCategoryQuestions, NoAnswersQuestions: NoAnswersQuestions, QuestionsNoAnswer: QuestionsNoAnswer, pageNumber: pagenumber, pageSize: pageSize },
+            success: function (data) {
+                $('#divList').html(data);
+
+            },
+            error: function (xhr, textStatus) {
+                toastr.error('Error!');
+            }
+        });
+        return false;
+    }
+
+    function getCustomParms(customParm) {
+        if (customParm == null) return "";
+        var keys = customParm.split(",");
+        var keysWithValues
+        for (var i = 0; i < keys.length; i++) {
+            keysWithValues = "&" + keys[i].replace("|", "=");
+        }
+        return keysWithValues;
+    }
+    function gotoPage(pageNumber) {
+        debugger;
+        var pager = $('#pager');
+        if (pager == null) return;
+        var url = pager.attr('data-url');
+        var container = pager.attr('data-container');
+        var searchText = pager.attr('data-search');
+        var isactive = pager.attr('data-isactive');
+        var userquestion = pager.attr('data-userquestion');
+        var nocategoryquestions = pager.attr('data-nocategoryquestions');
+        var noanswersquestions = pager.attr('data-noanswersquestions');
+        var questionsnoanswers = pager.attr('data-questionsnoanswers');
+        var sortOrder = pager.attr('data-sort');
+        // custom paramter
+        var customParm = pager.attr('data-customparm');
+        var customParmValues = getCustomParms(customParm);
+        //
+        var pageSize = pager.attr('data-page-size');
+        if (pageSize == '') {
+            pageSize = '@defaultPageSize';
+        }
+
+        $.ajax({
+            url: url + "?searchText=" + encodeURIComponent(searchText) + "&isActive=" + isactive + "&UserQuestion=" + userquestion + "&NoCategoryQuestions=" + nocategoryquestions + "&NoAnswersQuestions=" + noanswersquestions + "&QuestionsNoAnswer=" + questionsnoanswers + "&pageSize=" + pageSize + "&PageNumber=" + pageNumber + customParmValues,
+            type: 'Get',
+            async: false,
+            cache: false,
+            success: function (data) {
+                debugger;
+                $('#' + container).html(data);
+            },
+            error: function () {
+
+            }
+        });
+    }
+</script>
+<script>
+
+    $(document).ready(function (e) {
+        $('.checkboxActive').on('click', function (event) {
+            debugger;
+            var pagenumber = 1;
+            if ('@ViewBag.PageNumber' != null && '@ViewBag.PageNumber' != "" && '@ViewBag.PageNumber' != '') {
+                pagenumber = '@ViewBag.PageNumber';
+            }
+            var id = $(this).attr("data-id");
+            var ckbox = $(this).attr("data-checked");
+            console.log(id);
+            if (ckbox == "True") {
+                var status = "0";
+            } else {
+                var status = "1";
+            }
+            var statusId = status + "," + id;
+            url = '@(baseUrl)/' + '/Question/UnActivateQuestion/' + statusId;
+
+            if (status == "1") {
+                var r = confirm("@Resources.Messages.ActivateQuestion");
+            } else {
+                var r = confirm("@Resources.Messages.DeAtivateQuestion");
+            }
+            var isSuccess = false;
+            if (r == true) {
+                $.ajax({
+                    url: url,
+                    type: "POST",
+                    async: false,
+                    cache: false,
+                    data: { statusId: statusId, confirm: 0, pageNumber: pagenumber },
+                    success: function (data) {
+                        debugger;
+                        toastr.success('@Resources.Messages.Updated');
+                        $('#divList').html(data);
+                        $("#drpGroups").val('0');
+                        $("#questiontxt").val('');
+                        $("#answertxt").val('');
+                        $('#divList').html(data);
+                        $("#answerValidator").text('');
+                        $("#questionValidator").text('');
+                        $("#VideoLinktxt").text('');
+                        $("#VideoLinktxt").val('');
+                        $("#ID").val(0);
+                        search(pagenumber);
+
+                    },
+                    error: function (xhr, textStatus) {
+                        debugger;
+                        if (xhr.status == 9) {
+                            toastr.error('@Resources.Messages.Canotsavequestion')
+                        }
+                        else if (xhr.status == 8) {
+                            var x = confirm('@Resources.Messages.ConfirmActive');
+                            if (x == true) {
+                                $.ajax({
+                                    url: url,
+                                    type: "POST",
+                                    async: false,
+                                    cache: false,
+                                    data: { statusId: statusId, confirm: 1, pageNumber: pagenumber },
+                                    success: function (data) {
+                                        debugger;
+                                        toastr.success('@Resources.Messages.Updated');
+                                        $('#divList').html(data);
+                                        $("#drpGroups").val('0');
+                                        $("#questiontxt").val('');
+                                        $("#answertxt").val('');
+                                        $('#divList').html(data);
+                                        $("#answerValidator").text('');
+                                        $("#questionValidator").text('');
+                                        $("#VideoLinktxt").text('');
+                                        $("#VideoLinktxt").val('');
+                                        $("#ID").val(0);
+                                        search(pagenumber);
+
+                                    },
+                                    error: function (xhr, textStatus) {
+                                        debugger;
+                                        if (xhr.status == 9) {
+                                            toastr.error('@Resources.Messages.EnterGroupandanswer')
+                                        }
+
+                                        else {
+                                            toastr.error('Error Message');
+                                        }
+
+                                    }
+                                });
+
+                            }
+                            else {
+                                return false;
+                            }
+                        }
+                        else {
+                            toastr.error('Error Message');
+                        }
+
+                    }
+                });
+
+            }
+            else {
+                //$(this).toggle($(this).checked);
+                //$(this).prop("checked", !$checks.is(":checked"));
+                if ($(this).is(':checked')) {
+                    $(this).attr('checked', false);
+                }
+                else {
+
+                    //$(this).attr("checked", true);
+                    //$(this).is(":checked" , true);
+                    $(this).prop("checked", true)
+                }
+
+            }
+        });
+
+
+        //=======
+        $('.Sendcheckbox').on('click', function (event) {
+            debugger;
+            var pagenumber = 1;
+            if ('@ViewBag.PageNumber' != null && '@ViewBag.PageNumber' != "" && '@ViewBag.PageNumber' != '') {
+                pagenumber = '@ViewBag.PageNumber';
+            }
+            var id = $(this).attr("data-id");
+
+            url = '@(baseUrl)/' + '/Question/SendQuestionReply/' + id;
+            var r = confirm("@Resources.Messages.SendReplyConfirm");
+            var isSuccess = false;
+            if (r == true) {
+                $.ajax({
+                    url: url,
+                    type: "POST",
+                    async: false,
+                    cache: false,
+                    data: { Id: id, confirm: 0, pageNumber: pagenumber },
+                    success: function (data) {
+                        debugger;
+                        toastr.success('@Resources.Messages.sent');
+                        $('#divList').html(data);
+                        $("#drpGroups").val('0');
+                        $("#questiontxt").val('');
+                        $("#answertxt").val('');
+                        $('#divList').html(data);
+                        $("#answerValidator").text('');
+                        $("#questionValidator").text('');
+                        $("#VideoLinktxt").text('');
+                        $("#VideoLinktxt").val('');
+                        $("#ID").val(0);
+                        search(pagenumber);
+
+                    },
+                    error: function (xhr, textStatus) {
+                        debugger;
+                        if (xhr.status == 5) {
+                            toastr.error('@Resources.Messages.noansertoreply')
+                        }
+                        else if (xhr.status == 9) {
+                            var n = confirm("@Resources.Messages.ReplayQuestionagain");
+                            var isSuccess = false;
+                            if (n == true) {
+                                $.ajax({
+                                    url: url,
+                                    type: "POST",
+                                    async: false,
+                                    cache: false,
+                                    data: { Id: id, confirm: 1, pageNumber: pagenumber },
+                                    success: function (data) {
+                                        debugger;
+                                        toastr.success('@Resources.Messages.sent');
+                                        $('#divList').html(data);
+                                        $("#drpGroups").val('0');
+                                        $("#questiontxt").val('');
+                                        $("#answertxt").val('');
+                                        $('#divList').html(data);
+                                        $("#answerValidator").text('');
+                                        $("#questionValidator").text('');
+                                        $("#VideoLinktxt").text('');
+                                        $("#VideoLinktxt").val('');
+                                        $("#ID").val(0);
+                                        search(pagenumber);
+
+                                    },
+                                    error: function (xhr, textStatus) {
+                                        debugger;
+                                        if (xhr.status == 5) {
+                                            toastr.error('@Resources.Messages.noansertoreply')
+                                        }
+                                        else {
+                                            toastr.error('Error Message');
+                                        }
+
+                                    }
+                                });
+
+                            }
+                            else {
+                                return false;
+                            }
+                        }
+                        else {
+                            toastr.error('Error Message');
+                        }
+
+                    }
+                });
+
+            }
+            else {
+                return false;
+
+            }
+        });
+
+    });
+
+</script>

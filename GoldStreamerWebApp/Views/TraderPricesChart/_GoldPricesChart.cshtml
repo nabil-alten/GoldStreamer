@@ -1,0 +1,94 @@
+﻿@using Trirand.Web.Mvc
+
+@{
+    Layout = null;
+}
+<script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery/jquery-1.9.0.js"></script>
+<!-- Include the javascript client-side file for jqChart -->
+<script type="text/javascript" src="../../Scripts/trirand/jquery.jqChart.min.js"></script>
+<div>
+    <!--
+        The Html.Trirand().JQChart() helper has two parameters
+        - the model of the chart -- all chart properties, data and settings
+        - the ID of the chart -- can be used for client-side manipulation
+        In this example we are using hardcoded model in the View, but you can contruct the model in
+        the controller based on runtime criteria and database data and pass the model
+        to the View using ViewData
+    -->
+    <div style="text-align:center;color:#0d3340;font-weight:bold;">@ViewBag.text</div>
+    @Html.Trirand().JQChart(
+                new JQChart
+                {
+                    Type =  ViewBag.ChartType,
+                    Width = 800,
+                    Height = 300,
+                    MarginRight = 130,
+                    MarginBottom = 50,
+                    
+                    //BackgroundColor="Gray",
+                    Title = new ChartTitleSettings
+                    {
+                        Text = "",
+                        Align = ChartHorizontalAlign.Left,
+                        X = -15
+                    },
+                    SubTitle = new ChartTitleSettings
+                    {
+                        Text = ViewBag.subtitle,
+                        X = -20
+                    },
+                    // we can have multiple x and y-axis.
+                    XAxis = new List<ChartXAxisSettings>
+                    {
+                        new ChartXAxisSettings
+                        {
+                            Categories =ViewBag.Categories,
+                            Title = new ChartTitleSettings
+                            {
+                                Text = Resources.General.daymonth+ " "+DateTime.Now.Year.ToString()
+                            }
+                        }
+                    },
+                    // we can have multiple x and y-axis.
+                    YAxis = new List<ChartYAxisSettings>
+                    {
+                        new ChartYAxisSettings
+                        {
+                            Title = new ChartTitleSettings
+                            {
+                                Text = Resources.General.leprice
+                            }
+                        }
+                    },
+                    Legend = new ChartLegendSettings
+                    {
+                        Layout = ChartLegendLayout.Vertical,
+                        Align = ChartHorizontalAlign.Right,
+                        //BackgroundColor=System.Drawing.Color.Red,
+                        VerticalAlign = ChartVerticalAlign.Top,
+                        X = -10,
+                        Y = 100,
+                        BorderWidth = 0,
+                    },
+                    ToolTip = new ChartToolTipSettings
+                    {
+                        Formatter = "formatToolTip",
+                        
+                    },
+                    Series =ViewBag.Series 
+                }, "TemperatureChart")
+
+
+    <script type="text/javascript">
+
+        function formatToolTip() {
+            // "point" is the current point data, you can access various properties there
+            return  this.series.name  +
+               this.x + ':' + this.y + 'ج.م' ;
+        }
+
+    </script>
+
+    <br /><br />
+
+</div>

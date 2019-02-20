@@ -1,0 +1,220 @@
+﻿@{
+    ViewBag.Title = Resources.General.EditUserProfile;
+    string baseUrl = GoldStreamer.Helpers.CultureHelper.GetBaseURL().ToLower();
+    Layout = "~/Views/Shared/_LayoutInner.cshtml";
+}
+
+@model GoldStreamerWebApp.Models.EditProfileViewModel
+
+<div style="width:100%; min-height: 600px; overflow:auto;">
+    <div class="innerData">
+        <h1>@Resources.General.EditUserProfile</h1>
+        <hr />
+
+        @using (Html.BeginForm("EditUserProfile", "EditProfile", FormMethod.Post, new { @class = "form-horizontal", role = "form", id = "form" }))
+        {
+            <table width="100%" border="0" style="text-align:right;" dir="rtl">
+
+                <tr>
+                    <td width="15%"> @Resources.General.FirstName<label style="color: red">*</label></td>
+                    <td>
+                        @Html.TextBoxFor(model => Model.UserName, new { @id = "lbl_UserName", maxlength="50", placeholder = @Resources.General.UserName })
+                        @Html.ValidationMessageFor(model => model.UserName)
+                    </td>
+                    <td width="15%"><label>@Resources.General.LastName</label></td>
+                    <td>
+                        @Html.TextBoxFor(model => Model.Family, new { @id = "lbl_Family", maxlength = 50, placeholder = @Resources.General.LastName })
+                        @Html.ValidationMessageFor(model => model.Family)
+                    </td>
+                </tr>
+                <tr>
+                    <td width="15%"> @Resources.General.Gender<label style="color: red">*</label></td>
+                    <td>
+                        @Html.RadioButtonFor(model => model.Gender, "false", new { id = "Female", name = "Gender" })
+                        @Html.Label(@Resources.General.Female)
+                        @Html.RadioButtonFor(model => model.Gender, "true", new { id = "Male", name = "Gender" })
+                        @Html.Label(@Resources.General.Male)
+                    </td>
+                    <td width="15%"><label>@Resources.General.phone</label></td>
+                    <td>
+                        @Html.TextBoxFor(model => model.Phone, new { maxlength = 11, placeholder = @Resources.General.phone })
+                        @Html.ValidationMessageFor(model => model.Phone)
+                    </td>
+                </tr>
+                <tr>
+                    <td width="15%"><label>@Resources.General.Mobile</label></td>
+                    <td>
+                        @Html.TextBoxFor(model => model.Mobile, new { name = "name", type = "text", maxlength = 15, placeholder = @Resources.General.Mobile })
+                        @Html.ValidationMessageFor(model => model.Mobile)
+                    </td>
+
+                    
+                    <td width="20%">@Resources.General.Email</td>
+                    <td>
+                        @Html.TextBoxFor(model => model.Email, new { name = "name", type = "text", @readonly = "readonly", placeholder = @Resources.General.Email })
+                        @Html.ValidationMessageFor(model => model.Email)
+                    </td>
+                    
+                </tr>
+
+                <tr>
+                    
+                    <td width="15%">@Resources.General.UserName</td>
+
+                    <td>
+                        @Html.TextBoxFor(model => Model.Name, new { @id = "lbl_UserName", @readonly = "readonly", placeholder = @Resources.General.FirstName })
+                    </td>
+                    <td width="15%">@Resources.General.ReEmail</td>
+                    <td>
+                        @Html.TextBoxFor(model => model.ReEmail, new { name = "name", type = "text", @readonly = "readonly", placeholder = @Resources.General.Email })
+                        @Html.ValidationMessageFor(model => model.ReEmail)
+                    </td>
+                </tr>
+                <tr>
+                    <td width="15%">@Resources.General.OldPassword</td>
+                    <td>
+                        @Html.PasswordFor(m => m.OldPassword, new { name = "name", id="OldPassword", type = "password", @class = "form-control", placeholder = @Resources.General.OldPassword, maxlength = 20 })
+                        @Html.ValidationMessageFor(model => model.OldPassword)
+                    </td>
+                    <td width="15%">@Resources.General.Password</td>
+                    <td>
+                        @Html.PasswordFor(m => m.Password, new { name = "name", type = "password", @class = "form-control", placeholder = @Resources.General.Password, maxlength = 20 })
+                        @Html.ValidationMessageFor(model => model.Password)
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                    </td>
+                    <td></td>
+                    
+                    <td width="15%">@Resources.General.ConfirmPassword</td>
+
+                    <td>
+                        @Html.PasswordFor(m => m.ConfirmPassword, new { name = "name", type = "password", @class = "form-control", placeholder = @Resources.General.ConfirmPassword, maxlength = 20 })
+                        @Html.ValidationMessageFor(model => model.ConfirmPassword)
+                    </td>
+                </tr>
+                <tr>
+                    
+                </tr>
+                <tr>
+
+                    <td colspan="3">
+                        @Html.CheckBoxFor(model => model.IsPublicProfile, new { @checked = "checked" })
+                        @Html.Label(@Resources.General.AllowGeneralProfile)
+                    </td>
+                    <td id="passwordError" style="color:red"></td>
+                </tr>
+                <tr>
+                    <td colspan="4">
+                        @Html.CheckBoxFor(model => model.IsRegistered, new { @checked = "checked" })
+                        @Html.Label(@Resources.General.RegisterInNews)
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4" align="center">
+                        <input class="btn center-block" name="btn_Update" id="btn_Update" type="button" value="@Resources.General.Update" />
+                    </td>
+                </tr>
+            </table>
+        }
+    </div>
+</div>
+
+<script>
+    $("#btn_Update").click(function () {
+        if (!CheckPasswords()) {
+            event.preventDefault();
+
+            var oldPassword = $("#OldPassword").val();
+            var paswordValue = $("#Password").val();
+            var confirmPassword = $("#ConfirmPassword").val();
+
+            if (paswordValue == "")
+                $("#passwordError").html('@Resources.Messages.PasswordValidationMsg');
+            else if (confirmPassword == "")
+                $("#passwordError").html('@Resources.Messages.RePasswordValidationMsg');
+            else
+                $("#passwordError").html('@Resources.Messages.PasswordErrorMsg');
+        }
+
+        else {
+
+            $("#passwordError").html('');
+            var phone = $("#Phone").val();
+            var mobile = $("#Mobile").val();
+            var email = $("#Email").val();
+            var userName = $("#lbl_UserName").val();
+            var family = $("#lbl_Family").val();
+            var password = $("#Password").val();
+            var confirmPassword = $("#ConfirmPassword").val();
+            var oldPassword = $("#OldPassword").val();
+            var gender = $('input[name="Gender"]:checked').val();
+            var IsPublicProfile = document.getElementById('IsPublicProfile').checked;
+            var IsRegistered = document.getElementById('IsRegistered').checked;
+
+            if (!$("#form").valid()) return false;
+            $.ajax({
+                cache: false,
+                type: "Post",
+                url: '@(baseUrl)/EditProfile/UpdateUserProfile/',
+                data: { 'Phone': phone, 'Mobile': mobile, 'Email': email, 'Name': userName, 'Family': family, 'Password': password, 'IsPublicProfile': IsPublicProfile, 'IsRegistered': IsRegistered, 'Gender': gender, 'OldPassword': oldPassword, 'ConfirmPassword': confirmPassword },
+                success: function (data) {
+                    debugger;
+                    toastr.success('@Resources.Messages.Saved');
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    debugger;
+                    if (xhr.status === 1)
+                        toastr.error('@Resources.Messages.EmailExists');
+                    else if (xhr.status === 2)
+                        toastr.error('@Resources.Messages.OrderExists');
+                    else if (xhr.status === 3)
+                        toastr.error('@Resources.Messages.TraderNameExists');
+                    else if (xhr.status === 4)
+                        toastr.error('@Resources.Messages.TraderMobileExists');
+                    else if (xhr.status === 5)
+                        toastr.error('@Resources.Messages.TraderShopExists');
+                    else if (xhr.status === 6)
+                        toastr.error('@Resources.Messages.TraderPhoneExists');
+                    else if (xhr.status === 7)
+                        toastr.error('@Resources.Messages.InvalidOldPassword');
+                    else if (xhr.status === 8)
+                        toastr.error('@Resources.Messages.PasswordGeneralError');
+
+                    else
+                        toastr.error(thrownError);
+                }
+            });
+        }
+    });
+
+
+    function CheckPasswords() {
+        var oldPassword = $("#OldPassword").val();
+        var paswordValue = $("#Password").val();
+        var confirmPassword = $("#ConfirmPassword").val();
+
+        if (paswordValue == "" && confirmPassword == "" && oldPassword == "")
+            return true;
+
+        if (paswordValue != "" && confirmPassword != "" && oldPassword != "")
+            return true;
+
+        if (paswordValue == "" && confirmPassword == "" && oldPassword != "")
+            return true;
+
+        else
+            return false;
+    }
+</script>
+
+@section UpperBanner{
+
+
+    <div class="innerBanner">
+        <h1 class="banner_header">@Resources.General.EditUserProfile</h1>
+
+        <div class="banner"><img src="../../Content/Images/inner_banner.jpg" width="1050" height="180" alt="" /></div>
+    </div>
+}

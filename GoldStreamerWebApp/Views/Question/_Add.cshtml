@@ -1,0 +1,181 @@
+﻿@using System.Collections.Concurrent
+@using GoldStreamer.Helpers
+@model BLL.DomainClasses.Question
+@{
+    string baseUrl = CultureHelper.GetBaseURL().ToLower();
+
+    int itemId = Model.ID;
+
+}
+@Html.ValidationSummary(true)
+
+<form class="form-horizontal" id="form" method="post" action="">
+    @Html.HiddenFor(m => m.QuestionGroupId)
+    @Html.HiddenFor(m => m.ID)
+
+        <table style="width:100%;">
+            <tr>
+                <td>@Resources.General.Group : <label style="color: red">*</label></td>
+                <td>
+                    <select autofocus="autofocus" id="drpGroups" class="form-control">
+                        <option value="0"> @Resources.General.ChooseGroup</option>
+                        @{
+                        foreach (var item in @ViewBag.Groups)
+                        {
+                            <option value=@item.ID> @item.GroupName</option>
+                        }
+                        }
+
+                    </select>
+                    <div id="drpValidation" style=" color: #b94a48"></div>
+                </td>
+                <td style="width:25%;"></td>
+                <td>
+                    @Resources.General.Question : <label style="color: red">*</label>
+                </td>
+                <td>
+                    @Html.TextBoxFor(m => m.QuestionText, new { @autofocus = "autofocus", placeholder = Resources.General.Question, maxlength = "250", @id = "questiontxt", @class = "form-control" })
+                    @*@Html.ValidationMessageFor(m => m.QuestionText)*@
+                    <div id="questionValidator" style=" color: #b94a48;"></div>
+
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    @Resources.General.answer : <label style="color: red">*</label>
+                </td>
+                <td>
+                    @Html.TextAreaFor(m => m.Answer, new { @autofocus = "autofocus", placeholder = Resources.General.answer, maxlength = "250", @id = "answertxt", @class = "form-control" })
+                    @*@Html.ValidationMessageFor(m => m.Answer)*@
+                    <div id="answerValidator" style="color: #b94a48;"></div>
+                </td>
+                <td style="width:25%;"></td>
+
+                <td>
+                    @Resources.General.VideoLink : <label style="color: red"></label>
+                </td>
+                <td>
+                    @Html.TextBoxFor(m => m.VideoLink, new { placeholder = Resources.General.VideoLink, maxlength = "250", @id = "VideoLinktxt", @class = "form-control", @style = "width: 63.5%;" })
+                    @Html.ValidationMessageFor(m => m.VideoLink)
+                    <div id="VideoLinkValidation" style="color: #b94a48;"></div>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="5">
+                    <input id="btnSave" type="button" value="@Resources.General.Save" class="btn btn-primary" />
+                </td>
+            </tr>
+        </table>
+   
+</form>
+<script type="text/javascript">
+    $(document).ready(
+
+        function () {
+
+
+            $('#btnSave').on('click', function (e) {
+                debugger;
+                $("#answerValidator").text('');
+                $("#questionValidator").text('');
+                $("#drpValidation").text('');
+                var groupId = document.getElementById("drpGroups").value;
+                var question = document.getElementById("questiontxt").value;
+                var answer = document.getElementById("answertxt").value;
+                var video = document.getElementById("VideoLinktxt").value;
+                var itemId = $("#ID").val();
+                var pageSize = $('#SelectPageSize').val();
+                var flag = 0;
+                e.preventDefault();
+                var pagenumber = 1;
+                if ('@ViewBag.PageNumber' != null && '@ViewBag.PageNumber' != "" && '@ViewBag.PageNumber' != '') {
+                    pagenumber = '@ViewBag.PageNumber';
+                }
+                if (groupId == 0 || groupId == "0")
+                {
+                    $("#drpValidation").text('@Resources.Messages.Required');
+                    flag = 1;
+                }
+                else {
+                    $("#drpValidation").text('');
+                   
+                }
+                if (question == "") {
+                    $("#questionValidator").text('@Resources.Messages.Required');
+                    flag = 1;
+                } else if (question.length < 2) {
+                    $("#questionValidator").text('@Resources.Messages.Mintwo');
+                    flag = 1;
+                }
+                else {
+                    $("#questionValidator").text('');
+                }
+
+                if (answer != "" && answer.length < 2) {
+                    $("#answerValidator").text('@Resources.Messages.Mintwo');
+                    flag = 1;
+                }
+                else if (answer == "")
+                {
+                    $("#answerValidator").text('@Resources.Messages.Required');
+                    flag = 1;
+                }
+                else {
+                    $("#answerValidator").text('');
+                }
+
+                if (flag == 1) return false;
+                if ($("#form").valid()) {
+                
+
+                    $.ajax({
+                        url: "@(baseUrl)/Question/Save",
+                        type: "POST",
+                        contentType: "application/json; charset=utf-8",
+                        data: JSON.stringify({ 'groupId': groupId, 'questionText': question, 'answerText': answer, 'videoLink': video, 'questionId': itemId, 'pageSize': pageSize, pageNumber: pagenumber }),
+
+                        success: function (data, statusText, xhr) {
+                            debugger;
+                            if (data.StatusCode == "406" || data.StatusCode == 406) {
+                                toastr.error(data.StatusDescription);
+                            }
+
+                            else {
+                                toastr.success('@Resources.Messages.Saved');
+                                $("#drpGroups").val('0');
+                                $("#drpValidation").text('');
+                                $("#questiontxt").val('');
+                                $("#answertxt").val('');
+                                $("#answertxt").text('');
+                                $('#divList').html(data);
+                                $("#answerValidator").text('');
+                                $("#questionValidator").text('');
+                                $("#VideoLinktxt").text('');
+                                $("#VideoLinktxt").val('');
+                                $("#ID").val(0);
+                                if (itemId != 0)
+                                {
+                                    search(pagenumber);
+                                }
+                            }
+                            $('#SelectPageSize').val(pageSize);
+                        },
+                        error: function (xhr, textStatus) {
+
+                        }
+                    });
+                }
+
+                else {
+                return false;
+            }
+            });
+
+
+    }
+
+        );
+
+</script>
+@Scripts.Render("~/bundles/jqueryval")

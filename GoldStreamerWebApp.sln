@@ -1,0 +1,101 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.21005.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoldStreamerWebApp", "GoldStreamerWebApp\GoldStreamerWebApp.csproj", "{8AECB227-8974-4262-A722-06357DF24708}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoldStreamerWebApp.Tests", "GoldStreamerWebApp.Tests\GoldStreamerWebApp.Tests.csproj", "{B93AB748-7DFE-466A-B8F3-D165C74D7867}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{021B5B60-D066-4CA6-9479-735A16FF5BAB}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\NuGet.Config = .nuget\NuGet.Config
+		.nuget\NuGet.exe = .nuget\NuGet.exe
+		.nuget\NuGet.targets = .nuget\NuGet.targets
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DAL", "DAL\DAL.csproj", "{19398CCE-691C-4BBF-A60E-0C1FADD2EE5F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Resources", "Resources\Resources.csproj", "{69B94F48-3309-4AFE-BD7F-00720253A8ED}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BLL", "BLL\BLL.csproj", "{749EAFDE-27C1-4AAF-BCD3-380FD5E4DD0F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BusinessServices", "BusinessServices\BusinessServices.csproj", "{83A3D021-06C9-4BB7-89AD-81059DD3F351}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceControlPanel", "ServiceControlPanel\ServiceControlPanel.csproj", "{E2C6391B-C971-4F08-BAB6-0D988A1160A9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GlobalPricesCapturer", "FeederCapturer\GlobalPricesCapturer.csproj", "{044CCA2E-56E8-4F20-8F51-6D205D8796F5}"
+EndProject
+Global
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 9
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = http://tfs-server:8080/tfs/defaultcollection
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = BLL\\BLL.csproj
+		SccProjectName1 = BLL
+		SccLocalPath1 = BLL
+		SccProjectUniqueName2 = BusinessServices\\BusinessServices.csproj
+		SccProjectName2 = BusinessServices
+		SccLocalPath2 = BusinessServices
+		SccProjectUniqueName3 = DAL\\DAL.csproj
+		SccProjectName3 = DAL
+		SccLocalPath3 = DAL
+		SccProjectUniqueName4 = GoldStreamerWebApp.Tests\\GoldStreamerWebApp.Tests.csproj
+		SccProjectName4 = GoldStreamerWebApp.Tests
+		SccLocalPath4 = GoldStreamerWebApp.Tests
+		SccProjectUniqueName5 = GoldStreamerWebApp\\GoldStreamerWebApp.csproj
+		SccProjectName5 = GoldStreamerWebApp
+		SccLocalPath5 = GoldStreamerWebApp
+		SccProjectUniqueName6 = Resources\\Resources.csproj
+		SccProjectName6 = Resources
+		SccLocalPath6 = Resources
+		SccProjectUniqueName7 = ServiceControlPanel\\ServiceControlPanel.csproj
+		SccProjectName7 = ServiceControlPanel
+		SccLocalPath7 = ServiceControlPanel
+		SccProjectUniqueName8 = FeederCapturer\\GlobalPricesCapturer.csproj
+		SccProjectName8 = FeederCapturer
+		SccLocalPath8 = FeederCapturer
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8AECB227-8974-4262-A722-06357DF24708}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8AECB227-8974-4262-A722-06357DF24708}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8AECB227-8974-4262-A722-06357DF24708}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8AECB227-8974-4262-A722-06357DF24708}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B93AB748-7DFE-466A-B8F3-D165C74D7867}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B93AB748-7DFE-466A-B8F3-D165C74D7867}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B93AB748-7DFE-466A-B8F3-D165C74D7867}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B93AB748-7DFE-466A-B8F3-D165C74D7867}.Release|Any CPU.Build.0 = Release|Any CPU
+		{19398CCE-691C-4BBF-A60E-0C1FADD2EE5F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{19398CCE-691C-4BBF-A60E-0C1FADD2EE5F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{19398CCE-691C-4BBF-A60E-0C1FADD2EE5F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{19398CCE-691C-4BBF-A60E-0C1FADD2EE5F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{69B94F48-3309-4AFE-BD7F-00720253A8ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{69B94F48-3309-4AFE-BD7F-00720253A8ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{69B94F48-3309-4AFE-BD7F-00720253A8ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{69B94F48-3309-4AFE-BD7F-00720253A8ED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{749EAFDE-27C1-4AAF-BCD3-380FD5E4DD0F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{749EAFDE-27C1-4AAF-BCD3-380FD5E4DD0F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{749EAFDE-27C1-4AAF-BCD3-380FD5E4DD0F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{749EAFDE-27C1-4AAF-BCD3-380FD5E4DD0F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{83A3D021-06C9-4BB7-89AD-81059DD3F351}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{83A3D021-06C9-4BB7-89AD-81059DD3F351}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{83A3D021-06C9-4BB7-89AD-81059DD3F351}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{83A3D021-06C9-4BB7-89AD-81059DD3F351}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E2C6391B-C971-4F08-BAB6-0D988A1160A9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E2C6391B-C971-4F08-BAB6-0D988A1160A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E2C6391B-C971-4F08-BAB6-0D988A1160A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E2C6391B-C971-4F08-BAB6-0D988A1160A9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{044CCA2E-56E8-4F20-8F51-6D205D8796F5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{044CCA2E-56E8-4F20-8F51-6D205D8796F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{044CCA2E-56E8-4F20-8F51-6D205D8796F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{044CCA2E-56E8-4F20-8F51-6D205D8796F5}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

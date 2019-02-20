@@ -1,0 +1,123 @@
+﻿@{
+    ViewBag.Title = "مؤشر أسعار التاجر";
+    string baseUrl = CultureHelper.GetBaseURL().ToLower();
+    Layout = "~/Views/Shared/_LayoutInner.cshtml";
+}
+@using GoldStreamer.Helpers
+
+<div class="row">
+    <div>
+        <table style="width:80%; text-align:right;" cellpadding="5">
+            <tr>
+                <td>@Resources.General.Price :</td>
+                <td>
+                    <select id="Pricetype">
+                        <option value="1">@Resources.General.AveragePrice</option>
+                        <option value="2">@Resources.General.Close</option>
+                    </select>
+                </td>
+                <td>@Resources.General.period :</td>
+                <td>
+                    <select id="Datetype">
+                        <option value="1">@Resources.General.Week</option>
+                        <option value="2">@Resources.General.Month</option>
+                        <option value="3">@Resources.General.MonthWeek</option>
+                        <option value="4">@Resources.General.YearMonth</option>
+                    </select>
+                </td>
+                <td>
+                    @Resources.General.showtype :
+                </td>
+                <td>
+                    <select id="ChartType">
+                        <option value="Line">@Resources.General.Line</option>
+                        <option value="Column">@Resources.General.Bar</option>
+                        <option value="Scatter">@Resources.General.ScatterLine</option>
+
+
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="10" style="text-align:center;">
+                    <button class="btn" id="save" onclick="setChartType();">@Resources.General.show</button>
+                </td>
+            </tr>
+        </table>
+
+        <br />
+        <div >
+
+            <!-- graphSection -->
+            <div class="graphSection">
+                <div class="headerTitle" style="background-color:transparent;">
+                    <div id="jqChartHolder">@Html.Action("_GoldPricesChart", new { global = 0 })</div>  @*</td>*@
+                    @*<td><div><img id="chartHolder" src="@Url.Action("GetRainfallChart")" /></div>  </td>*@
+                  </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+<script>
+    function setChartType() {
+        setJQChartType();
+        //setOldChartType();
+    }
+    function setJQChartType() {
+        var pricetype = $("#Pricetype").val();
+        var datetype = $("#Datetype").val();
+        var charttype = $("#ChartType").val();
+        var global = 0;
+        var url = '@(baseUrl)/' + '/TraderPricesChart/_GoldPricesChart/?chartType=' + charttype + '&pricetype=' + pricetype + '&datetype=' + datetype + '&global=' + global;
+        $.ajax({
+            url: url,
+            type: "Get",
+            contentType: "application/html; charset=utf-8",
+            success: function (data) {
+                debugger;
+                $("#jqChartHolder").html(data);
+            },
+            error: function (data) {
+
+            }
+        });
+    }
+    @*function setOldChartType() {
+        var pricetype = $("#Pricetype").val();
+        var datetype = $("#Datetype").val();
+        var charttype = $("#ChartType").val();
+        var url = '@(baseUrl)/' + '/TraderPricesChart/GetRainfallChart/?chartType=' + charttype + '&pricetype=' + pricetype + '&datetype=' + datetype;
+
+        $.ajax({
+            url: url,
+            type: "Get",
+            contentType: "application/html; charset=utf-8",
+            success: function (data) {
+                $("#chartHolder").attr("src", "http://localhost:38071//images/" + charttype + ".jpg");
+            },
+            error: function (data) {
+
+            }
+        });
+    }*@
+</script>
+
+@section UpperBanner{
+
+
+    <div class="innerBanner">
+        <h1 class="banner_header">مؤشر أسعار التاجر</h1>
+
+        <div class="banner"><img src="../../Content/Images/inner_banner.jpg" width="1050" height="180" alt="" /></div>
+    </div>
+}
+
+@section SideMenu{
+    @Html.Partial("_SuperTraderMenu")
+}
+<script>
+    $(function () {
+        $("#div_pricesOffers").addClass("menuItemactive");
+    });
+</script>

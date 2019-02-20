@@ -1,0 +1,81 @@
+﻿@using GoldStreamer.Helpers
+@{
+    ViewBag.Title = Resources.General.Dashboard;
+    Layout = "~/Views/Shared/_LayoutInner.cshtml";
+
+    string baseUrl = CultureHelper.GetBaseURL().ToLower();
+}
+@section SideMenu{
+    @Html.Partial("_SuperTraderMenu")
+}
+
+<script type="text/javascript">
+    function changeImage(imgId, imgName) {
+        debugger;
+        image = document.getElementById(imgId);
+        image.src = "@(baseUrl)Content/Images/" + imgName;
+    }
+
+</script>
+
+<div class="mainContainer" id="wrap" style="min-height:200px; overflow:auto;">
+
+    <div style="width:100%; min-height: 600px; overflow:auto;">
+
+        <div class="innerData" style ="width:100%;">
+            <a href="~/EditProfile/Index">
+                <div class="dash_box" >
+                    <img src="~/Content/Images/info_icon.png" id="info_icon" onmouseover="changeImage(this.id, 'info_icon_sc.png')" onmouseout="    changeImage(this.id, 'info_icon.png')" />
+                 
+                </div>
+            </a>
+            <a href="~/TraderPrices/Index">
+                <div class="dash_box">
+                    <img src="~/Content/Images/update_prices_icon.png" id="update_prices_icon" onmouseover="changeImage(this.id, 'update_prices_icon_sc.png')" onmouseout="    changeImage(this.id, 'update_prices_icon.png')" />
+                   
+                </div>
+            </a>
+            <a href="~/Pricer/Index">
+                <div class="dash_box" >
+                    <img src="~/Content/Images/price_offers_icon.png" id="price_offers_icon" onmouseover="changeImage(this.id, 'price_offers_icon_sc.png')" onmouseout="    changeImage(this.id, 'price_offers_icon.png')" />
+                
+                </div>
+            </a>
+            <a href="~/Basket/Index">
+                <div class="dash_box" >
+                    <img src="~/Content/Images/traders_basket_icon.png" id="traders_basket_icon" onmouseover="changeImage(this.id, 'traders_basket_icon_sc.png')" onmouseout="    changeImage(this.id, 'traders_basket_icon.png')" />
+             
+                </div>
+            </a>
+            <a href="~/FavorateList/AssignTraders">
+                <div class="dash_box" >
+                    <img src="~/Content/Images/fav_icon.png" id="fav_icon" onmouseover="changeImage(this.id, 'fav_icon_sc.png')" onmouseout="    changeImage(this.id, 'fav_icon.png')" />
+
+                </div>
+            </a>
+
+            <a href="~/Feedback">
+                <div class="dash_box">
+                    <img src="~/Content/Images/msg_icon.png" id="msg_icon" onmouseover="changeImage(this.id, 'msg_icon_sc.png')" onmouseout="    changeImage(this.id, 'msg_icon.png')" />
+                </div>
+            </a>
+
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $("#div_dashboard").addClass("menuItemactive");
+    });
+</script>
+
+@section UpperBanner{
+
+
+    <div class="innerBanner">
+        <h1 class="banner_header">@Resources.General.Dashboard</h1>
+
+        <div class="banner"><img src="../../Content/Images/inner_banner.jpg" width="1050" height="180" alt="" /></div>
+    </div>
+}

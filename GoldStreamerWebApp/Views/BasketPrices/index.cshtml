@@ -1,0 +1,58 @@
+﻿@using BLL.DomainClasses
+@using Resources
+@model PagedList.IPagedList<BasketPrices>
+
+@{
+    ViewBag.Title = @Resources.General.BasketPrices + (Session["traderName"] != null ? " - " + Session["traderName"].ToString() : "");
+    Layout = "~/Views/Shared/_LayoutInner.cshtml";
+}
+
+
+<div class="headerTitle">
+    <h1 style="color:#fff;">
+        @Resources.General.BasketPrices
+    </h1>
+</div>
+<br />
+
+
+@{Html.RenderPartial("_Add", new BasketPrices());}
+<br />
+<br />
+<div id="bestP">
+    @{Html.RenderAction("_BestPrice");}
+</div>
+
+<div id="divList">
+    @Html.Action("_list")
+</div>
+
+
+
+@if (GoldStreamer.Helpers.UserNavigation.IsSuperTrader())
+{
+    @section SideMenu{
+        @Html.Partial("_SuperTraderMenu")
+    }
+}
+else if (GoldStreamer.Helpers.UserNavigation.IsTrader())
+{
+    @section SideMenu{
+        @Html.Partial("_TraderSideMenu")
+    }
+}
+@section UpperBanner{
+
+
+    <div class="innerBanner">
+        <h1 class="banner_header">@Resources.General.BasketPrices</h1>
+
+        <div class="banner"><img src="../../Content/Images/inner_banner.jpg" width="1050" height="180" alt="" /></div>
+    </div>
+}
+<script>
+    $(function () {
+        $("#div_basket").addClass("menuItemactive");
+    });
+</script>
+

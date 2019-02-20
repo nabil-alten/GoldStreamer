@@ -1,0 +1,231 @@
+﻿@model List<BLL.DomainClasses.News>
+@using GoldStreamer.Helpers
+@{
+    ViewBag.Title = @Resources.General.NewsDetails;
+    string baseUrl = CultureHelper.GetBaseURL().ToLower();
+    //Layout = "~/Views/Shared/_LayoutInner.cshtml";
+}
+
+<link href="~/Content/css/style.css" rel="stylesheet" />
+<script src="~/Scripts/GoldStreamer/jquery.ba-cond.min.js"></script>
+<script src="~/Scripts/GoldStreamer/jquery.slitslider.js"></script>
+<script src="~/Scripts/GoldStreamer/jquery.plusslider-min.js"></script>
+<script src="~/Scripts/GoldStreamer/jquery.easing.1.3.js"></script>
+<script src="~/Scripts/GoldStreamer/jcarousellite.js"></script>
+@{
+    int MaxNewsHome = int.Parse(System.Configuration.ConfigurationManager.AppSettings["MaxNewsHome"].ToString());
+}
+<!-- NewsArea --------------------------------->
+@*<div class="dataArea">
+    <div class="headerTitle" style="margin-bottom:30px;">
+        <h1 style="color:#fff;">اخبار الذهب العالمية والمحلية</h1>
+    </div>*@
+@*<div style="padding-right:20px;">*@
+    <div class="activities">
+
+        <div id="slider1">
+
+            @if (Model.Where(n => n.NewsCategory.MainCategoryId == 1) != null)
+            {
+                foreach (var item in Model.Where(n => n.NewsCategory.MainCategoryId == 1).GroupBy(n => n.NewsCategory.CategoryName))
+                {
+                    <div class="quote">
+                        <div class="date" style="background-color: #467146;">@item.Key</div>
+                        <div class="acts acts1">
+                            <ul>
+                                @for (int i = 0; i < MaxNewsHome; i++)
+                                {
+                                    if (item.ToList().Count > i)
+                                    {
+                                        <li>
+                                            @*<a href="@Url.Action("Details", "News", new {newsId = item.ToList()[i].Id})" class="mainCat1">*@
+                                                <a href="/News/Details?newsId=@item.ToList()[i].Id" class="mainCat1">
+                                                    @(item.ToList().Count > i ? item.ToList()[i].Summary : "")
+                                                    ...
+                                                </a>
+                                        </li>
+                                    }
+                                }
+
+                            </ul>
+                        </div>
+
+                    </div>
+                }
+            }
+        </div>
+
+
+    </div>
+
+    <div class="activities">
+
+        <div id="slider2">
+            @if (Model.Where(n => n.NewsCategory.MainCategoryId == 2).ToList().Count > 0)
+            {
+                foreach (var item1 in Model.Where(n => n.NewsCategory.MainCategoryId == 2).GroupBy(n => n.NewsCategory.CategoryName))
+                {
+                    <div class="quote">
+                        <div class="date">@item1.Key</div>
+                        <div class="acts acts2">
+                            <ul>
+                                @for (int i = 0; i <= MaxNewsHome; i++)
+                                {
+                                    if (item1.ToList().Count > i)
+                                    {
+                                        <li>
+                                            @*<a href="@Url.Action("Details", "News", new {newsId = item1.ToList()[i].Id})" class="mainCat1">*@
+                                                <a href="/News/Details?newsId=@item1.ToList()[i].Id" class="mainCat1">
+                                                    @(item1.ToList().Count > i ? item1.ToList()[i].Summary : "")
+                                                    ...
+                                                </a>
+                                        </li>
+                                    }
+                                }
+                            </ul>
+                        </div>
+                    </div>
+
+                }
+            }
+        </div>
+
+    </div>
+
+    <!-- /NewsArea --------------------------------->
+
+@*</div>*@
+
+
+
+<script type="text/javascript">
+    $(function () {
+
+        var Page = (function () {
+
+            var $nav = $('#nav-dots > span'),
+                slitslider = $('#slider').slitslider({
+                    onBeforeChange: function (slide, pos) {
+
+                        $nav.removeClass('nav-dot-current');
+                        $nav.eq(pos).addClass('nav-dot-current');
+
+                    }
+                }),
+
+                init = function () {
+
+                    initEvents();
+
+                },
+                initEvents = function () {
+
+                    $nav.each(function (i) {
+
+                        $(this).on('click', function (event) {
+
+                            var $dot = $(this);
+
+                            if (!slitslider.isActive()) {
+
+                                $nav.removeClass('nav-dot-current');
+                                $dot.addClass('nav-dot-current');
+
+                            }
+
+                            slitslider.jump(i + 1);
+                            return false;
+
+                        });
+
+                    });
+
+                };
+
+            return { init: init };
+
+        })();
+
+        Page.init();
+
+        /**
+         * Notes:
+         *
+         * example how to add items:
+         */
+
+        /*
+
+        var $items  = $('<div class="sl-slide sl-slide-color-2" data-orientation="horizontal" data-slice1-rotation="-5" data-slice2-rotation="10" data-slice1-scale="2" data-slice2-scale="1"><div class="sl-slide-inner bg-1"><div class="sl-deco" data-icon="t"></div><h2>some text</h2><blockquote><p>bla bla</p><cite>Margi Clarke</cite></blockquote></div></div>');
+
+        // call the plugin's add method
+        ss.add($items);
+
+        */
+
+    });
+</script>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(window).scroll(function () {
+            if ($(this).scrollTop() > 100) {
+                $('.scrollup').fadeIn();
+            } else {
+                $('.scrollup').fadeOut();
+            }
+        });
+        $('.scrollup').click(function () {
+            $("html, body").animate({ scrollTop: 0 }, 600);
+            return false;
+        });
+    });
+    jQuery(document).ready(function () {
+        $(".main .jCarouselLite").jCarouselLite({
+            btnNext: ".next",
+            btnPrev: ".prev",
+            speed: 500,
+            visible: 3
+        });
+        var s1 = '@Model.Where(n => n.NewsCategory.MainCategoryId == 1).ToList().Count';
+        if (s1 > 0) {
+            $('#slider1').plusSlider({
+                sliderEasing: 'easeInOutExpo',
+                fullWidth: true,
+                autoPlay: true,
+                sliderType: 'slider',
+                createPagination: false,
+                createArrows: true
+            });
+        }
+        var s2 = '@Model.Where(n => n.NewsCategory.MainCategoryId == 2).ToList().Count';
+        if (s2 > 0) {
+            $('#slider2').plusSlider({
+                sliderEasing: 'easeInOutExpo',
+                fullWidth: true,
+                autoPlay: true,
+                sliderType: 'slider',
+                createPagination: false,
+                createArrows: true
+            });
+        }
+        $('#slider3').plusSlider({
+            sliderEasing: 'easeInOutExpo',
+            fullWidth: true,
+            autoPlay: true,
+            sliderType: 'slider',
+            createPagination: false,
+            createArrows: true
+        });
+
+        if ($.cookie("css")) {
+            $('#css_color').attr("href", $.cookie("css"));
+        }
+        $("#colors a").click(function () {
+            $('#css_color').attr("href", $(this).attr("rel"));
+            $.cookie("css", $(this).attr("rel"), { expires: 365, path: '/' });
+            return false;
+        });
+    });
+</script>

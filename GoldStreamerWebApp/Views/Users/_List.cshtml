@@ -1,0 +1,404 @@
+﻿@*@model PagedList.IPagedList<BLL.DomainClasses.Users>*@
+@model PagedList.IPagedList<BLL.SecurityClasses.ApplicationUser>
+
+@using GoldStreamer.Helpers
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css"/>
+
+@{
+    string baseURL = CultureHelper.GetBaseURL().ToLower();
+    string culture = CultureHelper.GetCurrentCulture().ToLower();
+    string primaryCulture = CultureHelper.GetPrimaryCulture().ToLower();
+    string trClass = "clr_tr";
+}
+
+@*<form id="form" class="form-horizontal" method="post">*@
+
+    <table style="width:100%" class="data_table" id="tblUsers">
+        <tr>
+            <td style="text-align:right">
+                @Html.TextBox("searchtxt", "", "", new { placeholder = @Resources.General.Filter })
+                <input id="btnSearch" class="btn" type="button" value=@Resources.General.Filter>
+            </td>
+            </tr>
+
+            @if (Model.Count() == 0)
+            {
+
+<tr>
+                <td>
+                    @Html.Label("lblMSGsearch", Resources.Messages.NoData)
+                </td>
+            </tr>
+         
+          
+
+        }
+        else
+        {
+            <tr>
+            <td style="text-align:right">
+                <div class="counter_div">
+                    @Resources.General.UsersNo : @Model.TotalItemCount
+                </div>
+            </td>
+        </tr>
+            <tr>
+                <th>
+                   @Resources.General.UserName
+                </th>
+                <th>
+                    @Resources.General.Password
+                </th>
+                <th>
+                   @Resources.General.MainUser
+                </th>
+                <th>
+                    @Resources.General.isactive
+                </th>
+                <th></th>
+               
+            </tr>
+
+            foreach (var item in Model)
+            {
+                <tr class="@trClass">
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UserName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DefaultPassword)
+                    </td>
+                    <td>
+                        <div id="myList2">
+                            @if (item.MainUser == true)
+                            {
+                                <input checked="true" type="radio" id="@item.Id" name="ids" value="@item.Id"/>
+                            }
+                            else
+                            {
+                                <input class="radiobutton" type="radio" id="@item.Id" name="ids" value="@item.Id" />
+                            }
+                        </div>
+                    </td>
+                    <td>
+                        @if (item.IsActive)
+                        {
+                            <a href="#" id="@item.Id" data-id="@item.Id"  data-checked="@item.IsActive" class="checkbox">@Resources.General.notactive</a>
+                        }
+                        else
+                        {
+                            <a href="#" id="@item.Id" data-id="@item.Id"  data-checked="@item.IsActive" class="checkbox">@Resources.General.Activate</a>
+                        }
+                        @*<input type="checkbox" class="checkbox" checked="@item.IsActive" data-id="@item.Id" title="تفعيل"/>*@
+                    </td>
+
+                    @*<td>
+                        @Html.ActionLink(" اعادة انشاء كلمة المرور ", "GeneratePassword", "Users", new {id = item.Id}, null)
+                    </td>*@
+                    <td>
+                        <a href="#" id="@item.Id" class="GeneratePassword">@Resources.General.GeneratePassword</a>
+                    </td>
+                        
+                   
+                </tr>
+                
+                if(trClass == "")
+                {
+                    trClass = "clr_tr";
+                }
+                else
+                {
+                    trClass = "";
+                }
+            }
+            <tr>
+                <td colspan="3">
+                    @if (Model.PageCount > 1)
+                    {
+                        <span>@Resources.General.Page</span>
+                        @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)
+                        <span> @Resources.General.From </span>
+                        @Model.PageCount
+
+                    }
+                    @if (Model.PageCount > 1)
+                    {
+                        @Html.PagedListPager(Model, page => ("javascript:gotoPage('" + page + "','" + ViewBag.searchtxt + "','" + ViewBag.pageSize + "')"))
+                    }
+                </td>
+            </tr>
+        }
+
+    </table>
+    @*</form>*@
+    <script>
+
+    $(document).ready(function (e) {
+        $('.checkbox').on('click', function (event) {
+            debugger;
+            var txt = document.getElementsByName('searchtxt')[0].value;
+            var id = $(this).attr("data-id");
+            console.log(id);
+            var pagenumber = 1;
+            if ('@ViewBag.PageNumber' != null && '@ViewBag.PageNumber' != "" && '@ViewBag.PageNumber' != '') {
+                pagenumber = '@ViewBag.PageNumber';
+            }
+            //var ckbox = $('#checkbox');
+            var ckbox = $(this).attr("data-checked");
+            //if ($(this).is(':checked')) {
+            //    var status = "1";
+            //} else {
+            //    var status = "0";
+            //}
+            if (ckbox == "True") {
+                var status = "0";
+            } else {
+                var status = "1";
+            }
+            var statusId = status + "," + id;
+            url = '@(baseURL)/' + '/Users/UnActivateUsr/' + statusId;
+
+            if (status == "1") {
+                var r = confirm("@Resources.Messages.ActivateUsr");
+            } else {
+                var r = confirm("@Resources.Messages.DeAtivateUsr");
+            }
+            var isSuccess = false;
+            if (r == true) {
+                $.ajax({
+                    url: url,
+                    type: "POST",
+                    async: false,
+                    cache: false,
+                    data: { statusId: statusId, pageNumber: pagenumber },
+                    success: function (data) {
+
+                        toastr.success('@Resources.Messages.Updated');
+
+                            $('#divList').html(data);
+
+                            path = '@(baseURL)/' + '/Users/_Add';
+                        $.ajax({
+                            url: path,
+                            type: 'Get',
+                            async: false,
+                            cache: false,
+                            success: function (data) {
+                                $('#AjaxResult').html(data);
+                                document.getElementsByName('searchtxt')[0].value = txt;
+                                $('#btnSearch').click();
+                                $('#searchtxt').focus();
+                            },
+                            error: function (xhr, textStatus) {
+                                if (xhr.status == 5)
+                                    window.location.reload();
+                                else
+                                    toastr.error("something seems wrong");
+
+                            }
+                        });
+                    },
+                    error: function () {
+                        toastr.error('Error Message');
+                        if (xhr.status == 5)
+                            window.location.reload();
+                    }
+                });
+
+            }
+            else {
+                //$(this).toggle($(this).checked);
+                //$(this).prop("checked", !$checks.is(":checked"));
+                if ($(this).is(':checked')) {
+                    $(this).attr('checked', false);
+                }
+                else {
+
+                    //$(this).attr("checked", true);
+                    //$(this).is(":checked" , true);
+                    $(this).prop("checked", true)
+                }
+
+            }
+        });
+
+
+        //=======
+
+
+    });
+
+    </script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#searchtxt').keypress(function(event) {
+
+            if (event.keyCode == 13) {
+
+                $('#btnSearch').click();
+                $('#searchtxt').focus();
+
+                return false;
+            }
+        });
+
+        $('#btnSearch').on('click', function() {
+            var txt = document.getElementsByName('searchtxt')[0].value;
+
+            $.ajax({
+                url: '@(baseURL)/' + '/Users/Search',
+                type: 'Get',
+                async: false,
+                cache: false,
+                contentType: "application/json; charset=utf-8",
+                data: { searchtxt: txt },
+                success: function(data) {
+                    $('#divList').html(data);
+                    path = '@(baseURL)/' + '/Users/_Add';
+                    $.ajax({
+                        url: path,
+                        type: 'Get',
+                        async: false,
+                        cache: false,
+                        success: function(data) {
+                            $('#AjaxResult').html(data);
+                        },
+                        error: function(xhr, textStatus) {
+                            if (xhr.status == 5)
+                                window.location.reload();
+                            else
+                                toastr.error("something seems wrong");
+
+                        }
+                    });
+                },
+                error: function(xhr, textStatus) {
+                    toastr.error('Error!');
+                    if (xhr.status == 5)
+                        window.location.reload();
+                }
+            });
+            return false;
+        });
+        $(".GeneratePassword").on('click', function(event) {
+
+            var id = event.target.id;
+            var txt = document.getElementsByName('searchtxt')[0].value;
+            var Conf = confirm("@Resources.Messages.regeneratePassword");
+            if (Conf == true) {
+                $.ajax({
+                    url: '@(baseURL)/' + '/Users/GeneratePassword/' + id,
+                    type: 'Get',
+                    async: false,
+                    cache: false,
+                    success: function(data, statusText, xhr) {
+                        $('#divList').html(data)
+                        toastr.success('@Resources.Messages.Updated');
+
+                        path = '@(baseURL)/' + '/Users/_Add';
+                        $.ajax({
+                            url: path,
+                            type: 'Get',
+                            async: false,
+                            cache: false,
+                            success: function(data) {
+                                $('#AjaxResult').html(data);
+                                document.getElementsByName('searchtxt')[0].value = txt;
+                                $('#btnSearch').click();
+                                $('#searchtxt').focus();
+                            },
+                            error: function(xhr, textStatus) {
+                                if (xhr.status == 5)
+                                    window.location.reload();
+                                else
+                                    toastr.error("something seems wrong");
+
+                            }
+                        });
+                    },
+                    error: function(xhr, textStatus) {
+                        console.log("Error in Saveing User");
+                        console.log(xhr.code);
+
+                        if (xhr.status == 5)
+                            window.location.reload();
+                    }
+                });
+                console.log("register masked before delete");
+                $("#Balancerequired").autoNumeric({ oRide: '19,2' });
+                console.log("register masked after delete");
+            } else
+                return false;
+        });
+    });
+
+    function gotoPage(pageNumber, searchText, pageSize) {
+        if (pageSize == null || pageSize == "" || pageSize == "Undefigned") {
+            pageSize = 1;
+        }
+        $.ajax({
+            url: '@(baseURL)/' + '/Users/Search/',
+            data: { searchtxt: searchText, page: pageNumber },
+            contentType: "application/json; charset=utf-8",
+            success: function(data) {
+                $('#divList').html(data);
+                path = '@(baseURL)/' + '/Users/_Add';
+                $.ajax({
+                    url: path,
+                    type: 'Get',
+                    async: false,
+                    cache: false,
+                    success: function(data) {
+                        $('#AjaxResult').html(data);
+                    },
+                    error: function(xhr, textStatus) {
+                        if (xhr.status == 5)
+                            window.location.reload();
+                        else
+                            toastr.error("something seems wrong");
+
+                    }
+                });
+            },
+            error: function() {
+                toastr.error('Error');
+            }
+        });
+    }
+
+    $(".radiobutton").on('click', function(event) {
+        debugger;
+
+        var conf = confirm('@Resources.Messages.SetAsMainUser');
+        if (conf == true) {
+            var itemId = event.target.id;
+            $.ajax({
+                url: "@(baseURL)/Users/EditMainLogin/",
+                type: 'Get',
+                data: { userId: itemId },
+                async: false,
+                cache: false,
+                success: function (data) {
+                    debugger;
+                    if (data != "")
+                    {
+                    $('#divList').html(data);
+                    toastr.success('@Resources.Messages.Updated');
+                    }
+                    else {
+                        window.location.href = '/SuperTrader/Index/';
+                    }
+                },
+                error: function() {
+                    toastr.error("something seems wrong");
+                    }
+                });
+        }
+        else {
+            window.location.href = '/Users/Index/';
+        }
+
+        });
+    
+</script>

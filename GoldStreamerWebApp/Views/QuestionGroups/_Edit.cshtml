@@ -1,0 +1,156 @@
+﻿
+@using GoldStreamer.Helpers
+@model BLL.DomainClasses.QuestionGroup
+@{
+    string baseUrl = CultureHelper.GetBaseURL().ToLower();
+}
+
+
+@using (Html.BeginForm("_Add", "QuestionGroups", FormMethod.Post, new { id = "form" , dir="rtl" }))
+{
+    @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true)
+
+    <table style="width:100%">
+        <tr>
+            <td style="width:15%;">
+                @Resources.General.QuestionGroupDesc :
+            </td>
+            <td style="width:25%;">
+                @Html.TextBoxFor(model => model.GroupName, new { autofocus = "autofocus", placeholder = Resources.General.QuestionGroupDesc, maxlength = 50 })
+                <div id="notification"></div>
+                
+            </td>
+            <td style="width:17%;"></td>
+            <td style="width:15%;">
+                @Resources.General.QuestionOrder :
+            </td>
+            <td style="width:25%;">
+                @Html.TextBoxFor(model => model.GroupOrder, new { autofocus = "autofocus", placeholder = Resources.General.QuestionOrder, @Value = "" })
+              
+            </td>
+        
+
+            <td>
+                <div class="col-md-offset-2 col-md-10" id="divAdd">
+                    <input type="button" id="Create" value="@Resources.General.Add" class="btn" />
+                </div>
+                <div class="col-md-offset-2 col-md-10" id="divEdit" style="display:none;">
+                    <input type="button" id="Update" value="@Resources.General.Update" class="btn" />
+                </div>
+            </td>
+
+        </tr>
+
+        <tr>
+            <td></td>
+            <td class="message-label"> @Html.ValidationMessageFor(model => model.GroupName)</td>
+            <td></td>
+            <td></td>
+            <td class="message-label"> @Html.ValidationMessageFor(model => model.GroupOrder)</td>
+            <td></td>
+        </tr>
+    </table>
+
+}
+
+
+<script>
+   
+
+    $('#Create').click(function (e) {
+
+        var name = document.getElementById('GroupName').value;
+        var order = document.getElementById('GroupOrder').value;
+
+        if (!$("#form").valid()) return false;
+        $.ajax({
+            url: '@(baseUrl)QuestionGroups/_Add/',
+            type: "POST",
+            data: JSON.stringify({ 'GroupName': name, 'GroupOrder': order }),
+            cache: false,
+            contentType: "application/json; charset=utf-8",
+
+            success: function () {
+
+                $.ajax({
+                    url: '@(baseUrl)QuestionGroups/_List/',
+                    type: "POST",
+                    success: function (data) {
+
+                        document.getElementById('GroupName').value = '';
+                        document.getElementById('GroupOrder').value = '';
+
+                        var x = navigator.userAgent.indexOf('CLR');//IE
+                        if (x > 0) {
+                            $('#divList').html(data);
+                            $('#divList').show();
+                        }
+                        else
+                            $('#divList').html(data);
+                    }
+                });
+
+                toastr.success('@Resources.Messages.Saved');
+            },
+            error: function (data, xhr, textStatus) {
+                if (data.status === 1)
+                    toastr.error('@Resources.Messages.BasketNameDuplicate');
+                else if (data.status === 2)
+                    toastr.error('@Resources.Messages.OrderNoErrorMsg');
+                else
+                    toastr.error(textStatus);
+            }
+        });
+        return false;
+    });
+
+    $('#Update').click(function (e) {
+
+        var name = document.getElementById('GroupName').value;
+        var order = document.getElementById('GroupOrder').value;
+
+        if (!$("#form").valid()) return false;
+        $.ajax({
+            url: '@(baseUrl)QuestionGroups/UpdateQuestionGroup/',
+            type: "POST",
+            //data: JSON.stringify({ 'GroupName': name, 'GroupOrder': order }),
+            data: JSON.stringify({ 'ID': elementID, 'GroupName': name, 'GroupOrder': order }),
+            cache: false,
+            contentType: "application/json; charset=utf-8",
+
+            success: function (data) {
+               
+                var x = navigator.userAgent.indexOf('CLR');//IE
+                if (x > 0) {
+                    $('#divList').html(data);
+                    $('#divList').show();
+                }
+                else
+                    $('#divList').html(data);
+
+                $('#divEdit').hide();
+                $('#divAdd').show();
+                document.getElementById('GroupName').value = '';
+                document.getElementById('GroupOrder').value = '';
+                elementID = 0;
+
+               
+
+                toastr.success('@Resources.Messages.Updated');
+            },
+            error: function (data, xhr, textStatus) {
+                if (data.status === 1)
+                    toastr.error('@Resources.Messages.BasketNameDuplicate');
+                else if (data.status === 2)
+                    toastr.error('@Resources.Messages.OrderNoErrorMsg');
+                else
+                    toastr.error(textStatus);
+            }
+        });
+
+    });
+</script>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

@@ -1,0 +1,152 @@
+﻿@model BLL.DomainClasses.BasketPrices
+@using GoldStreamer.Helpers
+@using Resources
+<script src="~/Scripts/accounting.min.js"></script>
+<script src="~/Scripts/autoNumeric.js"></script>
+@{
+    var baseUrl = CultureHelper.GetBaseURL().ToLower();
+}
+
+
+    @using (Html.BeginForm("Create", "BasketPrices", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            @Html.ValidationSummary(true)
+            @Html.HiddenFor(model => model.BasketID)
+
+            <input hidden="hidden" id="notBetterPrices" value="@Messages.NotBetterPrices" />
+            <input hidden="hidden" id="notBetterBuy" value="@Messages.NotBetterBuy" />
+            <input hidden="hidden" id="notBetterSell" value="@Messages.NotBetterSell" />
+            <input hidden="hidden" id="msgContinue" value="@Messages.MsgContinue" />
+
+            <h1 style="margin-bottom:20px;">@Resources.General.UpdatePrices</h1>
+
+            <table style="width:100%; text-align:right;" cellpadding="7">
+            
+                <tr>
+                    <td style="width:15%">@Resources.General.BuyPrice</td>
+                    <td>@Html.TextBoxFor(model => model.BuyPrice, new { name = "name", type = "text", @data_val = "true", autofocus = "autofocus", placeholder = Resources.General.BuyPrice })</td>
+                    <td></td>
+
+                    <td>@Resources.General.SellPrice</td>
+                    <td>@Html.TextBoxFor(model => model.SellPrice, new { name = "name", type = "text", @data_val = "true", placeholder = Resources.General.SellPrice })</td>
+              
+                    <td style="text-align:center;">
+                        <input type="submit" id="Create" value='@Resources.General.AddPrice' class="btn" />
+                    </td>
+                </tr>
+            </table>
+
+
+   
+        </div>
+    }
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+    <script>
+
+        $('#BuyPrice').autoNumeric({ oRide: '8,3' });
+        $('#SellPrice').autoNumeric({ oRide: '8,3' });
+        $('#Create').click(function (e) {
+            e.preventDefault(); // <------------------ stop default behaviour of button
+
+            var buyPrice = document.getElementById('BuyPrice').value;
+            var sellPrice = document.getElementById('SellPrice').value;
+
+            if ((buyPrice == 0.00 && buyPrice != '') || (sellPrice == 0.00 && sellPrice != '')) {
+                toastr.error('@Resources.Messages.ZeroPrice');
+                return false;
+            }
+            var getConfirm = function (state, currBuy, currSell) {
+                var res = "";
+                var msg = document.getElementById('msgContinue').value;
+
+                if (state == 2)
+                    res = document.getElementById('notBetterBuy').value + accounting.formatMoney(currBuy) + ' ' + msg;
+                else if (state == 3)
+                    res = document.getElementById('notBetterSell').value + accounting.formatMoney(currSell) + ' ' + msg;
+                else if (state == 4)
+                    res = document.getElementById('notBetterPrices').value + accounting.formatMoney(currBuy)
+                        + ' , ' + accounting.formatMoney(currSell) + ' ' + msg;
+
+                return res;
+            };
+
+            $.ajax({
+                url: '@(baseUrl)/' + '/BasketPrices/ValidateIsBetterPrice/',
+                type: "POST",
+                data: JSON.stringify({ 'BuyPrice': buyPrice, 'SellPrice': sellPrice }),
+                cache: false,
+                contentType: "application/json; charset=utf-8",
+
+                success: function (data) {
+
+                    if (data.isBetter > 1) {
+                        var actionSelected = confirm(getConfirm(data.isBetter, data.crntBuy, data.crntSell));
+                        if (actionSelected) LetsSave();
+                    } else LetsSave();
+
+                },
+                error: function () {
+                }
+            });
+
+
+            return false;
+        }
+        );
+
+        function LetsSave() {
+
+            var buyPrice = document.getElementById('BuyPrice').value;
+            var sellPrice = document.getElementById('SellPrice').value;
+            var basketId = document.getElementById('BasketID').value;
+
+            $.ajax({
+                url: '@(baseUrl)/' + '/BasketPrices/Create/',
+                type: "POST",
+                data: JSON.stringify({ 'BuyPrice': buyPrice, 'SellPrice': sellPrice }),
+                cache: false,
+                contentType: "application/json; charset=utf-8",
+
+                success: function (data) {
+                    $('#BuyPrice').val('');
+                    $('#SellPrice').val('');
+
+                    document.getElementById('MaxSell').value = accounting.formatMoney(data.maxSell);
+                    document.getElementById('MinBuy').value = accounting.formatMoney(data.minBuy);
+
+                    AddToCart(basketId);
+                    toastr.success('@Resources.Messages.Saved');
+                },
+                error: function (data) {
+                    if (data.status == 1)
+                        toastr.error('@Resources.Messages.ZeroPrice');
+                    if (data.status == 2)
+                        toastr.error('@Resources.Messages.nullablePrices');
+                    if (data.status == 3)
+                        toastr.error('@Resources.Messages.NoPriceBefore');
+                }
+            });
+        }
+
+        function AddToCart() {
+            $.ajax({
+                url: '@(baseUrl)/' + '/BasketPrices/_list/',
+                type: "POST",
+                success: function (data) {
+                    var x = navigator.userAgent.indexOf('CLR');//IE
+                    if (x > 0) {
+                        $('#divList').html(data);
+                        $('#divList').show();
+                    }
+                    else
+                        $('#divList').html(data);
+                }
+            });
+        }
+    </script>

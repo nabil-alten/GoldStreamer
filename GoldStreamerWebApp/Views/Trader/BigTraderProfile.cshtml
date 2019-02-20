@@ -1,0 +1,382 @@
+﻿@*@model BLL.DomainClasses.Trader*@
+@using GoldStreamer.Helpers
+@using Resources
+@model GoldStreamer.Models.ViewModels.TraderViewModel
+
+@{
+    string baseUrl = CultureHelper.GetBaseURL().ToLower();
+    ViewBag.Title = General.STraderProfileCreate;
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+@section SideMenu{
+    @Html.Partial("_AdminSideMenu")
+}
+<script>
+    $(function () {
+        $("#div_st").addClass("menuItemactive");
+    });
+</script>
+@section UpperBanner{
+
+
+    <div class="innerBanner">
+        <div class="banner">
+            <h1 class="banner_header">@Resources.General.STraderProfileCreate</h1>
+
+            <img src="../../Content/Images/inner_banner.jpg" width="1050" height="180" alt="" />
+        </div>
+    </div>
+}
+
+@using (Html.BeginForm("Add", "Trader", FormMethod.Post, new { id = "form" }))
+{
+    <div style="width: 84%;">
+        <table style="width: 100%; text-align: right;">
+            <tr>
+                <td>
+                    @General.FirstName:
+                </td>
+
+                <td>
+                    @Html.TextBoxFor(model => model.Name, new { maxlength = 50, placeholder = General.FirstName, autofocus = true })
+                   
+                </td>
+
+                <td style="width:12%">
+
+                </td>
+                <td>
+                    @General.LastName:
+                </td>
+
+                <td>
+                    @Html.TextBoxFor(model => model.Family, new { maxlength = 50, placeholder = General.LastName })
+                   
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td class="message-label">@Html.ValidationMessageFor(model => model.Name)</td>
+                <td></td>
+                <td></td>
+                <td class="message-label">@Html.ValidationMessageFor(model => model.Family)</td>
+            </tr>
+            <tr>
+                <td> @General.Gender:</td>
+
+                <td>
+                    @Html.RadioButtonFor(model => model.Gender, "true", new { @checked = true, id = "rbMale" })
+                    @Html.Label(General.Male)
+                    @Html.RadioButtonFor(model => model.Gender, "false")
+                    @Html.Label(General.Female)
+                </td>
+                <td></td>
+                <td>
+                    @General.phone:
+                </td>
+
+                <td>
+                    @Html.TextBoxFor(model => model.Phone, new { maxlength = 11, placeholder = General.phone })
+                
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td class="message-label"></td>
+                <td></td>
+                <td></td>
+                <td class="message-label">@Html.ValidationMessageFor(model => model.Phone)</td>
+            </tr>
+
+            <tr>
+                <td>@General.Mobile:</td>
+
+                <td>
+                    @Html.TextBoxFor(model => model.Mobile, new { maxlength = 15, placeholder = General.Mobile })
+                    
+                </td>
+                <td></td>
+
+                <td>@General.Email:</td>
+
+                <td>
+                    @Html.TextBoxFor(model => model.Email, new { placeholder = General.Email })
+                   
+                </td>
+
+
+            </tr>
+            <tr>
+                <td></td>
+                <td class="message-label">@Html.ValidationMessageFor(model => model.Mobile)</td>
+                <td></td>
+                <td></td>
+                <td class="message-label">@Html.ValidationMessageFor(model => model.Email)</td>
+            </tr>
+            <tr>
+                <td>@General.StoreName</td>
+                <td>@Html.TextBoxFor(model => model.ShopName, new { placeholder = General.StoreName })</td>
+
+
+                <td></td>
+                <td>@General.ReEmail:</td>
+
+                <td>
+                    @Html.TextBoxFor(model => model.ReEmail, new { placeholder = General.ReEmail })
+                    
+                </td>
+
+            </tr>
+            <tr>
+                <td></td>
+                <td class="message-label"></td>
+                <td></td>
+                <td></td>
+                <td class="message-label">@Html.ValidationMessageFor(model => model.ReEmail)</td>
+            </tr>
+            <tr>
+                <td>@General.Governorate:</td>
+
+                <td>
+                    @Html.DropDownList("Governorate", (SelectList)ViewBag.govs, General.select)
+                </td>
+                <td></td>
+
+                <td>
+                    @General.City:
+                </td>
+                <td>@Html.DropDownList("City", Enumerable.Empty<SelectListItem>(), General.select)</td>
+            </tr>
+
+         
+
+            <tr>
+                <td>@General.Region:</td>
+
+                <td>
+                    @Html.DropDownList("District", Enumerable.Empty<SelectListItem>(), General.select)
+                </td>
+                <td></td>
+                <td>@General.STraderOrder:</td>
+
+                <td>
+                    @Html.TextBoxFor(model => model.SortOrder, new { placeholder = General.STraderOrder, @Value = ViewBag.Order })
+                    
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td class="message-label"></td>
+                <td></td>
+                <td></td>
+                <td class="message-label">@Html.ValidationMessageFor(model => model.SortOrder)</td>
+            </tr>
+            <tr>
+                <td>@General.Active:</td>
+
+                <td>
+                    @Html.CheckBoxFor(model => model.IsActive, new { @checked = "checked" })
+                    @Html.Label(General.ActiveState)
+                </td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+
+      
+
+            <tr>
+                <td colspan="5" style="text-align:center;">
+                    <br />
+                    <input type="submit" id="Create" value="@General.Add" class="btn" />
+                    <br />
+                </td>
+            </tr>
+
+        </table>
+
+    </div>}
+
+
+
+<script>
+
+    $(function () {
+        $("#Governorate").change(function () {
+            var selectedItem = $(this).val();
+
+            var ddlCity = $("#City");
+            //var statesProgress = $("#states-loading-progress");
+            //statesProgress.show();
+            ddlCity.html('');
+            $("#District").html('');
+            if (selectedItem == "")
+                return false;
+            $.ajax({
+                cache: false,
+                type: "GET",
+                url: '@(baseUrl)/' + '/Trader/GetCity/',
+                data: { "govId": selectedItem },
+                success: function (data) {
+
+
+                    $.each(data.city, function (id, option) {
+                        ddlCity.append($('<option></option>').val(option.ID).html(option.Name));
+                    });
+                    //statesProgress.hide();
+                    //------------------------
+                    @*selectedItem = $("#City").val();
+                    var ddlDistrict = $("#District");
+                    $.ajax({
+                        cache: false,
+                        type: "GET",
+                        url: '@(baseUrl)/' + '/Trader/GetRegion/',
+                        data: { "cityId": selectedItem },
+                        success: function (data) {
+
+                            ddlDistrict.html('');
+                            $.each(data.district, function (id, option) {
+                                ddlDistrict.append($('<option></option>').val(option.ID).html(option.Name));
+                            });
+                            statesProgress.hide();
+                        },
+                        error: function (xhr, ajaxOptions, thrownError) {
+                            alert('Failed to retrieve states.');
+                            statesProgress.hide();
+                        }
+                    });*@
+
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    alert('Failed to retrieve states.');
+                    //statesProgress.hide();
+                }
+            });
+        });
+
+        $("#City").change(function () {
+            var selectedItem = $(this).val();
+            var ddlDistrict = $("#District");
+            var statesProgress = $("#states-loading-progress");
+            statesProgress.show();
+            $.ajax({
+                cache: false,
+                type: "GET",
+                url: '@(baseUrl)/' + '/Trader/GetRegion/',
+                data: { "cityId": selectedItem },
+                success: function (data) {
+
+                    ddlDistrict.html('');
+                    $.each(data.district, function (id, option) {
+                        ddlDistrict.append($('<option></option>').val(option.ID).html(option.Name));
+                    });
+                    statesProgress.hide();
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    alert('Failed to retrieve states.');
+                    statesProgress.hide();
+                }
+            });
+        });
+    });
+
+    function clearPage() {
+        document.getElementById('Name').value = "";
+        document.getElementById('Family').value = "";
+        document.getElementById('Phone').value = "";
+        document.getElementById('Mobile').value = "";
+        document.getElementById('Email').value = "";
+        document.getElementById('ReEmail').value = "";
+        document.getElementById('ShopName').value = "";
+        $('#Governorate').val(0);
+        $('#City').val(0);
+        $('#District').val(0);
+        document.getElementById('SortOrder').value = parseFloat(document.getElementById('SortOrder').value) + 1;
+
+
+    }
+
+    $('#Create').click(function (e) {
+        e.preventDefault(); // <------------------ stop default behaviour of button
+        if (!$("#form").valid()) return false;
+        //Name Family rbMale Phone Mobile Email ShopName Governorate City District SortOrder IsActive
+        var name = document.getElementById('Name').value;
+        var family = document.getElementById('Family').value;
+        var rbMale = document.getElementById('rbMale').checked;
+        var phone = document.getElementById('Phone').value;
+        var mobile = document.getElementById('Mobile').value;
+        var email = document.getElementById('Email').value;
+        var shopName = document.getElementById('ShopName').value;
+
+        var governorate = $('#Governorate').val() == '0' ? null : $('#Governorate').val(); //document.getElementById('Governorate').value;
+        var city = $('#City').val() == '0' ? null : $('#City').val(); //document.getElementById('City').value;
+        var district = $('#District').val() == '0' ? null : $('#District').val(); //document.getElementById('District').value;
+        var sortOrder = document.getElementById('SortOrder').value;
+        var isActive = document.getElementById('IsActive').checked;
+        $.ajax({
+            url: '@(baseUrl)/Trader/Add/',
+            type: "POST",
+            data: JSON.stringify({
+                'Name': name,
+                'Family': family,
+                'Gender': rbMale == true ? true : false,
+                "Phone": phone,
+                "Mobile": mobile,
+                "Email": email,
+                "ShopName": shopName,
+                "Governorate": governorate,
+                "City": city,
+                "District": district,
+                "SortOrder": sortOrder,
+                "IsActive": isActive,
+                "TypeFlag": 1,
+                "ReEmail": email
+            }),
+            cache: false,
+            contentType: "application/json; charset=utf-8",
+
+            success: function (data, xhr, textStatus) {
+                toastr.success('@Messages.Saved');
+                clearPage();
+
+                @*var url = '@Url.Action("STraderProfile", "Trader")';
+                window.location.href = url;*@
+
+                @*$.ajax({
+                    cache: false,
+                    type: "POST",
+                    url: '@(baseUrl)/' + '/Trader/STraderProfile/',
+                    success: function (data) {
+                        debugger;
+                        toastr.success('@Resources.Messages.Saved');
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+
+                    }
+                });*@
+
+
+            },
+            error: function (data, xhr, textStatus) {
+                if (data.status === 1)
+                    toastr.error('@Messages.EmailExists');
+                else if (data.status === 2)
+                    toastr.error('@Messages.OrderExists');
+                else if (data.status === 3)
+                    toastr.error('@Messages.TraderNameExists');
+                else if (data.status === 4)
+                    toastr.error('@Messages.TraderMobileExists');
+                else if (data.status === 5)
+                    toastr.error('@Messages.TraderShopExists');
+                else if (data.status === 6)
+                    toastr.error('@Messages.TraderPhoneExists');
+                else
+                    toastr.error(textStatus);
+            }
+        });
+        return false;
+    }
+
+  );
+</script>

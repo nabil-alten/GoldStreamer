@@ -1,0 +1,589 @@
+﻿@using BLL.SecurityClasses
+@using DAL
+@using GoldStreamer.Helpers
+@using Microsoft.AspNet.Identity
+@using Microsoft.AspNet.Identity.EntityFramework
+
+@{
+    Layout = null;
+    int day;
+    string month;
+    int year;
+}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>الصفحة الرئيسية</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="~/Content/css/style.css" />
+    <script type="text/javascript" src="~/Scripts/GoldStreamer/modernizr.custom.79639.js"></script>
+    <noscript>
+        <link rel="stylesheet" type="text/css" href="~/Content/css/styleNoJS.css" />
+    </noscript>
+    <script type="text/javascript"
+            src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/GoldStreamer/popUp.js"></script>
+    <script>
+
+        function closse() {
+            var a = document.getElementById("popup_name");
+            var b = document.getElementById("fade");
+            a.style.display = 'none';
+            b.style.display = 'none';
+
+        }
+    </script>
+
+
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+
+    @{
+        string baseUrl = CultureHelper.GetBaseURL().ToLower();
+
+
+    }
+    <script src="~/Scripts/jquery-1.10.2.js"></script>
+    <script src="~/Scripts/jquery.signalR-2.2.0.js"></script>
+    <script src="/signalr/hubs"></script>
+    <script type="text/javascript">
+        $(function () {
+            $.ajax({
+                url: '@baseUrl/Home/GetCurentDollarPrice',
+                contentType: 'application/html ; charset:utf-8',
+                type: 'GET',
+                dataType: 'html'
+            }).success(function (result) {
+                $('#txtDollarBuyPrice').text(result.split(",")[0].split(":")[1]);
+                $('#txtDollarSellPrice').text(result.split(",")[1].split(":")[1]);
+
+            }).done(function () {
+
+            }).error(function () {
+            });
+
+            $.ajax({
+                url: '@baseUrl/Home/GetGoldBuyPrice',
+                contentType: 'application/html ; charset:utf-8',
+                type: 'GET',
+                dataType: 'html'
+            }).success(function (result) {
+                $('#txtGoldBuyPrice').text(result);
+            }).error(function () {
+            });
+
+            $.ajax({
+                url: '@baseUrl/Home/GetGoldSellPrice',
+                contentType: 'application/html ; charset:utf-8',
+                type: 'GET',
+                dataType: 'html'
+            }).success(function (result) {
+                $('#txtGoldSellPrice').text(result);
+            }).error(function () {
+            });
+
+
+           
+
+
+            var priceViewer = $.connection.priceViewerHub;
+            priceViewer.client.updateHeader = function () {
+                doUpdateHeader();
+            };
+
+            //$.connection.hub.logging = true;
+            $.connection.hub.start().done(function () {
+                doUpdateHeader();
+            }).fail(function (e) {
+            });
+
+
+        });
+
+
+        function doUpdateHeader() {
+            var tbl = $('#pricesHeader');
+            $.ajax({
+                url: '@(baseUrl)/' + 'Home/DoShowBest',
+                contentType: 'application/html ; charset:utf-8',
+                type: 'GET',
+                dataType: 'html'
+            }).success(function (result) {
+                tbl.empty().append(result);
+            }).error(function () {
+            });
+        }
+    </script>
+</head>
+
+
+<body>
+    <div class="mainContainer">
+
+        <!-- topArea --------------------------------->
+        <div class="topArea">
+            <!-- topSection -->
+            <div class="topSection">
+
+
+                @if (Request.IsAuthenticated)
+                {
+                    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+                    {  @Html.AntiForgeryToken()
+                    <div class="right">  <a href="javascript:document.getElementById('logoutForm').submit()">خروج</a> </div>
+
+                    }
+                    <div class="sep right">|</div>
+                    <div class="right">
+                         <a href="@baseUrl/EditProfile/Index">@Resources.General.Hello @User.Identity.GetUserName()</a>
+                    </div>
+                    <div class="sep right">|</div>
+
+                    <div class="right">
+
+                        <a href="@baseUrl/Home/Chat" title="@Resources.General.ChatRoom"><img src="~/Content/Images/chat_icon.png" width="19" height="19"/></a>
+                    </div>
+
+                }
+                else
+                {
+                    <div class="right"> <img src="~/Content/images/lock.png" width="14" height="19" /> <a href="#?w=550" rel="popup_name" class="poplight">@Resources.General.Login</a> </div>
+                    <div class="sep right">|</div>
+                    <div class="right"> <img src="~/Content/images/profile.png" /> <a href="@baseUrl/Account/Register"> @Resources.General.Register</a> </div>
+                }
+
+
+
+                <div class="left search">
+                    <input type="text" placeholder=@Resources.General.SearchInSagha />
+                    <img class="searchImg" src="~/Content/images/search.png" />
+                </div>
+
+            </div>
+            <!-- /topSection -->
+            <!-- priceSection -->
+            <div class="priceSection">
+                <div class="priceDiv_cal">
+
+                    <br />
+                    @{
+                        DateTime date = ViewBag.Date;
+                        day = date.Day;
+                        month = System.Globalization.CultureInfo.CurrentUICulture.DateTimeFormat.GetMonthName(date.Month);
+                        year = date.Year;
+                    }
+                    <label class="month">@month</label>
+                    <label class="day">@day</label>
+                    <label class="year">@year</label>
+
+                </div>
+                <div class="subHeader">@Resources.General.GoldPrice1gm</div>
+                <div class="priceDiv2">
+                    <label id="txtGoldSellPrice" class="price3"></label>
+                    <label id="txtGoldBuyPrice" class="price4"></label>
+                    <img src="~/Content/images/gold_price.png" width="168" height="99" />
+                </div>
+                <div class="subHeader">@Resources.General.DollarPrice1</div>
+                <div class="priceDiv3">
+                    <label id="txtDollarBuyPrice" class="price1"></label>
+                    <label id="txtDollarSellPrice" class="price2"></label>
+                    <img src="~/Content/images/dolar_price.png" width="168" height="99" />
+                </div>
+            </div>
+            <!-- priceSection -->
+            <!-- navSection -->
+            <div class="navSection">
+                <ul>
+                   @if (GoldStreamer.Helpers.UserNavigation.IsAdmin()){
+                     <li class="curent"><a href="~/Home/AdminDashBoard"><img src="~/Content/images/home_ico.png" /></a></li>
+
+                    }
+                   else
+                   {
+                    <li class="curent"><a href="~/Home/Home"><img src="~/Content/images/home_ico.png" /></a></li>
+
+                   }
+                    <li><a href="~/Home/About" ><img src="~/Content/images/about_us_ico.png"  width="41" height="68" /></a></li>
+
+                    
+                    @if (GoldStreamer.Helpers.UserNavigation.IsSuperTrader() && !GoldStreamer.Helpers.UserNavigation.IsAdmin())
+                        {
+                            <li>
+                                <a href="~/Home/SuperTraderDashboard"><img src="~/Content/images/traders_only_ico.png" /></a>
+                            </li>
+                        }
+                        else if (GoldStreamer.Helpers.UserNavigation.IsTrader() && !GoldStreamer.Helpers.UserNavigation.IsAdmin())
+                        {
+                            <li>
+                                <a href="~/Home/TraderDashboard"><img src="~/Content/images/traders_only_ico.png" /></a>
+
+                            </li>
+
+                        }
+                        
+                        else
+                        {
+                            <li>
+
+                                <a href="~/Account/Login"><img src="~/Content/images/traders_only_ico.png" /></a>
+
+                            </li>
+                        }
+               
+                    <li><a href="~/GlobalPrice"><img src="~/Content/images/graphs_ico.png" /></a></li>
+                    <li><a href="~/News/"><img src="~/Content/images/news_ico.png" /></a></li>
+                    <li><a href="~/FAQ"><img src="~/Content/images/q_a_ico.png" /></a></li>
+                    <li><a href="~/Feedback/Index"><img src="~/Content/images/contact_us_ico.png" /></a></li>
+                </ul>
+            </div>
+            <!-- /navSection -->
+
+            <div class="logo"><img src="~/Content/images/logo.png" width="163" height="230" /></div>
+
+            <!-- sl-slider -->
+            <div class="container demo-2">
+                <div id="slider" class="sl-slider-wrapper">
+                    <div class="sl-slider">
+                        <div class="sl-slide" data-orientation="horizontal" data-slice1-rotation="-25" data-slice2-rotation="-25" data-slice1-scale="2" data-slice2-scale="2">
+                            <div class="sl-slide-inner">
+                                <div class="bg-img bg-img-1"></div>
+                            </div>
+                        </div>
+                        <div class="sl-slide" data-orientation="vertical" data-slice1-rotation="10" data-slice2-rotation="-15" data-slice1-scale="1.5" data-slice2-scale="1">
+                            <div class="sl-slide-inner">
+                                <div class="bg-img bg-img-2"></div>
+                            </div>
+                        </div>
+                        <div class="sl-slide" data-orientation="horizontal" data-slice1-rotation="3" data-slice2-rotation="3" data-slice1-scale="2" data-slice2-scale="1">
+                            <div class="sl-slide-inner">
+                                <div class="bg-img bg-img-3"></div>
+                            </div>
+                        </div>
+                        <div class="sl-slide" data-orientation="vertical" data-slice1-rotation="-5" data-slice2-rotation="25" data-slice1-scale="2" data-slice2-scale="1">
+                            <div class="sl-slide-inner">
+                                <div class="bg-img bg-img-4"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- slider-wrapper -->
+                    <nav id="nav-dots" class="nav-dots"> <span class="nav-dot-current"></span> <span></span> <span></span> <span></span> </nav>
+                </div>
+                <!-- /slider-wrapper -->
+
+            </div>
+            <!-- /slider -->
+
+        </div>
+        <!-- /topArea --------------------------------->
+        <!-- graphArea --------------------------------->
+        <div class="graphArea">
+
+            <!-- graphSection -->
+            <div class="graphSection">
+                <div class="headerTitle" style="background-color:transparent;">
+                    <h1 style="color:#fff;">@Resources.General.generalGoldPrices</h1>
+                    </div>
+                <div style="background:#fff; height:355px; text-align:center;">
+                    @Html.Action("_GoldPricesChart", "TraderPricesChart", new { global = 1 })
+
+                </div>
+            </div>
+            <!-- /graphSection -->
+
+            <div class="msgBox">
+                <div class="msg_box_header"> <img src="~/Content/images/msg_box_header.png" width="297" height="88" /> </div>
+                @Html.Partial("~/Views/Subscribe/Index.cshtml")
+
+            </div>
+        </div>
+        <!-- /graphArea --------------------------------->
+        <!-- NewsArea --------------------------------->
+        <div class="dataArea">
+            <div class="headerTitle" style="margin-bottom:10px;">
+                <h1 style="color:#fff;">@Resources.General.GlobalGoldPrices</h1>
+            </div>
+            <div style="padding-right:13px;">
+
+
+                @Html.Action("_News", "News")
+
+
+                <!--<div class="clr" style="height:10px;"></div>-->
+
+
+
+
+                <div class="activities">
+
+                    <div id="slider3">
+                        <div class="quote">
+                            <div class="date" style="background-color: #ec8171;">الاعلان الاول</div>
+
+                            <div class="acts acts3">
+                                <ul>
+                                    <li>
+                                        <a href="#">
+                                            <img src="~/Uploads/Ads/6a00d83451ccbc69e20120a5c82489970c-400wi.jpg"/>
+                                        </a>
+                                    </li>
+
+
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="quote">
+                            <div class="date" style="background-color: #ec8171;">الاعلان الثاني</div>
+                            <div class="acts acts3">
+                                <ul>
+                                    <li>
+                                        <a href="#">
+                                            <img src="~/Uploads/Ads/index.jpg"/>
+                                        </a>
+                                    </li>
+
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="quote">
+
+                            <div class="date" style="background-color: #ec8171;">الاعلان الثالث</div>
+                            <div class="acts acts3">
+                                <ul>
+                                    <li><a href="#"><img src="~/Uploads/Ads/OldisGold_Ad1.jpg"/></a></li>
+
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="activities" style="background-color:none; text-align:right; width:24%">
+                    <div class="date" style="background-color:#FFA500;"><label class="news_lbl">رأيك يهمنا</label></div>
+                    <table width="90%" style="text-align:right; margin-right:15px;">
+                        <tr>
+                            <td><h1 style="font-size:18px; margin: 15px 0px 5px; 0px;">ماهو تقييمك لفكرة عمل الصاغة</h1></td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <label>
+                                    <input type="radio" name="RadioGroup1" value="radio" id="RadioGroup1_0" />
+                                    ممتازة
+                                </label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label>
+                                    <input type="radio" name="RadioGroup1" value="radio" id="RadioGroup1_1" />
+                                    جيدة
+                                </label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label>
+                                    <input type="radio" name="RadioGroup1" value="radio" id="RadioGroup1_2" />
+                                    متوسطة
+                                </label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label>
+                                    <input type="radio" name="RadioGroup1" value="radio" id="RadioGroup1_3" />
+                                    ضعيفة
+                                </label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <table>
+                                    <tr>
+                                        <td width="40%"></td>
+                                        <td width="20%" align="center"><input type="submit" value="ارسال" id="btnVote" class="btn" /></td>
+                                        <td width="40%"></td>
+                                    </tr>
+                                </table>
+                                
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+
+
+
+            </div>
+        </div>
+        <!-- /NewsArea --------------------------------->
+        <!-- footerArea --------------------------------->
+        <div class="footerArea">
+            @Html.Partial("Footer")
+            <div id="popup_name" class="popup_block" style="height:250px; display:none">
+                @Html.Partial("_Login")
+            </div>
+        </div>
+
+        <!-- /footerArea --------------------------------->
+
+    </div>
+    <!-- /mainContainer -->
+    @*<script src="js/jquery-1.11.0.min.js"></script>
+        <script type="text/javascript" src="~/Scripts/GoldStreamer/jquery.ba-cond.min.js"></script>
+        <script type="text/javascript" src="~/Scripts/GoldStreamer/jquery.slitslider.js"></script>
+        <script type="text/javascript">
+            $(function () {
+
+                var Page = (function () {
+
+                    var $nav = $('#nav-dots > span'),
+                        slitslider = $('#slider').slitslider({
+                            onBeforeChange: function (slide, pos) {
+
+                                $nav.removeClass('nav-dot-current');
+                                $nav.eq(pos).addClass('nav-dot-current');
+
+                            }
+                        }),
+
+                        init = function () {
+
+                            initEvents();
+
+                        },
+                        initEvents = function () {
+
+                            $nav.each(function (i) {
+
+                                $(this).on('click', function (event) {
+
+                                    var $dot = $(this);
+
+                                    if (!slitslider.isActive()) {
+
+                                        $nav.removeClass('nav-dot-current');
+                                        $dot.addClass('nav-dot-current');
+
+                                    }
+
+                                    slitslider.jump(i + 1);
+                                    return false;
+
+                                });
+
+                            });
+
+                        };
+
+                    return { init: init };
+
+                })();
+
+                Page.init();
+
+                /**
+                 * Notes:
+                 *
+                 * example how to add items:
+                 */
+
+                /*
+
+                var $items  = $('<div class="sl-slide sl-slide-color-2" data-orientation="horizontal" data-slice1-rotation="-5" data-slice2-rotation="10" data-slice1-scale="2" data-slice2-scale="1"><div class="sl-slide-inner bg-1"><div class="sl-deco" data-icon="t"></div><h2>some text</h2><blockquote><p>bla bla</p><cite>Margi Clarke</cite></blockquote></div></div>');
+
+                // call the plugin's add method
+                ss.add($items);
+
+                */
+
+            });
+        </script>
+        <script type="text/javascript" src="~/Scripts/GoldStreamer/jquery.plusslider-min.js"></script>
+        <script type="text/javascript" src="~/Scripts/GoldStreamer/jquery.easing.1.3.js"></script>
+        <script type="text/javascript" src="~/Scripts/GoldStreamer/jcarousellite.js"></script>
+
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $(window).scroll(function () {
+                    if ($(this).scrollTop() > 100) {
+                        $('.scrollup').fadeIn();
+                    } else {
+                        $('.scrollup').fadeOut();
+                    }
+                });
+                $('.scrollup').click(function () {
+                    $("html, body").animate({ scrollTop: 0 }, 600);
+                    return false;
+                });
+            });
+            jQuery(document).ready(function () {
+                $(".main .jCarouselLite").jCarouselLite({
+                    btnNext: ".next",
+                    btnPrev: ".prev",
+                    speed: 500,
+                    visible: 3
+                });
+
+                $('#slider1').plusSlider({
+                    sliderEasing: 'easeInOutExpo',
+                    fullWidth: true,
+                    autoPlay: true,
+                    sliderType: 'slider',
+                    createPagination: false,
+                    createArrows: true
+                });
+
+                $('#slider2').plusSlider({
+                    sliderEasing: 'easeInOutExpo',
+                    fullWidth: true,
+                    autoPlay: true,
+                    sliderType: 'slider',
+                    createPagination: false,
+                    createArrows: true
+                });
+
+                $('#slider3').plusSlider({
+                    sliderEasing: 'easeInOutExpo',
+                    fullWidth: true,
+                    autoPlay: true,
+                    sliderType: 'slider',
+                    createPagination: false,
+                    createArrows: true
+                });
+
+                if ($.cookie("css")) {
+                    $('#css_color').attr("href", $.cookie("css"));
+                }
+                $("#colors a").click(function () {
+                    $('#css_color').attr("href", $(this).attr("rel"));
+                    $.cookie("css", $(this).attr("rel"), { expires: 365, path: '/' });
+                    return false;
+                });
+            });
+        </script>*@
+    <script type="text/javascript">
+        var $_Tawk_API = {}, $_Tawk_LoadStart = new Date();
+        (function () {
+            var s1 = document.createElement("script"), s0 = document.getElementsByTagName("script")[0];
+            s1.async = true;
+            s1.src = 'https://embed.tawk.to/55895414e43723cd5276a412/default';
+            s1.charset = 'UTF-8';
+            s1.setAttribute('crossorigin', '*');
+            s0.parentNode.insertBefore(s1, s0);
+        })();
+    </script>
+
+</body>
+
+
+
+
+
+</html>

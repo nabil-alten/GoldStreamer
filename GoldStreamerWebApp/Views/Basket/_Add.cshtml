@@ -1,0 +1,98 @@
+﻿@using GoldStreamer.Helpers
+@model BLL.DomainClasses.Basket
+@{
+    string baseUrl = CultureHelper.GetBaseURL().ToLower();
+}
+
+@using (Html.BeginForm("_Add", "Basket", FormMethod.Post, new { id = "form" }))
+{
+    @Html.AntiForgeryToken()
+  
+    <div class="form-horizontal">
+        @Html.ValidationSummary(true)
+        <table style="width:100%; text-align:right ; ">
+            <tr >
+                <td style ="width:15%">@Resources.General.BasketName    </td>
+                <td style="width:20%;">
+                    @Html.TextBoxFor(model => model.Name, new { autofocus = "autofocus", placeholder = Resources.General.BasketName, maxlength = 50 })
+
+            </td>
+                <td>
+        <input class="btn" type="submit" id="Create" value="@Resources.General.Add" />
+</td>
+        </tr>
+            <tr>
+                <td style="width:15%"></td>
+                <td>
+                    <label style="color :red;"> @Html.ValidationMessageFor(model => model.Name)</label>
+
+                </td>
+                <td>
+                  
+                </td>
+            </tr>
+
+    </table>
+    @*<div class="form-group">
+            <div class="control-label col-md-2">
+                @Resources.General.BasketName
+            </div>
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.Name, new { autofocus = "autofocus", placeholder = Resources.General.BasketName,maxlength=50 })
+                @Html.ValidationMessageFor(model => model.Name)
+            </div>
+        </div>*@
+    <br /><br /><br />
+  
+
+    
+</div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+<script>
+    $('#Create').click(function (e) {
+        e.preventDefault(); // <------------------ stop default behaviour of button
+        var name = document.getElementById('Name').value;
+        if (!$("#form").valid()) return false;
+        $.ajax({
+            url: '@(baseUrl)/' + '/Basket/_Add/',
+            type: "POST",
+            data: JSON.stringify({ 'name': name }),
+            cache: false,
+            contentType: "application/json; charset=utf-8",
+
+            success: function () {
+                $('#Name').val('');
+
+                $.ajax({
+                    url: '@(baseUrl)/' + '/Basket/_list/',
+                    type: "POST",
+                    success: function (data) {
+                        var x = navigator.userAgent.indexOf('CLR');//IE
+                        if (x > 0) {
+                            $('#divList').html(data);
+                            $('#divList').show();
+                        }
+                        else
+                            $('#divList').html(data);
+                    }
+                });
+
+                toastr.success('@Resources.Messages.Saved');
+            },
+            error: function (data, xhr, textStatus) {
+                if (data.status === 1)
+                    toastr.error('@Resources.Messages.BasketNameDuplicate');
+                else
+                    toastr.error(textStatus);
+            }
+        });
+        return false;
+    }
+
+   );
+</script>

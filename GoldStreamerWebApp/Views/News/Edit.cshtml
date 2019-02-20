@@ -1,0 +1,269 @@
+﻿@using GoldStreamer.Helpers
+@using Resources
+@model BLL.DomainClasses.News
+
+@{
+    string baseUrl = CultureHelper.GetBaseURL().ToLower();
+    string culture = CultureHelper.GetCurrentCulture().ToLower();
+    ViewBag.Title = General.NewsUpdate;
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<script src="~/Scripts/GoldStreamer/jquery.datetimepicker.js"></script>
+<link href="~/Content/css/jquery.datetimepicker.css" rel="stylesheet" />
+
+<link href="~/Content/css/style.css" rel="stylesheet" />
+
+<script type="text/javascript">
+
+
+
+    function fileCheck(file) {
+        debugger;
+
+        var _validFileExtensions = [".jpg", ".jpeg", ".bmp", ".gif", ".png"];
+        var sFileName = file.value;
+        var blnValid = false;
+        for (var j = 0; j < _validFileExtensions.length; j++) {
+            var sCurExtension = _validFileExtensions[j];
+            if (sFileName.substr(sFileName.length - sCurExtension.length, sCurExtension.length).toLowerCase() == sCurExtension.toLowerCase()) {
+                blnValid = true;
+                break;
+            }
+        }
+
+        if (!blnValid) {
+            alert("Sorry, " + sFileName + " is invalid, allowed extensions are: " + _validFileExtensions.join(", "));
+            return false;
+        }
+        return true;
+        $.ajax({
+
+            cache: false,
+            type: "GET",
+            url: '@(baseUrl)/' + '/NewsCategory/CheckPhoto/',
+            data: { "mainCategory": selectedItem },
+            success: function (data) {
+
+                debugger;
+                $.each(data.newscategory, function (id, option) {
+                    debugger;
+                    ddlCategory.append($('<option></option>').val(option.Id).html(option.CategoryName));
+                });
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                alert('Failed to retrieve states.');
+            }
+        });
+    }
+</script>
+
+
+<h2>@General.NewsUpdate</h2>
+
+@using (Html.BeginForm("Edit", "News", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal", id = "form" }))
+{
+    <hr />
+    @Html.AntiForgeryToken()
+    <div id="errors">@ViewBag.ErrorMessage</div>
+    <div class="form-horizontal">
+        <hr />
+
+        @Html.ValidationSummary(true)
+        @Html.HiddenFor(model => model.Id)
+        <div class="form-group">
+            <div class="control-label col-md-2">
+                @General.NewsTitle
+            </div>
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.Title, new { maxlength = 50, placeholder = General.NewsTitle, autofocus = true })
+                @Html.ValidationMessageFor(model => model.Title)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="control-label col-md-2">
+                @General.NewsSummary
+            </div>
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.Summary, new { maxlength = 100, placeholder = General.NewsSummary })
+                @Html.ValidationMessageFor(model => model.Summary)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="control-label col-md-2">
+                @General.Upload
+            </div>
+            <div class="col-md-10">
+                <input type="file" name="File1" id="File1" onchange="fileCheck(this)" />
+                <div class="news_img">
+                    <img src='~/Uploads/News/@(Model.Photo ?? "camera.png")' id="imgNews" class="news_img" />
+                </div>
+                @*<input type="file" id="File1" name="File1">
+                    <button class="btn btn-primary" id="upload">@Resources.General.Upload</button>
+                    @Html.ValidationMessageFor(model => model.Photo)*@
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="control-label col-md-2">
+                @General.NewsDate
+            </div>
+            <div>
+                @Html.EditorFor(n => n.Date, new { type = "text" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="control-label col-md-2">
+                @General.NewsMainCategory
+            </div>
+            <div class="col-md-10">
+                @Html.DropDownList("MainCategory", (SelectList)ViewBag.newsMainCategories)
+                @Html.ValidationMessageFor(model => model.CategoryId)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="control-label col-md-2">
+                @General.NewsCategory
+            </div>
+            <div class="col-md-10">
+                @*@Html.DropDownList("City", @Resources.General.select)*@
+                @if (Model.NewsCategory == null)
+                {
+                    @Html.DropDownList("CategoryId", Enumerable.Empty<SelectListItem>(), General.select)
+                }
+                else
+                {
+                    @Html.DropDownList("CategoryId")
+                }
+                @Html.ValidationMessageFor(model => model.CategoryId)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="control-label col-md-2">
+                @General.ActiveState
+            </div>
+            <div class="col-md-10">
+                @Html.CheckBoxFor(model => model.IsActive, new { @checked = "checked" })
+                @*@Html.Label(General.ActiveState)*@
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="control-label col-md-2">
+                @General.IsLatest
+            </div>
+            <div class="col-md-10">
+                @Html.CheckBoxFor(model => model.IsLatest, new { @checked = "checked" })
+                @*@Html.Label(General.IsLatest)*@
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="control-label col-md-2">
+                @General.NewsDetails
+            </div>
+            <div class="col-md-10">
+                @Html.TextAreaFor(model => model.Body, new { cols = "200", rows = "10", placeholder = General.NewsDetails })
+                @Html.ValidationMessageFor(model => model.Body)
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <div class="control-label col-md-2">
+                @General.NewsSource
+            </div>
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.SourceName, new { placeholder = General.NewsSource })
+                @Html.ValidationMessageFor(model => model.SourceName)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="control-label col-md-2">
+                @General.NewsSourceURL
+            </div>
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.SourceUrl, new { placeholder = General.NewsSourceURL })
+                @Html.ValidationMessageFor(model => model.SourceUrl)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="control-label col-md-2">
+                @General.NewsOrder
+            </div>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Order, new { placeholder = General.NewsOrder })
+                @Html.ValidationMessageFor(model => model.Order)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" id="btnReceive" value="@General.Save" class="btn" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink(Resources.General.NewsList, "ListIndex")
+</div>
+
+<script>
+    $(function () {
+        $("#MainCategory").change(function () {
+            var selectedItem = $(this).val();
+            var ddlCategory = $("#CategoryId");
+            //var statesProgress = $("#states-loading-progress");
+            //statesProgress.show();
+            ddlCategory.html('');
+            $("#District").html('');
+            if (selectedItem == "")
+                return false;
+            $.ajax({
+                cache: false,
+                type: "GET",
+                url: '@(baseUrl)/' + '/NewsCategory/GetCategory/',
+                data: { "mainCategory": selectedItem },
+                success: function (data) {
+
+                    $.each(data.newscategory, function (id, option) {
+                        ddlCategory.append($('<option></option>').val(option.Id).html(option.CategoryName));
+                    });
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    alert('Failed to retrieve states.');
+                }
+            });
+        });
+
+
+    });
+</script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $('#Date').datetimepicker({
+            dayOfWeekStart: 1,
+            lang: 'ar',
+            step: 15,
+            maxDate: "+0D"
+        });
+
+
+        $('#IsLatest').click(function () {
+            $("#Order").val(1);
+            $("#orders").toggle(this.checked);
+
+        });
+
+    });
+</script>

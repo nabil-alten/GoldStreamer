@@ -1,0 +1,39 @@
+﻿@using GoldStreamer.Helpers
+
+@{
+        string baseUrl = CultureHelper.GetBaseURL().ToLower();
+}
+
+<div class="left" style="width: calc(100% - 300px); color: #fff;">
+    <marquee direction="right" scrolldelay="200" onmouseover="this.stop();" onmouseout="this.start();"><div id="pricesHeader"></div></marquee>
+
+</div>
+
+<script>
+    
+    $(function () {
+        var priceViewer = $.connection.priceViewerHub;
+        priceViewer.client.updateHeader = function () {
+            doUpdateHeader();
+        };
+
+        //$.connection.hub.logging = true;
+        $.connection.hub.start().done(function () {
+            doUpdateHeader();
+        }).fail(function (e) {
+        });
+    });
+
+    function doUpdateHeader() {
+        var tbl = $('#pricesHeader');
+        $.ajax({
+            url: '@(baseUrl)/' + 'Home/DoShowBest',
+            contentType: 'application/html ; charset:utf-8',
+            type: 'GET',
+            dataType: 'html'
+        }).success(function (result) {
+            tbl.empty().append(result);
+        }).error(function () {
+        });
+    }
+</script>

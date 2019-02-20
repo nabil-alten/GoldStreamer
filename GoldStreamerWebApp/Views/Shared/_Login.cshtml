@@ -1,0 +1,52 @@
+﻿@model GoldStreamerWebApp.Models.LoginViewModel
+@using GoldStreamer.Helpers
+
+
+ <!-- PoP UP Data-->
+
+@{
+    string baseUrl = CultureHelper.GetBaseURL().ToLower();
+    ViewBag.ReturnUrl = baseUrl;
+}
+
+
+<a href="#" onclick="closse()" class="btn_close"><img src="~/Content/images/close_pop.png" width="48" height="48" /></a>
+<div class="headerTitle" style="margin-bottom:15px;">
+    <h1 style="color:#fff;">@Resources.General.Login</h1>
+</div>
+
+
+
+<section id="loginForm">
+    @using (Html.BeginForm("Login", "Account", new {ReturnUrl = ViewBag.ReturnUrl}, FormMethod.Post, new {@class = "form-horizontal", role = "form"}))
+            {
+        @Html.AntiForgeryToken()
+         @Html.ValidationSummary(true)
+        <table style="width:90%; margin:auto;" cellspacing="10">
+            <tr>
+                <td>@Resources.General.UserName</td>
+                <td>
+                    @Html.TextBoxFor(m => m.UserName, new { @class = "form-control", autofocus = "true" })
+                @Html.ValidationMessageFor(m => m.UserName)
+            </td>
+            <td></td>
+        </tr>
+
+        <tr>
+            <td>@Resources.General.Password</td>
+            <td>
+                @Html.PasswordFor(m => m.Password, new { @class = "form-control", maxlength = 20 })
+            @Html.ValidationMessageFor(m => m.Password)
+        </td>
+        <td></td>
+    </tr>
+    <tr>
+        <td colspan="3"><input type="submit" class="btn" value=@Resources.General.Login /></td>
+    </tr>
+    <tr>
+        <td colspan="3">@Html.ActionLink(@Resources.General.ForgotPassword, "ForgetPassword", "Account",null, new { @class = "login_link" })</td>
+    </tr>
+</table>
+        
+    }
+    </section>

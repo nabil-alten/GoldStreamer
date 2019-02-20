@@ -1,0 +1,30 @@
+﻿@model System.Collections.Generic.List<BLL.DomainClasses.Trader>
+
+@{
+    ViewBag.Title = @Resources.General.SuperTraderProfile;
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+
+}
+
+<div id="divList" style="width:100%" dir="rtl">
+    @Html.Action("_List")
+</div> 
+@section SideMenu{
+    @Html.Partial("_AdminSideMenu")
+}
+<script>
+    $(function () {
+        $("#div_st").addClass("menuItemactive");
+    });
+</script>
+@section UpperBanner{
+
+
+    <div class="innerBanner">
+        <div class="banner">
+            <h1 class="banner_header">@Resources.General.SuperTraderProfile</h1>
+
+            <img src="../../Content/Images/inner_banner.jpg" width="1050" height="180" alt="" />
+        </div>
+    </div>
+}

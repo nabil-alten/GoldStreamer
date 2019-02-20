@@ -1,0 +1,129 @@
+﻿@using GoldStreamer.Helpers
+@model GoldStreamer.Models.ViewModels.TradersComparisonViewModel
+@{
+    ViewBag.Title = @Resources.General.TradersComparison;
+    Layout = "~/Views/Shared/_LayoutInner.cshtml";
+    string baseUrl = CultureHelper.GetBaseURL().ToLower();
+    var counter = 1;
+}
+<h1 style=" margin-bottom:20px;">
+مقارنة أسعار التجار</h1>
+
+<table style="width:100%; text-align:right;" cellpadding="7">
+    <tr>
+        <td>@Resources.General.traderlabel:</td>
+        <td>
+
+            <select id="Trader" name="Trader">
+                @foreach (var item in Model.TraderList)
+                {
+                    <option value="@item.ID">@item.Name</option>
+                }
+            </select>
+
+
+        </td>
+        
+        <td>
+            @Resources.General.Periods
+        </td>
+        <td>
+            <select id="periods">
+                <option value="1">@Resources.General.Week</option>
+                <option value="2">@Resources.General.Month</option>
+                <option value="3">@Resources.General.MonthWeek</option>
+                <option value="4">@Resources.General.YearMonth</option>
+            </select>
+        </td>
+        <td>@Resources.General.BuySell</td>
+        <td>
+
+            <label class="radio-inline">
+                <input type="radio" name="BuySell" id="Buy" value="1" class="BuySell" checked />
+                <b>@Resources.General.Buy</b>
+            </label>
+            <label class="radio-inline">
+                <input type="radio" id="Sell" name="BuySell" value="2">
+                <b>@Resources.General.Sell</b>
+            </label>
+        </td>
+    </tr>
+    <tr>
+       
+        <td>
+            @Resources.General.Price
+        </td>
+        <td>
+            <select id="price">
+                <option value="1">@Resources.General.AveragePrice</option>
+                <option value="2">@Resources.General.AverageClose</option>
+            </select>
+        </td>
+        <td>
+            @Resources.General.ReportType
+        </td>
+        <td>
+            <select id="reportType">
+                <option value="Line">@Resources.General.Line</option>
+                <option value="Column">@Resources.General.Bar</option>
+                <option value="Scatter">@Resources.General.ScatterLine</option>
+            </select>
+
+        </td>
+
+    </tr>
+    <tr>
+        <td colspan="10" style="text-align:center;">
+            <input class="btn" type="button" id="btnViewReport" value="@Resources.General.show" />
+        </td>
+    </tr>
+</table>
+
+
+    <!-- graphSection -->
+    <div class="graphSection">
+        <div class="headerTitle" style="background-color:transparent;">
+            <div id="DivChart">@Html.Action("ViewChart")</div>
+        </div>
+    </div>
+            <script>
+
+                $("#btnViewReport").click(function () {
+                    debugger;
+                    var traderLst = "";
+                    var buySellType = $("input[name=BuySell]:checked").val();
+                    var traderLst = $("#Trader").val();
+                    var periods = $("#periods").val();
+                    var price = $("#price").val();
+                    var chartType = $("#reportType").val();
+
+                    var url = "@(baseUrl)/TradersComparison/ViewChart";
+                    $.ajax({
+                        type: "Post",
+                        url: url,
+                        data: { trader: traderLst, buySellType: buySellType, datetype: periods, pricetype: price, chartType: chartType },
+                        success: function (data) {
+                            $("#DivChart").html(data);
+                        },
+                        error: function () {
+                        }
+                    });
+                });
+
+            </script>
+@section UpperBanner{
+
+
+    <div class="innerBanner">
+        <div class="banner"><img src="../../Content/Images/inner_banner.jpg" width="1050" height="180" alt="" /></div>
+    </div>
+}
+
+@section SideMenu{
+    @Html.Partial("_SuperTraderMenu")
+}
+<script>
+    $(function () {
+        $("#div_pricesOffers").addClass("menuItemactive");
+    });
+</script>

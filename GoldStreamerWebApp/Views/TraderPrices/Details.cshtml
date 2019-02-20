@@ -1,0 +1,49 @@
+﻿@model BLL.DomainClasses.TraderPrices
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>TraderPrices</h4>
+	<hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.TraderID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TraderID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BuyPrice)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BuyPrice)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SellPrice)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SellPrice)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.priceDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.priceDate)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Back to List", "Index")
+</p>

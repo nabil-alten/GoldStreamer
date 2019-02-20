@@ -1,0 +1,155 @@
+﻿@*@model PagedList.IPagedList<BLL.DomainClasses.QuestionGroup>*@
+
+@using GoldStreamer.Helpers
+@model IEnumerable<BLL.DomainClasses.QuestionGroup>
+
+
+<script src="~/Scripts/GoldStreamer/ListFunctionsHelper.js"></script>
+
+@{ string baseUrl = CultureHelper.GetBaseURL().ToLower();
+   string trClass = "clr_tr";}
+<br />
+<br />
+<table>
+    <tr>
+        <td>@Html.TextBox("txtSearch", ViewBag.GroupsSearchText as string, new { @placeholder = Resources.General.Search + "...", @Value = ViewBag.GroupsSearchText, @class = "form-control search-query" })
+</td>
+        <td><input type="button" id="btnSearch" class="btn" value="@Resources.General.Search" title="@Resources.General.Search" data-url="@baseUrl/QuestionGroups/_List" data-container="divList" />
+</td>
+    </tr>
+</table>
+
+
+
+    @if (Model.Count() == 0)
+    {
+     
+                @Html.Label("lblMSGsearch", Resources.Messages.NoData)
+    }
+
+    else
+    {
+        <table style="width:100%;" class="data_table">
+
+            <tr style="text-align: right">
+                <td><div class="counter_div"> @Resources.General.QuestionGroup @Model.Count()</div>
+</td>
+                <td></td>
+                <td></td></tr>
+<tr>
+    <th width="30%">
+        @Resources.General.QuestionOrder
+    </th>
+            <th style="width:35%" >
+                @Resources.General.QuestionGroup
+            </th>
+            
+            <th>@Resources.General.Procedures</th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr class="@trClass">
+                <td>
+                    @Html.DisplayFor(modelItem => item.GroupOrder)
+                </td>
+                <td style="text-align: center;">
+                    @Html.DisplayFor(modelItem => item.GroupName)
+                </td>
+              
+
+                <td>
+
+                    <a href="javascript:UpdateQuestionGroup(@item.ID);" title="@Resources.General.Edit">
+                        <img src="~/Content/Images/edit_1.png" width="30" />
+                    </a>
+                      
+                    <a href="javascript:DeleteQuestionGroup(@item.ID);" title="@Resources.General.Delete">
+                        <img src="~/Content/Images/del.png" width="30" /></a>
+                </td>
+            </tr>
+            
+            if (trClass == "")
+            {
+                trClass = "clr_tr";
+
+            }
+            else
+            {
+                trClass = "";
+
+            }
+        }
+    
+    </table>
+    }
+<script>
+
+        var elementID;
+        function UpdateQuestionGroup(id) {
+            elementID = id;
+            $('#divEdit').show();
+            $('#divAdd').hide();
+
+            $.ajax({
+                url: '@(baseUrl)QuestionGroups/GetQuestionGroupInfo/',
+                type: "POST",
+                data: JSON.stringify({ 'id': id }),
+                cache: false,
+                contentType: "application/json; charset=utf-8",
+
+                success: function (data) {
+                    var result = data.toString().split(",");
+                    document.getElementById('GroupName').value = result[0].split(':')[1];
+                    document.getElementById('GroupOrder').value = result[1].split(':')[1];
+                },
+                error: function (data, xhr, textStatus) {
+                    toastr.error(textStatus);
+                }
+            });
+        }
+
+
+
+
+        function DeleteQuestionGroup(id) {
+            var r = confirm("@Resources.Messages.SureDelete");
+
+            if (r === true) {
+                $.ajax({
+
+                    url: "@(baseUrl)QuestionGroups/Delete/" + id,
+                    type: 'Post',
+                    contentType: "application/json; charset=utf-8",
+
+                    success: function (data) {
+                        toastr.success('@Resources.Messages.Deleted');
+
+                        $.ajax({
+                            url: '@(baseUrl)QuestionGroups/_List/',
+                            type: "POST",
+                            success: function (data) {
+
+                                $('#divEdit').hide();
+                                $('#divAdd').show();
+                                document.getElementById('GroupName').value = '';
+                                document.getElementById('GroupOrder').value = '';
+
+                                var x = navigator.userAgent.indexOf('CLR');//IE
+                                if (x > 0) {
+                                    $('#divList').html(data);
+                                    $('#divList').show();
+                                }
+                                else
+                                    $('#divList').html(data);
+                            }
+                        });
+                    },
+                    error: function () {
+                        toastr.error('@Resources.Messages.UnableToDelete');
+                    }
+                });
+            }
+        }
+
+    </script>

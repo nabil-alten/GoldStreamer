@@ -1,0 +1,1040 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="BuyPrice" xml:space="preserve">
+    <value>Buy Price</value>
+  </data>
+  <data name="ChangeLanguage" xml:space="preserve">
+    <value>Change Language</value>
+  </data>
+  <data name="From" xml:space="preserve">
+    <value>of</value>
+  </data>
+  <data name="maxPrice" xml:space="preserve">
+    <value>Best Sell price</value>
+  </data>
+  <data name="minPrice" xml:space="preserve">
+    <value>Best Buy price</value>
+  </data>
+  <data name="Page" xml:space="preserve">
+    <value>Page</value>
+  </data>
+  <data name="PriceDate" xml:space="preserve">
+    <value>Time</value>
+  </data>
+  <data name="PriceViewer" xml:space="preserve">
+    <value>Price Viewer</value>
+  </data>
+  <data name="SellPrice" xml:space="preserve">
+    <value>Sell Price</value>
+  </data>
+  <data name="TradePrices" xml:space="preserve">
+    <value>Add Price</value>
+  </data>
+  <data name="Trader" xml:space="preserve">
+    <value>Trader</value>
+    <comment>Trader/Index</comment>
+  </data>
+  <data name="TraderName" xml:space="preserve">
+    <value>Trader Name</value>
+  </data>
+  <data name="am" xml:space="preserve">
+    <value>AM</value>
+  </data>
+  <data name="pm" xml:space="preserve">
+    <value>PM</value>
+  </data>
+  <data name="LastPriceDate" xml:space="preserve">
+    <value>Last Update</value>
+  </data>
+  <data name="OpenBuy" xml:space="preserve">
+    <value>Open Buy</value>
+  </data>
+  <data name="OpenSell" xml:space="preserve">
+    <value>Open Sell</value>
+  </data>
+  <data name="AddPrice" xml:space="preserve">
+    <value>Update Price</value>
+  </data>
+  <data name="BasketPrices" xml:space="preserve">
+    <value>Basket Prices</value>
+  </data>
+  <data name="Basket" xml:space="preserve">
+    <value>Traders Basket</value>
+  </data>
+  <data name="Add" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="BasketName" xml:space="preserve">
+    <value>Basket Name</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="Update" xml:space="preserve">
+    <value>Update</value>
+  </data>
+  <data name="updatePrice" xml:space="preserve">
+    <value>Update Price</value>
+  </data>
+  <data name="Filter" xml:space="preserve">
+    <value>Search</value>
+    <comment>Zone/Index</comment>
+  </data>
+  <data name="BasketBuy" xml:space="preserve">
+    <value>Basket Buy</value>
+  </data>
+  <data name="BasketSell" xml:space="preserve">
+    <value>Basket Sell</value>
+  </data>
+  <data name="basketPriceHistory" xml:space="preserve">
+    <value>Basket prices history</value>
+  </data>
+  <data name="BasketUpdate" xml:space="preserve">
+    <value>Update Basket</value>
+  </data>
+  <data name="SuperTrader" xml:space="preserve">
+    <value>Super Trader</value>
+  </data>
+  <data name="Home" xml:space="preserve">
+    <value>Home</value>
+  </data>
+  <data name="Login" xml:space="preserve">
+    <value>Login</value>
+  </data>
+  <data name="Register" xml:space="preserve">
+    <value>Register</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="maxSellPrice" xml:space="preserve">
+    <value>Max Sell</value>
+  </data>
+  <data name="minBuyPrice" xml:space="preserve">
+    <value>Min Buy</value>
+  </data>
+  <data name="CurrentBuy" xml:space="preserve">
+    <value>Current Buy</value>
+  </data>
+  <data name="CurrentSell" xml:space="preserve">
+    <value>Current Sell</value>
+  </data>
+  <data name="InBasketPrices" xml:space="preserve">
+    <value>InBasket Prices</value>
+  </data>
+  <data name="maxBuyPrice" xml:space="preserve">
+    <value>Best BuyPrice</value>
+  </data>
+  <data name="minSellPrice" xml:space="preserve">
+    <value>Best SellPrice</value>
+  </data>
+  <data name="BackToBasket" xml:space="preserve">
+    <value>Back to Basket</value>
+  </data>
+  <data name="buyMax" xml:space="preserve">
+    <value>buyMax</value>
+  </data>
+  <data name="sellMin" xml:space="preserve">
+    <value>sellMin</value>
+  </data>
+  <data name="BackToTraders" xml:space="preserve">
+    <value>BackToTraders</value>
+  </data>
+  <data name="TraderPriceHistory" xml:space="preserve">
+    <value>Trader price history</value>
+  </data>
+  <data name="FavorateList" xml:space="preserve">
+    <value>Favorate List</value>
+  </data>
+  <data name="UsersNo" xml:space="preserve">
+    <value>Added Users </value>
+  </data>
+  <data name="AssignFavLink" xml:space="preserve">
+    <value>Assign Favorites</value>
+  </data>
+  <data name="ShowFavLstLink" xml:space="preserve">
+    <value>Favorite Price List</value>
+  </data>
+  <data name="GeneratePassword" xml:space="preserve">
+    <value>Generate Password</value>
+  </data>
+  <data name="AddTraderUsers" xml:space="preserve">
+    <value>Add Trader User</value>
+  </data>
+  <data name="isactive" xml:space="preserve">
+    <value>Isactive/Inactive</value>
+  </data>
+  <data name="Password" xml:space="preserve">
+    <value>Password</value>
+  </data>
+  <data name="UserName" xml:space="preserve">
+    <value>User Name</value>
+  </data>
+  <data name="Active" xml:space="preserve">
+    <value>Active</value>
+  </data>
+  <data name="City" xml:space="preserve">
+    <value>City</value>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>Email</value>
+  </data>
+  <data name="FirstName" xml:space="preserve">
+    <value>First Name</value>
+  </data>
+  <data name="Gender" xml:space="preserve">
+    <value>Gender</value>
+  </data>
+  <data name="Governorate" xml:space="preserve">
+    <value>Governorate</value>
+  </data>
+  <data name="LastName" xml:space="preserve">
+    <value>Last Name</value>
+  </data>
+  <data name="Mobile" xml:space="preserve">
+    <value>Mobile</value>
+  </data>
+  <data name="phone" xml:space="preserve">
+    <value>phone</value>
+  </data>
+  <data name="ReEmail" xml:space="preserve">
+    <value>ReEmail</value>
+  </data>
+  <data name="Region" xml:space="preserve">
+    <value>Region</value>
+  </data>
+  <data name="StoreName" xml:space="preserve">
+    <value>StoreName</value>
+  </data>
+  <data name="STraderOrder" xml:space="preserve">
+    <value>Trader Order</value>
+  </data>
+  <data name="STraderProfileCreate" xml:space="preserve">
+    <value>Add super trader</value>
+  </data>
+  <data name="FavPriceListTitle" xml:space="preserve">
+    <value>FavPriceListTitle</value>
+  </data>
+  <data name="GoToFavPriceList" xml:space="preserve">
+    <value>GoToFavPriceList</value>
+  </data>
+  <data name="GoToMainPriceList" xml:space="preserve">
+    <value>GoToMainPriceList</value>
+  </data>
+  <data name="MngFavList" xml:space="preserve">
+    <value>MngFavList</value>
+  </data>
+  <data name="ShowUsers" xml:space="preserve">
+    <value>ShowUsers</value>
+  </data>
+  <data name="ShowFavPrices" xml:space="preserve">
+    <value>ShowFavPrices</value>
+  </data>
+  <data name="ConfirmPassword" xml:space="preserve">
+    <value>Confirm Password</value>
+  </data>
+  <data name="CurrPassword" xml:space="preserve">
+    <value>Current Password</value>
+  </data>
+  <data name="select" xml:space="preserve">
+    <value>select</value>
+  </data>
+  <data name="Female" xml:space="preserve">
+    <value>Female</value>
+  </data>
+  <data name="Male" xml:space="preserve">
+    <value>Male</value>
+  </data>
+  <data name="STUpdate" xml:space="preserve">
+    <value>Update super trader</value>
+  </data>
+  <data name="Actions" xml:space="preserve">
+    <value>Actions</value>
+  </data>
+  <data name="Activate" xml:space="preserve">
+    <value>Activate</value>
+  </data>
+  <data name="SearchResultCount" xml:space="preserve">
+    <value>SearchResultCount</value>
+  </data>
+  <data name="PriceFavTitle" xml:space="preserve">
+    <value>PriceFavTitle</value>
+  </data>
+  <data name="SuperTraderProfile" xml:space="preserve">
+    <value>SuperTraderProfile</value>
+  </data>
+  <data name="BackToPricePage" xml:space="preserve">
+    <value>BackToPricePage</value>
+  </data>
+  <data name="ActiveState" xml:space="preserve">
+    <value>Active</value>
+  </data>
+  <data name="Captcha" xml:space="preserve">
+    <value>verification Code</value>
+  </data>
+  <data name="EnterCaptcha" xml:space="preserve">
+    <value>Enter Captcha</value>
+  </data>
+  <data name="RefreshCaptcha" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="CheckMail" xml:space="preserve">
+    <value>Please check your email and confirm your email address</value>
+  </data>
+  <data name="Resend" xml:space="preserve">
+    <value>Resend</value>
+  </data>
+  <data name="ResendMessage" xml:space="preserve">
+    <value>If you didn't receive the mail send again</value>
+  </data>
+  <data name="ConfirmMail" xml:space="preserve">
+    <value>Confirm Mail</value>
+  </data>
+  <data name="loginLink" xml:space="preserve">
+    <value>Click here to Log in</value>
+  </data>
+  <data name="ForgotPassword" xml:space="preserve">
+    <value>Forgot Password?</value>
+  </data>
+  <data name="ChangePassword" xml:space="preserve">
+    <value>Cahnge password</value>
+  </data>
+  <data name="ConfirmNewPassword" xml:space="preserve">
+    <value>Confirm New Password</value>
+  </data>
+  <data name="NewPassword" xml:space="preserve">
+    <value>New Password</value>
+  </data>
+  <data name="Send" xml:space="preserve">
+    <value>Send</value>
+  </data>
+  <data name="PasswordChanged" xml:space="preserve">
+    <value>Password Changed</value>
+  </data>
+  <data name="ResetPassword" xml:space="preserve">
+    <value>Reset Password</value>
+  </data>
+  <data name="ManageUsers" xml:space="preserve">
+    <value>Manage Users</value>
+  </data>
+  <data name="CheckMailPassword" xml:space="preserve">
+    <value>Please check your email and confirm your email address</value>
+  </data>
+  <data name="ReGetPassword" xml:space="preserve">
+    <value>ReGetPassword</value>
+  </data>
+  <data name="UserType" xml:space="preserve">
+    <value>User Type</value>
+  </data>
+  <data name="TraderText" xml:space="preserve">
+    <value>Trader</value>
+  </data>
+  <data name="UserText" xml:space="preserve">
+    <value>User</value>
+  </data>
+  <data name="Print" xml:space="preserve">
+    <value>Print</value>
+  </data>
+  <data name="Comment" xml:space="preserve">
+    <value>Comment</value>
+  </data>
+  <data name="Feedback" xml:space="preserve">
+    <value>Feedback</value>
+  </data>
+  <data name="Submit" xml:space="preserve">
+    <value>Submit</value>
+  </data>
+  <data name="PriceList" xml:space="preserve">
+    <value>PriceList</value>
+  </data>
+  <data name="FeedbackSubject" xml:space="preserve">
+    <value>gold </value>
+  </data>
+  <data name="QuestionGroup" xml:space="preserve">
+    <value>Question Group</value>
+  </data>
+  <data name="QuestionGroupDesc" xml:space="preserve">
+    <value>Group Description</value>
+  </data>
+  <data name="QuestionOrder" xml:space="preserve">
+    <value>Question Order</value>
+  </data>
+  <data name="Description" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="notactive" xml:space="preserve">
+    <value>Not active</value>
+  </data>
+  <data name="PageSizeChoose" xml:space="preserve">
+    <value>PageSizeChoose</value>
+  </data>
+  <data name="Users" xml:space="preserve">
+    <value>Users</value>
+  </data>
+  <data name="UsersNoTable" xml:space="preserve">
+    <value>Users Number</value>
+  </data>
+  <data name="QuestionsTitle" xml:space="preserve">
+    <value>Frequently Asked Questions Groups</value>
+  </data>
+  <data name="Search" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="AdvancedSearch" xml:space="preserve">
+    <value>Advanced Search</value>
+  </data>
+  <data name="traderlabel" xml:space="preserve">
+    <value>trader</value>
+  </data>
+  <data name="ExportTpPDF" xml:space="preserve">
+    <value>PDF</value>
+  </data>
+  <data name="answer" xml:space="preserve">
+    <value>Answer</value>
+  </data>
+  <data name="ChooseGroup" xml:space="preserve">
+    <value>Choose Group</value>
+  </data>
+  <data name="ComonQuestions" xml:space="preserve">
+    <value>Common Questions</value>
+  </data>
+  <data name="Group" xml:space="preserve">
+    <value>Group</value>
+  </data>
+  <data name="Procedures" xml:space="preserve">
+    <value>Procedures</value>
+  </data>
+  <data name="Question" xml:space="preserve">
+    <value>question</value>
+  </data>
+  <data name="NoResults" xml:space="preserve">
+    <value>No Results to preview</value>
+  </data>
+  <data name="NumberOfQuestions" xml:space="preserve">
+    <value>Number Of Questions</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="NewsMainCategory" xml:space="preserve">
+    <value>News Main Category</value>
+  </data>
+  <data name="NewsMainCategoryName" xml:space="preserve">
+    <value>عنوان الفئه الرئيسيه للاخبار</value>
+  </data>
+  <data name="NewsMainCategoryOrder" xml:space="preserve">
+    <value>ترتيب الفئه الرئيسيه للاخبار</value>
+  </data>
+  <data name="Upload" xml:space="preserve">
+    <value>Upload</value>
+  </data>
+  <data name="VideoLink" xml:space="preserve">
+    <value>Video Link</value>
+  </data>
+  <data name="Subject" xml:space="preserve">
+    <value>Subject</value>
+  </data>
+  <data name="NewsMainCategoryMaxVal" xml:space="preserve">
+    <value>Can't add more than two main category.</value>
+  </data>
+  <data name="sendSubscribe" xml:space="preserve">
+    <value>Send Subscribe</value>
+  </data>
+  <data name="Subscribe" xml:space="preserve">
+    <value>Subscribe</value>
+  </data>
+  <data name="AddNews" xml:space="preserve">
+    <value>Add News</value>
+  </data>
+  <data name="IsLatest" xml:space="preserve">
+    <value>Latest</value>
+  </data>
+  <data name="NewsCategory" xml:space="preserve">
+    <value>News Category</value>
+  </data>
+  <data name="NewsDate" xml:space="preserve">
+    <value>News Date</value>
+  </data>
+  <data name="NewsSource" xml:space="preserve">
+    <value>News Source</value>
+  </data>
+  <data name="NewsSourceURL" xml:space="preserve">
+    <value>News Source URL</value>
+  </data>
+  <data name="NewsSummary" xml:space="preserve">
+    <value>Summary</value>
+  </data>
+  <data name="NewsTitle" xml:space="preserve">
+    <value>Title</value>
+  </data>
+  <data name="NewsCategoryText" xml:space="preserve">
+    <value>News Category</value>
+  </data>
+  <data name="NewsOrder" xml:space="preserve">
+    <value>News Order</value>
+  </data>
+  <data name="subscribebtn" xml:space="preserve">
+    <value>Subscribe</value>
+  </data>
+  <data name="AddNewCategory" xml:space="preserve">
+    <value>Add Category</value>
+  </data>
+  <data name="ChooseCategory" xml:space="preserve">
+    <value>Choose Category</value>
+  </data>
+  <data name="chooseMainCategory" xml:space="preserve">
+    <value>choose Main Category</value>
+  </data>
+  <data name="NewsCount" xml:space="preserve">
+    <value>News Count</value>
+  </data>
+  <data name="ChooseDate" xml:space="preserve">
+    <value>Choose Date</value>
+  </data>
+  <data name="LoacleGoldNews" xml:space="preserve">
+    <value>Loacle Gold News</value>
+  </data>
+  <data name="Next" xml:space="preserve">
+    <value>Next</value>
+  </data>
+  <data name="Previous" xml:space="preserve">
+    <value>Previous</value>
+  </data>
+  <data name="ReadMore" xml:space="preserve">
+    <value>Read More</value>
+  </data>
+  <data name="MainUser" xml:space="preserve">
+    <value>Main User</value>
+  </data>
+  <data name="NewsDetails" xml:space="preserve">
+    <value>News Details</value>
+  </data>
+  <data name="NewsMostViewed" xml:space="preserve">
+    <value>Most viewed</value>
+  </data>
+  <data name="ViewsNo" xml:space="preserve">
+    <value>Views number</value>
+  </data>
+  <data name="AddNewsSubCategory" xml:space="preserve">
+    <value>AddNewsSubCategory</value>
+  </data>
+  <data name="CategoryOrder" xml:space="preserve">
+    <value>ترتيب الفئة</value>
+  </data>
+  <data name="NewsSubCategory" xml:space="preserve">
+    <value>الفئة الفرعية</value>
+  </data>
+  <data name="EditProfile" xml:space="preserve">
+    <value>Edit Profile</value>
+  </data>
+  <data name="SearchNews" xml:space="preserve">
+    <value>Search News</value>
+  </data>
+  <data name="NewsUpdate" xml:space="preserve">
+    <value>Update News</value>
+  </data>
+  <data name="userquestioncheck" xml:space="preserve">
+    <value>User Questions</value>
+  </data>
+  <data name="NoCategoryQuestions" xml:space="preserve">
+    <value>No Category Questions</value>
+  </data>
+  <data name="NoAnswersQuestions" xml:space="preserve">
+    <value>No Answers Questions</value>
+  </data>
+  <data name="QuestionsNoAnswer" xml:space="preserve">
+    <value>Questions No Answer</value>
+  </data>
+  <data name="deactive" xml:space="preserve">
+    <value>deactive</value>
+  </data>
+  <data name="All" xml:space="preserve">
+    <value>All</value>
+  </data>
+  <data name="EditTraderProfile" xml:space="preserve">
+    <value>Edit Trader Profile</value>
+  </data>
+  <data name="SendReply" xml:space="preserve">
+    <value>Send Reply</value>
+  </data>
+  <data name="notreplied" xml:space="preserve">
+    <value>notreplied</value>
+  </data>
+  <data name="replied" xml:space="preserve">
+    <value>replied</value>
+  </data>
+  <data name="NewsUser" xml:space="preserve">
+    <value>News</value>
+  </data>
+  <data name="AllowGeneralProfile" xml:space="preserve">
+    <value>Allow others to view my profile data</value>
+  </data>
+  <data name="RegisterInNews" xml:space="preserve">
+    <value>Register in website news feature</value>
+  </data>
+  <data name="EditUserProfile" xml:space="preserve">
+    <value>Edit User Profile</value>
+  </data>
+  <data name="UserInfo" xml:space="preserve">
+    <value>User Information</value>
+  </data>
+  <data name="FAQ" xml:space="preserve">
+    <value>Frequently Asked Questions</value>
+  </data>
+  <data name="GlobalGoldPrices" xml:space="preserve">
+    <value>Global gold prices</value>
+  </data>
+  <data name="userquestion" xml:space="preserve">
+    <value>User question</value>
+  </data>
+  <data name="OldPassword" xml:space="preserve">
+    <value>Old Password</value>
+  </data>
+  <data name="Ask" xml:space="preserve">
+    <value>Ask</value>
+  </data>
+  <data name="Bid" xml:space="preserve">
+    <value>Bid</value>
+  </data>
+  <data name="Close" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="High" xml:space="preserve">
+    <value>High</value>
+  </data>
+  <data name="Low" xml:space="preserve">
+    <value>Low</value>
+  </data>
+  <data name="Open" xml:space="preserve">
+    <value>Open</value>
+  </data>
+  <data name="TradersComparison" xml:space="preserve">
+    <value>Traders Comparison</value>
+  </data>
+  <data name="AverageClose" xml:space="preserve">
+    <value>Average Close</value>
+  </data>
+  <data name="AveragePrice" xml:space="preserve">
+    <value>Average Price</value>
+  </data>
+  <data name="Bar" xml:space="preserve">
+    <value>Bar</value>
+  </data>
+  <data name="Buy" xml:space="preserve">
+    <value>Buy</value>
+  </data>
+  <data name="ChooseTrader" xml:space="preserve">
+    <value>ChooseT rader</value>
+  </data>
+  <data name="Line" xml:space="preserve">
+    <value>Line</value>
+  </data>
+  <data name="Month" xml:space="preserve">
+    <value>Month</value>
+  </data>
+  <data name="MonthWeek" xml:space="preserve">
+    <value>Month/Week</value>
+  </data>
+  <data name="Periods" xml:space="preserve">
+    <value>Periods</value>
+  </data>
+  <data name="Price" xml:space="preserve">
+    <value>Price</value>
+  </data>
+  <data name="ReportType" xml:space="preserve">
+    <value>Report Type</value>
+  </data>
+  <data name="ScatterLine" xml:space="preserve">
+    <value>Scatter Line</value>
+  </data>
+  <data name="Sell" xml:space="preserve">
+    <value>Sell</value>
+  </data>
+  <data name="ViewReport" xml:space="preserve">
+    <value>View Report</value>
+  </data>
+  <data name="Week" xml:space="preserve">
+    <value>Week</value>
+  </data>
+  <data name="YearMonth" xml:space="preserve">
+    <value>Year/Month</value>
+  </data>
+  <data name="BuySell" xml:space="preserve">
+    <value>Buy/Sell</value>
+  </data>
+  <data name="NewsList" xml:space="preserve">
+    <value>Back to news list</value>
+  </data>
+  <data name="Carat10" xml:space="preserve">
+    <value>Carat 10</value>
+  </data>
+  <data name="Carat14" xml:space="preserve">
+    <value>Carat 14</value>
+  </data>
+  <data name="Carat18" xml:space="preserve">
+    <value>Carat 18</value>
+  </data>
+  <data name="Carat21" xml:space="preserve">
+    <value>Carat 21</value>
+  </data>
+  <data name="Carat24" xml:space="preserve">
+    <value>Carat 24</value>
+  </data>
+  <data name="GoldLatestPrice" xml:space="preserve">
+    <value>Gold latest price</value>
+  </data>
+  <data name="RelatedNews" xml:space="preserve">
+    <value>Related News</value>
+  </data>
+  <data name="carat22" xml:space="preserve">
+    <value>carat 22</value>
+  </data>
+  <data name="goldpricesmonth" xml:space="preserve">
+    <value>اسعار الذهب في الشهر من </value>
+  </data>
+  <data name="daymonth" xml:space="preserve">
+    <value>day month</value>
+  </data>
+  <data name="globalmarket" xml:space="preserve">
+    <value>global market</value>
+  </data>
+  <data name="goldpricesweek" xml:space="preserve">
+    <value>gold prices week</value>
+  </data>
+  <data name="leprice" xml:space="preserve">
+    <value>Egyption pound</value>
+  </data>
+  <data name="period" xml:space="preserve">
+    <value>period</value>
+  </data>
+  <data name="pound" xml:space="preserve">
+    <value>pound</value>
+  </data>
+  <data name="show" xml:space="preserve">
+    <value>show</value>
+  </data>
+  <data name="showtype" xml:space="preserve">
+    <value>show type</value>
+  </data>
+  <data name="to" xml:space="preserve">
+    <value>to</value>
+  </data>
+  <data name="Hours" xml:space="preserve">
+    <value>Hours</value>
+  </data>
+  <data name="Minutes" xml:space="preserve">
+    <value>Minutes</value>
+  </data>
+  <data name="Since" xml:space="preserve">
+    <value>Since</value>
+  </data>
+  <data name="AboutUs" xml:space="preserve">
+    <value>About Us</value>
+  </data>
+  <data name="Hello" xml:space="preserve">
+    <value>Hello</value>
+  </data>
+  <data name="ManageFav" xml:space="preserve">
+    <value>Manage Favourites</value>
+  </data>
+  <data name="PricesOffers" xml:space="preserve">
+    <value>Prices Offers</value>
+  </data>
+  <data name="Profile" xml:space="preserve">
+    <value>Profile</value>
+  </data>
+  <data name="ProfileInfo" xml:space="preserve">
+    <value>Profile Info</value>
+  </data>
+  <data name="TraderOnly" xml:space="preserve">
+    <value>Only Traders</value>
+  </data>
+  <data name="TradersBasket" xml:space="preserve">
+    <value>Traders Basket</value>
+  </data>
+  <data name="UpdatePrices" xml:space="preserve">
+    <value>Update Prices</value>
+  </data>
+  <data name="AccountLock" xml:space="preserve">
+    <value>Account  Is Locked !</value>
+  </data>
+  <data name="AddAll" xml:space="preserve">
+    <value>Add All</value>
+  </data>
+  <data name="AddChoosen" xml:space="preserve">
+    <value>Add Choosen</value>
+  </data>
+  <data name="Available" xml:space="preserve">
+    <value>Available</value>
+  </data>
+  <data name="CancelSearch" xml:space="preserve">
+    <value>Cancel search</value>
+  </data>
+  <data name="Chossen" xml:space="preserve">
+    <value>Chossen</value>
+  </data>
+  <data name="ContinueLogin" xml:space="preserve">
+    <value>Complete the process of login</value>
+  </data>
+  <data name="DeleteAll" xml:space="preserve">
+    <value>Delete All</value>
+  </data>
+  <data name="DeleteChoosen" xml:space="preserve">
+    <value>Delete Choosen</value>
+  </data>
+  <data name="FirstPrivilage" xml:space="preserve">
+    <value>First privilage</value>
+  </data>
+  <data name="Goldsmiths" xml:space="preserve">
+    <value>Goldsmiths</value>
+  </data>
+  <data name="GoldText1" xml:space="preserve">
+    <value>Kilogram of gold calibres 21</value>
+  </data>
+  <data name="GoldText2" xml:space="preserve">
+    <value>Half kilogram of gold calibres 18</value>
+  </data>
+  <data name="ListPrices" xml:space="preserve">
+    <value>List prices throughout the day</value>
+  </data>
+  <data name="NoOfmovements" xml:space="preserve">
+    <value>Number Of Movements 0</value>
+  </data>
+  <data name="NoOfmovements1" xml:space="preserve">
+    <value>Number Of Movements {0}</value>
+  </data>
+  <data name="PersonalInformation" xml:space="preserve">
+    <value>Personal Information</value>
+  </data>
+  <data name="PrintingDate" xml:space="preserve">
+    <value>Printing Date</value>
+  </data>
+  <data name="QuesrtionSearch" xml:space="preserve">
+    <value>Search by question or question group</value>
+  </data>
+  <data name="QuestionType" xml:space="preserve">
+    <value>Question Type</value>
+  </data>
+  <data name="RegisterNewTrader" xml:space="preserve">
+    <value>Register new trader</value>
+  </data>
+  <data name="RegisterNewUser" xml:space="preserve">
+    <value>Register new user</value>
+  </data>
+  <data name="RegisterNow" xml:space="preserve">
+    <value>Register now</value>
+  </data>
+  <data name="ReloadAdvertisedPrice" xml:space="preserve">
+    <value>Reload Advertised Price</value>
+  </data>
+  <data name="SearchGoldsmiths" xml:space="preserve">
+    <value>Search Goldsmiths</value>
+  </data>
+  <data name="SubscribtionCancelled" xml:space="preserve">
+    <value>Your news subscribtion has been cancelled</value>
+  </data>
+  <data name="TraderRegister" xml:space="preserve">
+    <value>Trader Register</value>
+  </data>
+  <data name="TradersNumber" xml:space="preserve">
+    <value>Traders Number {0}</value>
+  </data>
+  <data name="TradersNumber1" xml:space="preserve">
+    <value>Traders Number 0</value>
+  </data>
+  <data name="unsubscribtion" xml:space="preserve">
+    <value>Unsubscribtion</value>
+  </data>
+  <data name="unsubscribtionFailed" xml:space="preserve">
+    <value>Unsubscribtion Failed</value>
+  </data>
+  <data name="unsubscribtionFailedMsg" xml:space="preserve">
+    <value>An error has occurred during the unsubscribe process in the News feature, please make sure of the link</value>
+  </data>
+  <data name="traderpriceslist" xml:space="preserve">
+    <value>traderpriceslist</value>
+  </data>
+  <data name="comparsonChart" xml:space="preserve">
+    <value>comparsonChart</value>
+  </data>
+  <data name="GlobalChart" xml:space="preserve">
+    <value>Global Gold Chart</value>
+  </data>
+  <data name="traderChart" xml:space="preserve">
+    <value>traderChart</value>
+  </data>
+  <data name="DollarPrice" xml:space="preserve">
+    <value>Dollar Price</value>
+  </data>
+  <data name="generalGoldPrices" xml:space="preserve">
+    <value>General Gold Prices In Egypt</value>
+  </data>
+  <data name="GoldNews" xml:space="preserve">
+    <value>Global And Local Gold Prices</value>
+  </data>
+  <data name="GoldPrice1gm" xml:space="preserve">
+    <value>GoldPrice1gm</value>
+  </data>
+  <data name="SearchInSagha" xml:space="preserve">
+    <value>search in Sagha</value>
+  </data>
+  <data name="AdminQuestions" xml:space="preserve">
+    <value>Admin Questions</value>
+  </data>
+  <data name="Dashboard" xml:space="preserve">
+    <value>Dashboard</value>
+  </data>
+  <data name="FavouriteListManagement" xml:space="preserve">
+    <value>Favourite List Management</value>
+  </data>
+  <data name="Tradedata" xml:space="preserve">
+    <value>Trade data</value>
+  </data>
+  <data name="Logout" xml:space="preserve">
+    <value>Logout</value>
+  </data>
+  <data name="Loading" xml:space="preserve">
+    <value>Loading .....</value>
+  </data>
+  <data name="UsageTerms" xml:space="preserve">
+    <value>Usage Terms</value>
+  </data>
+  <data name="ComparasonTraders" xml:space="preserve">
+    <value>ComparasonTraders</value>
+  </data>
+  <data name="OtherTraders" xml:space="preserve">
+    <value>OtherTraders</value>
+  </data>
+  <data name="ChatRoom" xml:space="preserve">
+    <value>Chat Room</value>
+  </data>
+  <data name="AddBasket" xml:space="preserve">
+    <value>Add Basket</value>
+  </data>
+  <data name="Baskets" xml:space="preserve">
+    <value>Baskets</value>
+  </data>
+  <data name="privacyPolicy" xml:space="preserve">
+    <value>privacy Policy</value>
+  </data>
+</root>

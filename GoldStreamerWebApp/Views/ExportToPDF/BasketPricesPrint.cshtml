@@ -1,0 +1,153 @@
+﻿@using GoldStreamer.Helpers
+@model List<GoldStreamer.Models.ViewModels.BasketPricesPrintVM>
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>TraderPricesPrint</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/toast")
+    <script src="~/Scripts/jquery-1.11.1.min.js"></script>
+
+</head>
+<body>
+@{
+    string baseUrl = CultureHelper.GetBaseURL().ToLower();
+}
+
+@using (Html.BeginForm("GenerateBasketPDF", "ExportToPDF", FormMethod.Get,new{id="form"}))
+{
+    <div>
+        <table class="table" id="list">
+            <tr>
+                <td colspan="3" style="align-content: center">
+                    <div align="center" style="font-size: large"> @Resources.General.PriceList</div>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3" style="align-content: center">
+                    <div align="center" style="font-size: large"> @Model[0].Date</div>
+                    @Html.Hidden("BasketID", Model[0].BasketID)
+
+                </td>
+            </tr>
+            <tr>
+
+                <td colspan="2">
+                    <div align="right" style="font-size: large"> @Model[0].BasketName</div>
+
+                </td>
+                <td>
+                    <div align="center" style="font-size: large"> @Resources.General.BasketName</div>
+                </td>
+            </tr>
+
+            <tr>
+                <td colspan="3">
+                    <div id="bestP">
+                        @{Html.RenderAction("_BasketBestPrice");}
+                    </div>
+                </td>
+            </tr>
+            @if (!Model.Any())
+            {
+                <tr>
+                    <td colspan="3">
+                        @Html.Label("lblMSGsearch", Resources.Messages.NoData)
+                    </td>
+                </tr>
+
+            }
+
+            else
+            {
+                <tr>
+                    <th>
+                        @Html.Label(@Resources.General.BuyPrice)
+                    </th>
+                    <th>
+                        @Html.Label(@Resources.General.SellPrice)
+                    </th>
+                    <th>
+                        @Html.Label(@Resources.General.PriceDate)
+
+                    </th>
+
+                </tr>
+
+                foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @String.Format("{0:0,0.00}", item.BuyPrice)
+                            @Html.HiddenFor(m => item.BuyPrice)
+                        </td>
+                        <td>
+                            @String.Format("{0:0,0.00}", item.SellPrice)
+                            @Html.HiddenFor(m => item.SellPrice)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PriceDate)
+                            @Html.HiddenFor(m => item.Date)
+                        </td>
+
+                    </tr>
+                }
+                if (!Model[0].print)
+                {
+                    <tr>
+                        <td colspan="3">
+                            <a href="javascript:window.print()">@Resources.General.Print</a>
+                            <input id="PrintPreview1" type="submit" value='@Resources.General.ExportTpPDF' class="btn"/>
+                        </td>
+                    </tr>
+                }
+
+            }
+        </table>
+
+    </div>
+}
+@*<script>
+    $(document).ready(function() {
+
+        $('#PrintPreview1').on('click', function(e) {
+            debugger;
+            var trader = document.getElementById("TraderID").value;
+            $.ajax({
+                url: "@(baseUrl)/ExportToPDF/GeneratePDF",
+                type: 'Get',
+                async: false,
+                cache: false,
+                contentType: "application/json; charset=utf-8",
+                data: { traderId: trader },
+                success: function(data) {
+                    debugger;
+                    $('body').html(data);
+                    //$('#jqOpenDate').jqxDateTimeInput({ value: new Date(yy, mm - 1, dd) });
+                },
+                error: function (xhr, textStatus) {
+                    debugger;
+                    toastr.error('Error!');
+                }
+            });
+            return false;
+        });
+    });
+</script>*@
+@Scripts.Render("~/bundles/jqueryval")
+
+</body>
+<footer>
+    تاريخ الطباعة: @DateTime.Now
+</footer>
+</html>

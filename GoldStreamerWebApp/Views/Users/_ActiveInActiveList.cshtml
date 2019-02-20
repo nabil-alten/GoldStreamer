@@ -1,0 +1,499 @@
+﻿@using PagedList;
+@using PagedList.Mvc;
+@model PagedList.IPagedList<GoldStreamer.Models.ViewModels.ApplicationUserViewModel>
+
+@using GoldStreamer.Helpers
+@{
+    string baseUrl = CultureHelper.GetBaseURL().ToLower();
+    string culture = CultureHelper.GetCurrentCulture().ToLower();
+    string primaryCulture = CultureHelper.GetPrimaryCulture().ToLower();
+    string trClass = "clr_tr";
+    int defaultPageSize = int.Parse(System.Configuration.ConfigurationManager.AppSettings["DefaultPageSize"].ToString());
+    string[] pagingOptions = UsefulMethods.GetPagingOptions();
+
+}
+
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+
+@*----------------------List------------------------*@
+<form class="form-horizontal" id="form" method="post" action="">
+    @*<div class="form-group">*@
+    <table style="width:100%">
+        <tr>
+            <td>
+                <div class="control-label">@Resources.General.FirstName :</div>
+            </td>
+            <td>
+                @Html.TextBox("FullName", null, new { placeholder = @Resources.General.FirstName })
+            </td>
+            <td>
+                <div class="control-label">@Resources.General.UserName :</div>
+            </td>
+            <td>
+                @Html.TextBox("UserName", null, new { placeholder = @Resources.General.UserName })
+            </td>
+            <td>
+                <div class="control-label">@Resources.General.UserType :</div>
+            </td>
+            <td>
+                <select style="width:174px;height:26px;" id="drpUserType">
+                    <option value="0" selected>@Resources.General.select</option>
+                    <option value="2">@Resources.General.traderlabel</option>
+                    <option value="3">@Resources.General.UserText</option>
+                </select>
+            </td>
+            <td>
+                <input type="button" id="btnSearch" class="btn btn-primary" value='@Resources.General.Filter' class="btn btn-default" />
+            </td>
+        </tr>
+       
+        <tr>
+            
+        </tr>
+    </table>
+
+        <table>
+            <tr>
+                <td>
+                </td>
+                <td>
+                </td>
+            </tr>
+        </table>
+    <br />
+    <br/>
+  
+<br />
+    @if (Model.Count > 0)
+{
+
+    <div class="counter_div">@Resources.General.UsersNoTable :<span>@Model.TotalItemCount </span></div>
+
+        <table style="width:100%" class="data_table"  id="tbl">
+                <tr>
+                    <th>
+
+                        @Html.ActionLink(Resources.General.FirstName, "ActiveInActiveUsersIndex", new { sortOrder = ViewBag.FirstNameSort, pageSize = ViewBag.PageSize, UserName = ViewBag.UserName, FullName = ViewBag.fullName, Type = ViewBag.Type })
+                    </th>
+                    <th>
+                        @Html.ActionLink(Resources.General.UserName, "ActiveInActiveUsersIndex", new { sortOrder = ViewBag.UserNameSort, pageSize = ViewBag.PageSize, UserName = ViewBag.UserName, FullName = ViewBag.fullName, Type = ViewBag.Type })
+                    </th>
+                    <th>@Resources.General.UserType</th>
+                    <th>@Resources.General.Actions</th>
+                    <th>
+                        <div style=" margin-left: -42%;">
+                            <input id="selectAll" type="checkbox" />
+                            <input type="button" style="background-color: #304D5D;" class="btn btn-primary" value="@Resources.General.Activate" id="ActivateSelected" />
+                            <input type="button" style="background-color: #304D5D; width: 21%;" class="btn btn-primary" value="@Resources.General.notactive" id="DeActivateSelected" />
+                        </div>
+                    </th>
+                </tr>
+            <tbody>
+
+                @{
+        string cssRowCass = "odd";
+        foreach (var item in Model.ToList<GoldStreamer.Models.ViewModels.ApplicationUserViewModel>())
+        {
+            <tr class=@trClass>
+                <td>@Html.DisplayFor(modelItem => item.Fullname)</td>
+                <td>@Html.DisplayFor(modelItem => item.UserName)</td>
+
+                <td>@(item.typeFlg == 2 ? @Resources.General.traderlabel : @Resources.General.UserText) </td>
+                <td>
+                    @if (item.IsActive)
+                    {
+                        <a href="#" id="@item.ID" data-id="@item.ID" data-traderid="@item.TraderId" data-checked="@item.IsActive" class="checkbox">@Resources.General.notactive</a>
+                    }
+                    else
+                    {
+                        <a href="#" id="@item.ID" data-id="@item.ID" data-traderid="@item.TraderId" data-checked="@item.IsActive" class="checkbox">@Resources.General.Activate</a>
+                    }
+
+
+                </td>
+                <td>
+                    <div style="margin-left: 13%;">
+                        <input type="checkbox" value="@item.ID" data-id="@item.ID" data-traderid="@item.TraderId" title='@Resources.General.isactive' />
+                        </div>
+</td>
+            </tr>
+
+            if (trClass == "")
+            {
+                trClass = "clr_tr";
+
+            }
+            else
+            {
+                trClass = "";
+
+            }
+        }
+        <tr>
+                <td colspan="5">
+
+                    <div class="grid-footer">
+                        <div class="" id="pager" data-url="@(baseUrl)/Users/_ActiveInActiveList/" data-container="divList" data-username="@ViewBag.UserName" data-fullname="@ViewBag.fullName" data-type="@ViewBag.Type" data-sort="@ViewBag.CurrentSort" data-page-size="@ViewBag.PageSize">
+                            @if (Model.PageCount > 1)
+                            {
+                                @Html.PagedListPager(Model, page => ("javascript:gotoPage('" + page + "')"))
+                            }
+
+                            @*@if (Model.Count > 0)
+                {
+                <div class="pull-right show">
+                    <span class="padding5">@Resources.General.PageSizeChoose</span>
+                    <span>
+                        <select id="SelectPageSize" data-url="@(baseUrl)/Users/_ActiveInActiveList" data-container="divList" data-username="@ViewBag.UserName" data-fullname="@ViewBag.fullName" data-type="@ViewBag.Type" data-sort="@ViewBag.CurrentSort" data-page-size="@ViewBag.PageSize">
+                            @for (int i = 0; i < pagingOptions.Length; i++)
+                                {
+                                    if (ViewBag.PageSize != null && ViewBag.PageSize == int.Parse(pagingOptions[i]))
+                                    {
+                                <option value="@pagingOptions[i]" selected>@pagingOptions[i]</option>
+                                    }
+                                    else if (defaultPageSize == int.Parse(pagingOptions[i]))
+                                    {
+                                <option value="@pagingOptions[i]" selected>@pagingOptions[i]</option>
+                                    }
+                                    else
+                                    {
+                                <option value="@pagingOptions[i]">@pagingOptions[i]</option>
+                                    }
+                                }
+
+                        </select>
+
+                    </span>
+                </div>
+                }*@
+
+
+                        </div>
+                    </div>
+                </td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        @Html.Label("lblMSGsearch", Resources.Messages.NoData)
+    }
+
+</form>
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $('#btnSearch').on('click', function () {
+            search(1);
+        });
+        $('#selectAll').click(function (e) {
+
+            var table = $(e.target).closest('table');
+            $('td input:checkbox', table).prop('checked', this.checked);
+        });
+        $('#SelectPageSize').change(function (event) {
+            debugger;
+            var id = event.target.id;
+            var url = $(this).attr('data-url');
+            var container = $(this).attr('data-container');
+
+            var UserName = $(this).attr('data-UserName');
+            var FullName = $(this).attr('data-FullName');
+            var Type = $(this).attr('data-Type');
+            if (UserName.length > 0) {
+                UserName = UserName.trim();
+            }
+            if (FullName.length > 0) {
+                FullName = FullName.trim();
+            }
+            // custom paramter
+            var customParm = $(this).attr('data-customparm');
+            var customParmValues = getCustomParms(customParm);
+            //
+            var sortOrder = $(this).attr('data-sort');
+            var pageSize = '@defaultPageSize';
+            if (document.getElementById("SelectPageSize") != null) {
+                pageSize = document.getElementById('SelectPageSize').value;
+            }
+            $.ajax({
+                url: url + "?UserName=" + encodeURIComponent(UserName) + "&FullName=" + FullName + "&Type=" + Type + "&pageSize=" + pageSize + '&pageNumber=1' + '&sortOrder=' + sortOrder + customParmValues,
+                type: 'Get',
+                async: false,
+                cache: false,
+                //data: { 'SearchText': searchText, 'pageSize': pageSize,'sortOrder': sortOrder,'pageNumber':1 },
+                success: function (data) {
+                    $('#divList').html(data);
+                },
+                error: function () {
+
+                }
+            });
+        });
+    });
+
+    function search(pagenumber) {
+        debugger;
+        var Fullname = $('#FullName').val();
+        var UserName = $('#UserName').val();
+        var UserType = $('#drpUserType').val();
+        var customParm = $(this).attr('data-customparm');
+        var customParmValues = getCustomParms(customParm);
+        //
+        var pageSize = '@defaultPageSize';
+        if (document.getElementById("SelectPageSize") != null) {
+            pageSize = document.getElementById('SelectPageSize').value;
+        }
+        $.ajax({
+            url: "@(baseUrl)/Users/_ActiveInActiveList",
+            type: 'Get',
+            async: false,
+            cache: false,
+            contentType: "application/json; charset=utf-8",
+            data: { UserName: UserName, FullName: Fullname, Type: UserType ,pageNumber:pagenumber, pageSize: pageSize },
+            success: function (data) {
+                $('#divList').html(data);
+                $('#drpUserType').val(UserType);
+            },
+            error: function (xhr, textStatus) {
+                toastr.error('Error!');
+            }
+        });
+        return false;
+    }
+    function CheckedUsers() {
+        var ids = "";
+        $('#tbl input:checkbox:checked').each(function () {
+            if ($(this).attr('id') != "selectAll") {
+                if (ids == "") {
+                    ids = $(this).val();
+                }
+                else {
+                    ids = ids + "," + $(this).val();
+                }
+            }
+        })
+        return ids;
+    }
+    function getCustomParms(customParm) {
+        if (customParm == null) return "";
+        var keys = customParm.split(",");
+        var keysWithValues
+        for (var i = 0; i < keys.length; i++) {
+            keysWithValues = "&" + keys[i].replace("|", "=");
+        }
+        return keysWithValues;
+    }
+    function gotoPage(pageNumber) {
+        debugger;
+        var pager = $('#pager');
+        if (pager == null) return;
+        var url = pager.attr('data-url');
+        var container = pager.attr('data-container');
+        var UserName = pager.attr('data-UserName');
+        var FullName = pager.attr('data-FullName');
+        var Type = pager.attr('data-Type');
+        var sortOrder = pager.attr('data-sort');
+        // custom paramter
+        var customParm = pager.attr('data-customparm');
+        var customParmValues = getCustomParms(customParm);
+        //
+        var pageSize = pager.attr('data-page-size');
+        if (pageSize == '') {
+            pageSize = '@defaultPageSize';
+        }
+
+        $.ajax({
+            url: url + "?pageSize=" + pageSize + "&PageNumber=" + pageNumber + "&UserName=" + encodeURIComponent(UserName) + "&FullName=" + encodeURIComponent(FullName) + "&Type=" + encodeURIComponent(Type) + "&sortOrder=" + sortOrder + customParmValues,
+            type: 'Get',
+            async: false,
+            cache: false,
+            success: function (data) {
+                $('#' + container).html(data);
+            },
+            error: function () {
+
+            }
+        });
+    }
+</script>
+<script>
+
+    $(document).ready(function (e) {
+        $('#ActivateSelected').click(function (e) {
+            var pagenumber = 1;
+            if ('@ViewBag.PageNumber' != null || '@ViewBag.PageNumber' != "") {
+                pagenumber = '@ViewBag.PageNumber';
+            }
+            var tempIDs = CheckedUsers();
+            if (tempIDs == "") {
+                toastr.error('@Resources.Messages.NoSelected');
+                return false;
+            }
+            var ids = tempIDs.split(",");
+            var Activate = 1;
+            var FullName = $('#FullName').val();
+            var UserName = $('#UserName').val();;
+            var userType = $('#drpUserType').val();
+            var url = "@(baseUrl)/Users/ActiveSelected?Activate=1";
+            var Conf = confirm("@Resources.Messages.ActivateUsr");
+            if (Conf == true) {
+                $.ajax({
+                    url: url,
+
+                    data: JSON.stringify({ 'ids': ids, 'Activate': Activate, pageNumber: pagenumber }),
+                    type: 'Post',
+                    contentType: "application/json; charset=utf-8",
+                    async: false,
+                    cache: false,
+                    success: function (data, statusText, xhr) {
+                        $('#divList').html(data);
+                        toastr.success('@Resources.Messages.Updated');
+                        $('#FullName').val(FullName);
+                        $('#UserName').val(UserName);
+                        $('#drpUserType').val(userType);
+                        search(pagenumber);
+                    },
+                    error: function (xhr, textStatus) {
+                        debugger;
+                        if (xhr.status == 2)
+                            toastr.error('@Resources.Messages.NoSelected');
+                        else
+                            if (xhr.status == 5)
+                                window.location.reload();
+                            else
+                                toastr.error('@Resources.Messages.SaveFailed');
+                    }
+                });
+            }
+            else
+                return false;
+
+
+        });
+        $('#DeActivateSelected').click(function (e) {
+            debugger;
+            var pagenumber = 1;
+            if ('@ViewBag.PageNumber' != null || '@ViewBag.PageNumber' != "") {
+                pagenumber = '@ViewBag.PageNumber';
+            }
+            var tempIDs = CheckedUsers();
+            if (tempIDs == "") {
+                toastr.error('@Resources.Messages.NoSelected');
+                return false;
+            }
+            var ids = tempIDs.split(",");
+            var Activate = 2;
+            var FullName = $('#FullName').val();
+            var UserName = $('#UserName').val();;
+            var userType = $('#drpUserType').val();
+            var url = "@(baseUrl)/Users/ActiveSelected?Activate=2";
+            var Conf = confirm("@Resources.Messages.DeAtivateUsr");
+            if (Conf == true) {
+                $.ajax({
+                    url: url,
+
+                    data: JSON.stringify({ 'ids': ids, 'Activate': Activate ,pageNumber:pagenumber}),
+                    type: 'Post',
+                    contentType: "application/json; charset=utf-8",
+                    async: false,
+                    cache: false,
+                    success: function (data, statusText, xhr) {
+                        $('#divList').html(data);
+                        toastr.success('@Resources.Messages.Updated');
+                        $('#FullName').val(FullName);
+                        $('#UserName').val(UserName);
+                        $('#drpUserType').val(userType);
+                        search(pagenumber);
+                    },
+                    error: function (xhr, textStatus) {
+                        debugger;
+                        if (xhr.status == 2)
+                            toastr.error('@Resources.Messages.NoSelected');
+                        else
+                            if (xhr.status == 5)
+                                window.location.reload();
+                            else
+                                toastr.error('@Resources.Messages.SaveFailed');
+                    }
+                });
+            }
+            else
+                return false;
+
+
+        });
+        $('.checkbox').on('click', function (event) {
+            debugger;
+            var FullName = $('#FullName').val();
+            var UserName = $('#UserName').val();;
+            var userType = $('#drpUserType').val();
+            var pagenumber = 1;
+            if ('@ViewBag.PageNumber' != null && '@ViewBag.PageNumber' != "" && '@ViewBag.PageNumber' != '') {
+                pagenumber = '@ViewBag.PageNumber';
+            }
+            var id = $(this).attr("data-id");
+            var traderid = $(this).attr("data-traderid");
+            var ckbox = $(this).attr("data-checked");
+            console.log(id);
+            if (ckbox == "True") {
+                var status = "0";
+            } else {
+                var status = "1";
+            }
+            var statusId = status + "," + id;
+            url = '@(baseUrl)/' + '/Users/UnActivateUsr/' + statusId;
+
+            if (status == "1") {
+                var r = confirm("@Resources.Messages.ActivateUsr");
+            } else {
+                var r = confirm("@Resources.Messages.DeAtivateUsr");
+            }
+            var isSuccess = false;
+            if (r == true) {
+                $.ajax({
+                    url: url,
+                    type: "POST",
+                    async: false,
+                    cache: false,
+                    data: { statusId: statusId, tradId: traderid ,pageNumber:pagenumber},
+                    success: function (data) {
+
+                        toastr.success('@Resources.Messages.Updated');
+                        $('#divList').html(data);
+                        $('#FullName').val(FullName);
+                        $('#UserName').val(UserName);
+                        $('#drpUserType').val(userType);
+                        search(pagenumber);
+                    },
+                    error: function () {
+                        toastr.error('Error Message');
+
+                    }
+                });
+
+            }
+            else {
+                //$(this).toggle($(this).checked);
+                //$(this).prop("checked", !$checks.is(":checked"));
+                if ($(this).is(':checked')) {
+                    $(this).attr('checked', false);
+                }
+                else {
+
+                    //$(this).attr("checked", true);
+                    //$(this).is(":checked" , true);
+                    $(this).prop("checked", true)
+                }
+
+            }
+        });
+
+
+        //=======
+
+
+    });
+
+</script>

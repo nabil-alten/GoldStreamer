@@ -1,0 +1,119 @@
+﻿@using GoldStreamer.Helpers
+@model BLL.DomainClasses.NewsCategory
+@{
+    string baseUrl = CultureHelper.GetBaseURL().ToLower();
+}
+
+@using (Html.BeginForm("_Save", "NewsCategory", FormMethod.Post, new { id = "form" }))
+{
+    @Html.AntiForgeryToken()
+     @Html.ValidationSummary(true)
+        @Html.HiddenFor(Model => Model.Id);
+    <table style="width:100%">
+        <tr>
+            <td style="text-align:right;">
+                <h1 class="h1"> @ViewBag.MainCategory</h1>
+
+            </td>
+            <td>
+            </td> <td></td>
+            </tr>
+        <tr>
+            <td>
+                @Resources.General.NewsSubCategory:
+            </td>
+
+<td>
+    @Html.TextBoxFor(model => model.CategoryName, new { autofocus = "autofocus", placeholder = Resources.General.NewsSubCategory, maxlength = 50 })
+    
+
+
+</td>
+            <td style="width:11%"></td>
+ 
+            <td>@Resources.General.CategoryOrder:
+</td>
+
+            <td>@Html.TextBoxFor(model => model.CategoryOrder, new { autofocus = "autofocus", placeholder = Resources.General.CategoryOrder, @Value = "" })
+
+</td>
+           <td> <input type="button" id="Save" value="@Resources.General.Save" class="btn" />
+</td>
+       </tr>
+        <tr>
+            
+            <td></td>
+            <td class="message-label">@Html.ValidationMessageFor(model => model.CategoryName)</td>
+            <td></td>
+            <td></td>
+            <td class="message-label"> @Html.ValidationMessageFor(model => model.CategoryOrder)</td>
+            <td></td>
+        </tr>
+    </table>
+    
+          
+}
+
+
+<script>
+    $('#Save').click(function (e) {
+
+        var mainCategoryID = querySt('MainCategoryID');
+        var name = document.getElementById('CategoryName').value;
+        var order = document.getElementById('CategoryOrder').value;
+
+        if (!$("#form").valid()) return false;
+        //var categoryId = querySt('MainCategoryID');
+
+        $.ajax({
+            url: '@(baseUrl)/' + '/NewsCategory/_Save/?MainCategoryID=' + mainCategoryID,
+            type: "POST",
+            data: JSON.stringify({ 'Id': elementID, 'CategoryName': name, 'CategoryOrder': order, 'MainCategoryId': mainCategoryID }),
+            cache: false,
+            contentType: "application/json; charset=utf-8",
+
+            success: function () {
+              
+                $.ajax({
+                    url: '@(baseUrl)/' + '/NewsCategory/_List/?MainCategoryID=' + mainCategoryID,
+                    type: "POST",
+                    success: function (data) {
+                        toastr.success('@Resources.Messages.Saved');
+                        document.getElementById('CategoryName').value = '';
+                        document.getElementById('CategoryOrder').value = '';
+                       
+                            $('#divList').html(data);
+                    }
+                });
+
+              
+            },
+            error: function (data, xhr, textStatus) {
+                if (data.status == 1) {
+                    toastr.error('@Resources.Messages.BasketNameDuplicate');
+                }
+                else if (data.status == 2) {
+                    toastr.error('@Resources.Messages.NewsCategoryMaxVal');
+                }
+                else if (data.status == 3)
+                {
+                    toastr.error('@Resources.Messages.OrderCategoryErrorMsg');
+                }
+
+                else if (data.status == 4)
+                {
+                    toastr.error('@Resources.Messages.CategoryErrorMsg');
+                }
+                else if (data.status == 5)
+                    toastr.error('@Resources.Messages.OrderNoErrorMsg');
+                else
+                {
+                    toastr.error(textStatus);
+                }
+            }
+        });
+        return false;
+    });
+
+</script>
+@Scripts.Render("~/bundles/jqueryval")

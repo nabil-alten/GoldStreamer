@@ -1,0 +1,113 @@
+﻿
+@{
+    ViewBag.Title = Resources.General.NewsCategoryText;
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    string trClass = "clr_tr";
+
+}
+
+@section SideMenu{
+    @Html.Partial("_AdminSideMenu")
+}
+<script>
+    $(function () {
+        $("#div_sn").addClass("menuItemactive");
+    });
+</script>
+@section UpperBanner{
+
+
+    <div class="innerBanner">
+        <div class="banner">
+            <h1 class="banner_header">@Resources.General.NewsCategoryText</h1>
+
+            <img src="../../Content/Images/inner_banner.jpg" width="1050" height="180" alt="" />
+        </div>
+    </div>
+}
+
+    <table style="width:100%">
+        <tr>
+            <td  style="text-align:right ; width:12%">
+                @Resources.General.NewsTitle :
+            </td>
+            <td>
+                @Html.TextBox("Newstitle", null, new { @placeholder = @Resources.General.NewsTitle, @style = "width: 68%;" })
+            </td>
+            <td style="text-align:right ; width:13%"></td>
+            <td style="text-align:right">
+                @Resources.General.NewsMainCategory :
+            </td>
+            <td>
+                <select id="MainCategory" name="MainCategory" style="width:200px;">
+                    <option value="0" selected>@Resources.General.select</option>
+                    @foreach (var item in new DAL.UnitOfWork.UnitOfWork().NewsMainCategoryRepo.GetAll())
+                    {
+                        <option value="@item.ID">@item.MainCategoryName</option>
+                    }
+                </select>
+            </td>
+            </tr>
+        <tr>
+            <td style="text-align:right ;width:14%">
+                @Resources.General.NewsCategory :
+            </td>
+            <td>
+                <select id="SubCategory" name="SubCategory" style="width:197px;">
+                    <option value="0" selected>@Resources.General.select</option>
+
+                </select>
+            </td>
+            <td></td>
+
+            <td style="text-align:right">
+                @Resources.General.NewsDate :
+            </td>
+            <td>
+
+                <input style="width: 70%;" type="text" id="Date" name="Date" />
+
+            </td>
+            </tr>
+        <tr>
+            <td></td>
+            <td style="text-align:left">
+                <br />
+                <input style=" margin-left: -31%;" type="button" id="btnSearch" class="btn btn-primary" value='@Resources.General.Filter' />
+            </td>
+            <td></td>
+        </tr>
+    </table>
+
+@Html.ActionLink(Resources.General.Add, "Add", "News", null, new { title = @Resources.General.NewsCategory , @class="btn" })
+
+
+    <div class="bank">
+        @*<h2><i class="fa fa-bank"></i> @Resources.General.Bank</h2>*@
+
+        <div id="divList">
+            @{Html.RenderPartial("_List");}
+        </div>
+    </div>
+
+<script>
+    $(document).ready(function () {
+        $('#btnSearch').on('click', function () {
+            search(1);
+        });
+       
+        $('#Date').datetimepicker({
+            lang: 'ar',
+            maxDate: "+0D",
+            timepicker: false,
+            formatDate: 'Y/m/d',
+            format: 'Y/m/d'
+        });
+
+
+        $('#MainCategory').change(function () {
+            LoadSubCategory();
+        });
+    });
+
+    </script>

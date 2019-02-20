@@ -1,0 +1,104 @@
+﻿@using GoldStreamer.Helpers
+@model BLL.DomainClasses.TraderPrices
+<script src="~/Scripts/accounting.min.js"></script>
+<script src="~/Scripts/autoNumeric.js"></script>
+@{
+    string baseURL = CultureHelper.GetBaseURL().ToLower();
+    string culture = CultureHelper.GetCurrentCulture().ToLower();
+    string primaryCulture = CultureHelper.GetPrimaryCulture().ToLower();
+}
+
+@using (Html.BeginForm("Create", "TraderPrices", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <h1 style="margin-bottom:20px;">@Resources.General.UpdatePrices</h1>
+
+    <table style="width:100%; text-align:right;">
+        @Html.ValidationSummary(true)
+        @Html.HiddenFor(model => model.TraderID)
+        <tr>
+            <td>@Resources.General.BuyPrice</td>
+            <td>@Html.TextBoxFor(model => model.BuyPrice, new { name = "name", type = "text", @data_val = "true", autofocus = "autofocus", placeholder = Resources.General.BuyPrice })</td>
+
+            <td>@Resources.General.SellPrice</td>
+            <td>@Html.TextBoxFor(model => model.SellPrice, new { name = "name", type = "text", @data_val = "true", placeholder = Resources.General.SellPrice })</td>
+      
+            <td style="text-align:center;">
+                <input type="submit" id="Create" value='@Resources.General.AddPrice' class="btn" />
+            </td>
+        </tr>
+    </table>
+
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+<script>
+
+    $("#BuyPrice").autoNumeric({ oRide: '8,3' })
+    $("#SellPrice").autoNumeric({ oRide: '8,3' })
+
+    $('#Create').click(function (e) {
+        e.preventDefault(); // <------------------ stop default behaviour of button
+        BuyPrice = document.getElementById('BuyPrice').value;
+        SellPrice = document.getElementById('SellPrice').value;
+        TraderID = document.getElementById('TraderID').value;
+
+        $.ajax({
+            url: '@(baseURL)/' + '/TraderPrices/Create/',
+            type: "POST",
+            data: JSON.stringify({ 'BuyPrice': BuyPrice, 'SellPrice': SellPrice, 'TraderID': TraderID }),
+            cache: false,
+            contentType: "application/json; charset=utf-8",
+
+            success: function (data, statusText, xhr) {
+                $('#BuyPrice').val('');
+                $('#SellPrice').val('');
+
+                document.getElementById('MaxSell').value = accounting.formatMoney(data.maxSell);
+                document.getElementById('MinBuy').value = accounting.formatMoney(data.minBuy);
+
+                AddToCart(TraderID);
+                toastr.success('@Resources.Messages.Saved');
+
+                $.ajax({
+                    url: '@(baseURL)/' + '/TraderPrices/_BestPrice/',
+                    type: "Get",
+                    success: function (data) {
+                        $('#bestP').html(data);
+                    }
+                });
+            },
+            error: function (data, xhr, textStatus) {
+                if (data.status == 1)
+                    toastr.error('@Resources.Messages.ZeroPrice')
+                if (data.status == 2)
+                    toastr.error('@Resources.Messages.nullablePrices')
+                if (data.status == 3)
+                    toastr.error('@Resources.Messages.NoPriceBefore')
+
+            }
+        })
+        return false;
+    }
+
+    );
+
+    function AddToCart(trader) {
+        $.ajax({
+            url: '@(baseURL)/' + '/TraderPrices/_list/',
+            type: "POST",
+            success: function (data) {
+                var x = navigator.userAgent.indexOf('CLR');//IE
+                if (x > 0) {
+                    $('#divList').html(data);
+                    $('#divList').show();
+                }
+                else
+                    $('#divList').html(data);
+            }
+        });
+    }
+</script>

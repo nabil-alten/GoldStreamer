@@ -1,0 +1,150 @@
+﻿@using BLL.SecurityClasses
+@using DAL
+@using GoldStreamer.Helpers
+@using Microsoft.AspNet.Identity
+@using Microsoft.AspNet.Identity.EntityFramework
+@using PagedList.Mvc;
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <link rel="stylesheet" type="text/css" href="~/Content/Css/style.css" />
+    <link rel="stylesheet" type="text/css" href="~/Content/toastr.css" />
+    @*<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>*@
+    <title>@ViewBag.Title </title>
+    <style>
+        .innerBanner {
+            margin-top: 20px;
+        }
+
+        .fixc {
+            position: fixed !important;
+            top: 40px;
+        }
+    </style>
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/toast")
+    @{
+        string baseUrl = CultureHelper.GetBaseURL().ToLower();
+
+    }
+
+
+    @*<script src="~/Scripts/vendor/bootstrap.min.js"></script>
+        <script src="js/main.js"></script>*@
+
+    <script src="~/Scripts/jquery.signalR-2.2.0.js"></script>
+    <script src="/signalr/hubs"></script>
+    <script type="text/javascript">
+        //$(function () {
+        //    var priceViewer = $.connection.priceViewerHub;
+        //    priceViewer.client.updateHeader = function () {
+        //        doUpdateHeader();
+        //    };
+
+        //    //$.connection.hub.logging = true;
+        //    $.connection.hub.start().done(function () {
+        //        doUpdateHeader();
+        //    }).fail(function (e) {
+        //    });
+        //});
+
+
+        function doUpdateHeader() {
+            var tbl = $('#pricesHeader');
+            $.ajax({
+                url: '@(baseUrl)/' + 'Home/DoShowBest',
+                contentType: 'application/html ; charset:utf-8',
+                type: 'GET',
+                dataType: 'html'
+            }).success(function (result) {
+                tbl.empty().append(result);
+            }).error(function () {
+            });
+        }
+    </script>
+
+
+</head>
+
+<body>
+    <div class="mainContainer" id="wrap">
+        <div class="innerNav">
+            @Html.Partial("UpperTaps")
+            <div style="margin-left: 20px;">
+                @{Html.RenderPartial("_LoginPartial"); }
+            </div>
+        </div>
+
+        <div class="innerBanner">
+            @RenderSection("UpperBanner", false)
+
+
+            <div class="innerLogo">
+                <a href="~/Home/Index"><img src="~/Content/images/inner_logo.png" width="95" /></a>
+            </div>
+            <div class="menuContainer" id="test1">
+                @RenderSection("SideMenu", false)
+            </div>
+        </div>
+        <div class="innerInfo">
+            @Html.Partial("GoldPricesTap")
+            @*<div class="right search" style="margin-right: 20px;">
+                <input type="text" placeholder="@Resources.General.SearchGoldsmiths" />
+                <img class="searchImg" src="~/Content/images/search.png" />
+            </div>*@
+        </div>
+
+        <div style="width: 100%; min-height: 600px; overflow: auto;">
+            <div class="innerData" style="width:74%">
+                @RenderBody()
+            </div>
+            @RenderSection("SideAddArea", required: false)
+        </div>
+
+        <div class="footerArea">
+            @Html.Partial("Footer")
+
+        </div>
+
+
+
+        @Scripts.Render("~/bundles/jqueryval")
+        @RenderSection("scripts", required: false)
+        <script>
+            var wrap = $("#wrap");
+            var test1 = $("#test1");
+            wrap.on("scroll", function (e) {
+
+                if (this.scrollTop > 220) {
+                    test1.addClass("fixc");
+                } else {
+                    test1.removeClass("fixc");
+                }
+
+            });
+        </script>
+
+        <script type="text/javascript">
+            var $_Tawk_API = {}, $_Tawk_LoadStart = new Date();
+            (function () {
+                var s1 = document.createElement("script"), s0 = document.getElementsByTagName("script")[0];
+                s1.async = true;
+                s1.src = 'https://embed.tawk.to/55895414e43723cd5276a412/default';
+                s1.charset = 'UTF-8';
+                s1.setAttribute('crossorigin', '*');
+                s0.parentNode.insertBefore(s1, s0);
+            })();
+        </script>
+
+    </div>
+
+</body>
+
+</html>

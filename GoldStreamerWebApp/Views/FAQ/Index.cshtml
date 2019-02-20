@@ -1,0 +1,75 @@
+﻿@using GoldStreamer.Helpers
+@model GoldStreamer.Models.ViewModels.FAQViewModel
+@{
+    ViewBag.Title = @Resources.General.FAQ;
+    Layout = "~/Views/Shared/_LayoutInner.cshtml";
+    string baseUrl = CultureHelper.GetBaseURL().ToLower();
+}
+<link type="text/css" href="~/Content/css/style.css" rel="stylesheet" />
+<script type="text/javascript" src="~/Scripts/accordion.js"></script>
+@section SideMenu{
+    @if (Model.QuestionGroupList.Count != 0)
+    {
+        <div class="innerMenu">
+            <div class="menuItem">
+                @Html.ActionLink(Resources.General.All, "Index")
+
+            </div>
+            @foreach (var groupItem in Model.QuestionGroupList)
+            {
+                <div class="menuItem" id="group@(groupItem.ID)" data-groupid="@groupItem.ID">
+                    <a href="#">@groupItem.GroupName</a>
+                </div>
+            }
+        </div>
+    }
+@*<div>@Html.Action("UserQuestion", "Question")</div>*@
+    
+}
+
+@section UpperBanner{
+
+
+    <div class="innerBanner">
+        <h1 class="banner_header">@Resources.General.FAQ</h1>
+
+        <div class="banner"><img src="../../Content/Images/inner_banner.jpg" width="1050" height="180" alt="" /></div>
+    </div>
+}
+
+<div id="accordionContainer">
+    @Html.Action("_Accordion")
+</div>
+
+
+<script>
+    var wrap = $("#wrap");
+    var test1 = $("#test1");
+    wrap.on("scroll", function (e) {
+
+        if (this.scrollTop > 220) {
+            test1.addClass("fixc");
+        } else {
+            test1.removeClass("fixc");
+        }
+
+    });
+
+    $(".menuItem").click(function () {
+        debugger;
+        var id = $(this).attr("data-groupid");
+        $.ajax({
+            url: "@(baseUrl)/FAQ/GetFaqByQuestionGroup",
+            type: 'GET',
+            data: { groupId: id },
+            cache: false,
+            success: function (data) {
+                $(".menuItem").removeClass("menuItemactive");
+                $("#group" + id).addClass("menuItemactive");
+                $('#accordionContainer').html(data);
+            },
+            error: function () {
+            }
+        });
+    });
+</script>

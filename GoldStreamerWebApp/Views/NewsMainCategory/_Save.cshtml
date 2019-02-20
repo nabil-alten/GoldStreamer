@@ -1,0 +1,122 @@
+﻿@using GoldStreamer.Helpers
+@model BLL.DomainClasses.NewsMainCategory
+@{
+    string baseUrl = CultureHelper.GetBaseURL().ToLower();
+}
+
+@using (Html.BeginForm("_Save", "NewsMainCategory", FormMethod.Post, new { id = "form" }))
+{
+    @Html.AntiForgeryToken()
+
+        @Html.ValidationSummary(true)
+
+        <table>
+            <tr>
+                <td style=" width: 20%;">
+                    @Resources.General.NewsMainCategoryName :
+                </td>
+                <td>
+                    @Html.TextBoxFor(model => model.MainCategoryName, new { autofocus = "autofocus", placeholder = Resources.General.NewsMainCategoryName, maxlength = 50 })
+                </td>
+                <td style="width: 9%;"></td>
+
+                <td style=" width: 20%;">
+                    @Resources.General.NewsMainCategoryOrder :
+                </td>
+                <td>
+                    @Html.TextBoxFor(model => model.MainCategoryOrder, new { autofocus = "autofocus", placeholder = Resources.General.NewsMainCategoryOrder, @Value = "" })
+                </td>
+            
+                <td>
+                    <input type="button" id="Save" value="@Resources.General.Save" class="btn" />
+                    </td>
+            </tr>
+            <tr>
+                <td style=" width: 20%;">
+                </td>
+                <td class="message-label">
+                    @Html.ValidationMessageFor(model => model.MainCategoryName)
+                </td>
+                <td style="width: 9%;"></td>
+
+                <td style=" width: 20%;">
+
+
+                </td>
+                <td class="message-label">
+                    @Html.ValidationMessageFor(model => model.MainCategoryOrder)
+                </td>
+
+                <td>
+                </td>
+            </tr>
+        </table>
+      
+       
+}
+
+
+<script>
+    $('#Save').click(function (e) {
+
+        var name = document.getElementById('MainCategoryName').value;
+        var order = document.getElementById('MainCategoryOrder').value;
+
+        if (!$("#form").valid()) return false;
+        $.ajax({
+            url: '@(baseUrl)/' + '/NewsMainCategory/_Save/',
+            type: "POST",
+            data: JSON.stringify({ 'ID': elementID, 'MainCategoryName': name, 'MainCategoryOrder': order }),
+            cache: false,
+            contentType: "application/json; charset=utf-8",
+
+            success: function () {
+
+                $.ajax({
+                    url: '@(baseUrl)/' + '/NewsMainCategory/_List/',
+                    type: "POST",
+                    success: function (data, statusText, xhr) {
+
+                        document.getElementById('MainCategoryName').value = '';
+                        document.getElementById('MainCategoryOrder').value = '';
+                        elementID = 0;
+                        var x = navigator.userAgent.indexOf('CLR');//IE
+                        if (x > 0) {
+                            $('#divList').html(data);
+                            $('#divList').show();
+                        }
+                        else
+                            $('#divList').html(data);
+
+                        debugger;
+
+                        toastr.success('@Resources.Messages.Saved');
+
+                    }
+                });
+
+            },
+            error: function (data, xhr, textStatus) {
+                if (data.status == 1) {
+                    toastr.error('@Resources.Messages.BasketNameDuplicate');
+                }
+                else if (data.status == 2) {
+                    toastr.error('@Resources.Messages.NewsMainCategoryMaxVal');
+                }
+                else if (data.status == 3)
+                {
+                    toastr.error('@Resources.Messages.OrderErrorMsg');
+                }
+                else if (data.status == 4) {
+                    toastr.error('@Resources.Messages.OrderNoErrorMsg');
+                }
+                else
+                    toastr.error(textStatus);
+            }
+        });
+        return false;
+    });
+
+</script>
+
+@Scripts.Render("~/bundles/jqueryval")

@@ -1,0 +1,105 @@
+﻿@model GoldStreamer.Models.ViewModels.QuestionViewModel
+@using GoldStreamer.Helpers
+@{
+    ViewBag.Title = Resources.General.userquestion;
+    string baseUrl = CultureHelper.GetBaseURL().ToLower();
+    Layout = null;//"~/Views/Shared/_LayoutAdmin.cshtml";
+
+}
+@*<div style="text-align:center;"><h2>@Resources.General.userquestion</h2></div>*@
+
+<form id="form" method="POST">
+    <div style="direction: rtl;">
+        <table width="100%">
+            <tr>
+                <td>
+                    @Html.Label(Resources.General.Name)
+                </td>
+                <td>
+                    @Html.TextBoxFor(model => model.Name, new { maxLength = "50", @placeHolder = @Resources.General.Name, @class = "form-control" })
+                    <br /> <label style="color :red;"> @Html.ValidationMessageFor(model => model.Name)</label>
+
+                </td>
+
+                <td>
+                    @Html.Label(Resources.General.Email)
+                </td>
+                <td>
+                    @Html.TextBoxFor(model => model.Email, new { placeholder = Resources.General.Email, @class = "form-control" })
+                    <br /> <label style="color :red;"> @Html.ValidationMessageFor(model => model.Email)</label>
+
+                </td>
+                <td >
+                    <input type="button" id="btnSave" class="btn btn-primary" value='@Resources.General.Send' />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.Label(Resources.General.Question)
+                </td>
+                <td colspan="3" >
+                    @Html.TextAreaFor(model => model.QuestionText, new { placeholder = Resources.General.Question, maxlength = "250", @class = "form-control", @Style=" margin: 0px;height: 50px;width: 80%;" })
+                    <br /> <label style="color :red;">@Html.ValidationMessageFor(model => model.QuestionText)</label>
+
+                </td>
+           <td></td>
+
+               
+            </tr>
+        </table>
+    </div>
+
+</form>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#btnSave').click(function (e) {
+            try {
+                e.preventDefault();
+
+                var Name = document.getElementById('Name').value;
+                var Email = document.getElementById('Email').value;
+                var Question = document.getElementById('QuestionText').value;
+                if ($("#form").valid()) {
+                    $.ajax({
+                        url: "@(baseUrl)/Question/SaveUserQuestion/",
+                        type: "Post",
+                        async: false,
+                        cache: false,
+                        contentType: "application/json; charset=utf-8",
+                        data: JSON.stringify({ 'Name': Name, 'Email': Email, 'QuestionText': Question }),
+                        success: function (data, statusText, xhr) {
+                            if (data.StatusCode == 200 || data.StatusCode == null) {
+
+                                alert(data.StatusDescription);
+                                clearFrom();
+                            }
+                            else {
+                                alert(data.StatusDescription);
+                            }
+
+
+                        },
+                        error: function (data, statusText, xhr) {
+                            alert(data.StatusDescription);
+                        }
+                    });
+                }
+
+            }
+            catch (err) { }
+            return false;
+        });
+    });
+    function clearFrom() {
+        try {
+            document.getElementById('Name').value = "";
+            document.getElementById('Email').value = "";
+            document.getElementById('QuestionText').value = "";
+
+        }
+        catch (err) { }
+    }
+</script>
+@Scripts.Render("~/bundles/jqueryval")

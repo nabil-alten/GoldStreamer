@@ -1,0 +1,111 @@
+﻿@using GoldStreamer.Helpers
+@model BLL.DomainClasses.Users
+@Scripts.Render("~/bundles/modernizr")
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/jqueryval")
+@{
+    string baseURL = CultureHelper.GetBaseURL().ToLower();
+    string culture = CultureHelper.GetCurrentCulture().ToLower();
+    string primaryCulture = CultureHelper.GetPrimaryCulture().ToLower();
+}
+<form class="form-horizontal" id="form" method="post" action="">
+    <table style="width:100%">
+        <tr>
+            <td style="
+    width: 10%;
+">
+                @Resources.General.UserName:
+        </td>
+            <td style="
+    width: 26%;
+">
+                @Html.TextBoxFor(model => model.UserName, new { @data_val = "true", placeholder = @Resources.General.UserName, @id = "txtUserName", @maxlength = "20" })
+      
+        <div style="display:none" id="validateUsername">
+            @Html.Label("ValidateTextExist", @Resources.Messages.BasketNameDuplicate, new { @class = "field-validation-error", style = "font-weight: normal" })
+        </div>
+        </td>
+            <td></td>
+
+            <td> <input type="button" id="btnSave" value='@Resources.General.Add' class="btn" />
+</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td class="message-label">@Html.ValidationMessageFor(x => x.UserName)</td>
+            <td></td><td></td>
+        </tr>
+
+       
+    </table>
+
+</form>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#txtUserName').keypress(function (event) {
+            if (event.keyCode == 13) {
+
+                $('#btnSave').click();
+               //$('#txtUserName').focus();
+                return false;
+            }
+        });
+        $('#btnSave').on('click', function(e) {
+
+            e.preventDefault();
+            var txtuserName = $("#txtUserName").val();
+            if ($("#form").valid()) {
+                $('#validateUsername').hide();
+                $.ajax({
+                    url: '@(baseURL)/' + '/Users/_Add',
+                    type: 'POST',
+                    async: false,
+                    cache: false,
+                    
+                    data: { userName: txtuserName },
+                    success: function (data) {
+                        debugger;
+                        toastr.success('@Resources.Messages.Saved');
+                        $('#divList').html(data);
+                        path = '@(baseURL)/' + '/Users/_Add';
+                        $.ajax({
+                            url: path,
+                            type: 'Get',
+                            async: false,
+                            cache: false,
+                            success: function (data) {
+                                $('#AjaxResult').html(data);
+                            },
+                            error: function (xhr, textStatus) {
+                                debugger;
+                                if (xhr.status == 5)
+                                    window.location.reload();
+                                else
+                                    toastr.error("something seems wrong");
+
+                            }
+                        });
+                    },
+                    error: function (xhr, textStatus) {
+                        debugger;
+                        if (xhr.status == 2) {
+                            //$("#form").valid();
+                            //$('#validateUsername').show();
+                            //return false;
+                            toastr.error('@Resources.Messages.BasketNameDuplicate');
+                        }
+                    else if (xhr.status == 5)
+                        window.location.reload();
+                    else
+                        toastr.error('Error!');
+                }
+            });
+        } else {
+                return false;
+    }
+            return false;
+    });
+    });
+</script>
+
+

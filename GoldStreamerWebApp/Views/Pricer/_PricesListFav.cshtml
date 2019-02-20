@@ -1,0 +1,175 @@
+﻿@model IEnumerable<BLL.DomainClasses.Prices>
+
+@{
+    var minBuyVal = "0.00";
+    var maxSellVal = "0.00";
+    var trClass = "clr_tr";
+
+}
+
+
+<table style="width: 100%" border="0" class="data_table">
+    <tr>
+        <td width="30%"></td>
+        <td><h2>@Resources.General.maxBuyPrice</h2> </td>
+        <td><h2>@Resources.General.minSellPrice</h2>  </td>
+        <td width="30%"></td>
+    </tr>
+    <tr>
+        <td width="30%"></td>
+
+        <td>
+
+            <div class="price_Div6">
+                <label id="txtBestBuy" class="best_price_lb">@minBuyVal</label>
+                <img src="~/Content/images/circ.png" />
+            </div>
+        </td>
+
+
+        <td>
+            <div class="price_Div6">
+                <label id="txtBestSell" class="best_price_lb">@maxSellVal</label>
+                <img src="~/Content/images/circ.png" />
+            </div>
+
+        </td>
+        <td width="30%"></td>
+
+    </tr>
+</table>
+
+<table id="list" style="width: 100%; margin-top :139px;"  border="0" class="data_table">
+    <tr>
+        <th scope="col" style="width:15%;">@Resources.General.TraderName</th>
+
+        <th scope="col">
+            @Resources.General.CurrentSell
+        </th>
+        <th scope="col" style="width:10%;">@Resources.General.CurrentBuy</th>
+
+
+        <th scope="col">
+            @Resources.General.OpenSell
+        </th>
+        <th scope="col">
+            @Resources.General.OpenBuy
+        </th>
+        <th scope="col">
+            @Resources.General.sellMin
+        </th>
+        <th scope="col">
+            @Resources.General.buyMax
+        </th>
+
+        <th scope="col">
+            @Resources.General.LastPriceDate
+        </th>
+
+        <th scope="col">
+            @Resources.General.BasketSell
+        </th>
+
+        <th scope="col">
+            @Resources.General.BasketBuy
+        </th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        if (trClass == "clr_tr") { trClass = ""; }
+        else
+        {
+            trClass = "clr_tr";
+        }
+        <tr class=@trClass>
+            <td>
+                @Html.ActionLink(item.Name, "TraderPricesHistory", new { traderId = item.TraderID })
+            </td>
+            @if (item.TradersMinSell)
+            {
+                maxSellVal = string.Format("{0:0,0.00;(0:0,0.00);----}", item.CurrentSell);
+                <td>
+                    <label id="lblCurrentSell">@string.Format("{0:0,0.00;(0:0,0.00);----}", item.CurrentSell)</label>
+                </td>
+            }
+            else
+            {
+                <td>
+                    <label id="lblCurrentSell">@string.Format("{0:0,0.00;(0:0,0.00);----}", item.CurrentSell)</label>
+                </td>
+            }
+            @if (item.TradersMaxBuy)
+            {
+                minBuyVal = string.Format("{0:0,0.00;(0:0,0.00);----}", item.CurrentBuy);
+                <td>
+                    <label id="lblCurrentBuy">@string.Format("{0:0,0.00;(0:0,0.00);----}", item.CurrentBuy)</label>
+                </td>
+            }
+            else
+            {
+                <td>
+                    <label id="lblCurrentBuy">@string.Format("{0:0,0.00;(0:0,0.00);----}", item.CurrentBuy)</label>
+                </td>
+            }
+            <td>
+                <label id="lblOpenSell">@string.Format("{0:0,0.00;(0:0,0.00);----}", item.OpenSell)</label>
+            </td>
+            <td>
+                <label id="lblOpenBuy">@string.Format("{0:0,0.00;(0:0,0.00);----}", item.OpenBuy)</label>
+            </td>
+            <td>
+                <label id="lblMinSell">@string.Format("{0:0,0.00;(0:0,0.00);----}", item.MinSell)</label>
+            </td>
+            <td>
+                <label id="lblMaxBuy">@string.Format("{0:0,0.00;(0:0,0.00);----}", item.MaxBuy)</label>
+            </td>
+            @if (item.OpenBuy != 0 && item.OpenSell != 0)
+            {
+                <td>
+                    <label id="lbldt">@String.Format("{0:T}", item.date)</label>
+                </td>
+            }
+            else
+            {
+                <td>
+                    <label id="lbldt">----</label>
+                </td>
+            }
+
+            <td>
+                <label id="lblMaxBuy">@string.Format("{0:0,0.00;(0:0,0.00);----}", item.BasketSell)</label>
+            </td>
+            <td>
+                <label id="lblMaxBuy">@string.Format("{0:0,0.00;(0:0,0.00);----}", item.BasketBuy)</label>
+            </td>
+
+            @if (item.InBasket != 0)
+            {
+                <td>
+                    @Html.ActionLink(@Resources.General.InBasketPrices, "PricesHistory", new { title = @Resources.General.basketPriceHistory, Basketid = item.InBasket })
+                </td>
+            }
+            else
+            {
+                <td style="display:none"><label id="no"></label></td>
+            }
+        </tr>
+
+    }
+</table>
+<br />
+<br />
+
+
+@*<table style="width: 100%;">
+    <tr style="direction: rtl;">
+        <td style="text-align: right;">
+            <label id="lblBestBuy">@Resources.General.maxBuyPrice</label>
+            <label id="txtBestBuy" style="background-color: #CEF6CE;">@minBuyVal</label>
+        </td>
+        <td style="text-align: left; padding-left: 10px;">
+            <label id="lblBestSell">@Resources.General.minSellPrice</label>
+            <label id="txtBestSell" style="background-color: #CEF6CE;">@maxSellVal</label>
+        </td>
+    </tr>
+</table>*@

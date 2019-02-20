@@ -1,0 +1,405 @@
+﻿@using PagedList;
+@using PagedList.Mvc;
+@model PagedList.IPagedList<BLL.DomainClasses.News>
+
+@using GoldStreamer.Helpers
+@{
+    string baseUrl = CultureHelper.GetBaseURL().ToLower();
+    string culture = CultureHelper.GetCurrentCulture().ToLower();
+    string primaryCulture = CultureHelper.GetPrimaryCulture().ToLower();
+    string trClass = "clr_tr";
+
+    int defaultPageSize = int.Parse(System.Configuration.ConfigurationManager.AppSettings["DefaultPageSize"].ToString());
+    string[] pagingOptions = UsefulMethods.GetPagingOptions();
+
+}
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+
+@*new date time picker*@
+<script src="~/Scripts/GoldStreamer/jquery.datetimepicker.js"></script>
+<link href="~/Content/css/jquery.datetimepicker.css" rel="stylesheet" />
+
+<script>
+    $(document).ready(function () {
+        $(".deleteNews").on('click', function (event) {
+            debugger;
+            var Id = event.target.id;
+            var Conf = confirm("@Resources.Messages.SureDelete");
+            var pagenumber = 1;
+            if ('@ViewBag.PageNumber' != null && '@ViewBag.PageNumber' != "" && '@ViewBag.PageNumber' != '') {
+                pagenumber = '@ViewBag.PageNumber';
+            }
+            if (Conf == true) {
+                $.ajax({
+                    url: "@(baseUrl)/News/Delete",
+                    type: 'POST',
+                    data: { id: Id, pageNumber: pagenumber },
+
+                    success: function (data, statusText, xhr) {
+                        if (data.StatusCode == 200 || data.StatusCode == null) {
+                            toastr.success('@Resources.Messages.Deleted');
+                            $('#divList').html(data);
+                            search(pagenumber);
+                        }
+
+                    },
+                    error: function (xhr, textStatus) {
+                        console.log("Error in Saveing User");
+                        console.log(xhr.code);
+                        if (xhr.status == 1)
+                            toastr.error('@Resources.Messages.UnableToDelete');
+                        else
+                            toastr.error('@Resources.Messages.UnableToDelete');
+                    }
+                });
+            }
+            else
+                return false;
+        });
+    });
+</script>
+<form class="form-horizontal" id="form" method="post" action="">
+
+
+
+    @if (Model.Count > 0)
+    {
+
+        <table style="width:100%;" class="data_table" id="tbl">
+            <tr>
+                <td style="text-align:right;">
+                    <div class="counter_div">@Resources.General.NewsCount :<span>@Model.TotalItemCount </span></div>
+                </td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr class="clr_tr">
+                <th>
+
+                    @Resources.General.NewsTitle
+                </th>
+                <th>
+                    @Resources.General.NewsDate
+                </th>
+                <th>@Resources.General.Actions</th>
+            </tr>
+            <tbody>
+
+                @{
+        foreach (var item in Model)
+        {
+            <tr class=@trClass>
+                <td>@Html.DisplayFor(modelItem => item.Title)</td>
+                <td>
+                    @String.Format("{0:dd/MM/yyyy h:mm tt}", item.Date)
+                </td>
+                <td>
+                    @if (item.IsActive)
+                    {
+                        
+                        @*<a href="#" id="@item.Id" data-id="@item.Id" data-checked="@item.IsActive" class="checkbox">@Resources.General.notactive</a>*@
+                        
+                        <a href="#" id="@item.Id" data-id="@item.Id" data-checked="@item.IsActive" class="checkbox" title="@Resources.General.notactive">
+                            <img src="~/Content/Images/de-active.jpg" width="40" />
+                        </a>
+                    }
+                    else
+                    {
+                        @*<a href="#" id="@item.Id" data-id="@item.Id" data-checked="@item.IsActive" class="checkbox">@Resources.General.Activate</a>*@
+
+                        <a href="#" id="@item.Id" data-id="@item.Id" data-checked="@item.IsActive" class="checkbox" title="@Resources.General.Activate">
+                            <img src="~/Content/Images/active.jpg" width="40" />
+                        </a>
+                    }
+
+                    @*| <a href="#" id="@item.Id"  title="@Resources.General.Edit">@Resources.General.Edit</a>
+                    |@Html.ActionLink(@Resources.General.Edit, "Edit", new { newsId = item.Id })*@
+
+                    <a href="#" id="@item.Id" class="deleteNews" title="@Resources.General.Delete"><img src="~/Content/Images/del.png" width="30"  /></a>
+                    <a href="@Url.Action("Edit", "News", new { newsId = item.Id })" id="@item.Id" title="@Resources.General.Edit"><img src="~/Content/Images/edit_1.png" width="30" /></a>
+
+
+                </td>
+            </tr>
+
+                    if (trClass == "")
+                    {
+                        trClass = "clr_tr";
+
+                    }
+                    else
+                    {
+                        trClass = "";
+
+                    }
+        }
+                }
+                <tr>
+                    <td colspan="3">
+                        <div class="grid-footer">
+                            <div class="" id="pager" data-url="@(baseUrl)/News/_List/" data-container="divList" data-newstitle="@ViewBag.Newstitle" data-maincategory="@ViewBag.MainCategory" data-subcategory="@ViewBag.SubCategory" data-date="@ViewBag.date" data-page-size="@ViewBag.PageSize">
+                                @if (Model.PageCount > 1)
+                                {
+                                    @Html.PagedListPager(Model, page => ("javascript:gotoPage('" + page + "')"))
+                                }
+
+                                @*@if (Model.Count > 0)
+                                {
+                                    <div class="pull-right show">
+                                        <span class="padding5">@Resources.General.PageSizeChoose</span>
+                                        <span>
+                                            <select id="SelectPageSize" data-url="@(baseUrl)/News/_List" data-container="divList" data-newstitle="@ViewBag.Newstitle" data-maincategory="@ViewBag.MainCategory" data-subcategory="@ViewBag.SubCategory" data-date="@ViewBag.date" data-page-size="@ViewBag.PageSize">
+                                                @for (int i = 0; i < pagingOptions.Length; i++)
+                                                {
+                                                    if (ViewBag.PageSize != null && ViewBag.PageSize == int.Parse(pagingOptions[i]))
+                                                    {
+                                                        <option value="@pagingOptions[i]" selected>@pagingOptions[i]</option>
+                                                    }
+                                                    else if (defaultPageSize == int.Parse(pagingOptions[i]))
+                                                    {
+                                                        <option value="@pagingOptions[i]" selected>@pagingOptions[i]</option>
+                                                    }
+                                                    else
+                                                    {
+                                                        <option value="@pagingOptions[i]">@pagingOptions[i]</option>
+                                                    }
+                                                }
+
+                                            </select>
+
+                                        </span>
+                                    </div>
+                                }*@
+
+
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    }
+    else
+    {
+        @Html.Label("lblMSGsearch", Resources.Messages.NoData)
+    }
+
+   
+</form>
+<script>
+
+    function LoadSubCategory() {
+        debugger;
+        var selectedmainCategory = $("#MainCategory").val();
+        var drpSubCategory = $("#SubCategory");
+        drpSubCategory.html('');
+        drpSubCategory.find("option").not('[value = 0]').remove();
+        $.ajax({
+            type: "Post",
+            url: '@(baseUrl)' + '/NewsCategory/GetCategory/',
+            data: "{mainCategory: '" + selectedmainCategory + "' }",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (data) {
+                $.each(data.newscategory, function (id, option) {
+                    drpSubCategory.append($('<option></option>').val(option.Id).html(option.CategoryName));
+                });
+            },
+            failure: function () {
+                alert("Failed!");
+            }
+        });
+    }
+</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+
+
+
+        $('#SelectPageSize').change(function (event) {
+            debugger;
+            var id = event.target.id;
+            var url = $(this).attr('data-url');
+            var container = $(this).attr('data-container');
+
+            var title = $(this).attr('data-Newstitle');
+            var mainCategory = $(this).attr('data-maincategory');
+            var subCategory = $(this).attr('data-subcategory');
+            var date = $(this).attr('data-date');
+            if (title.length > 0) {
+                title = title.trim();
+            }
+
+            // custom paramter
+            var customParm = $(this).attr('data-customparm');
+            var customParmValues = getCustomParms(customParm);
+            //
+            //var sortOrder = $(this).attr('data-sort');
+            var pageSize = '@defaultPageSize';
+            if (document.getElementById("SelectPageSize") != null) {
+                pageSize = document.getElementById('SelectPageSize').value;
+            }
+            $.ajax({
+                url: url + "?title=" + encodeURIComponent(title) + "&mainCategory=" + mainCategory + "&subCategory=" + subCategory + "&date=" + date + "&pageSize=" + pageSize + '&pageNumber=1' + customParmValues,
+                type: 'Get',
+                async: false,
+                cache: false,
+                //data: { 'SearchText': searchText, 'pageSize': pageSize,'sortOrder': sortOrder,'pageNumber':1 },
+                success: function (data) {
+                    $('#divList').html(data);
+                },
+                error: function () {
+
+                }
+            });
+        });
+    });
+
+    function search(pagenumber) {
+        debugger;
+        var Title = $('#Newstitle').val();
+        var mainCategory = $('#MainCategory').val();
+        var subCategory = $('#SubCategory').val();
+        var date = $('#Date').val();
+        var customParm = $(this).attr('data-customparm');
+        var customParmValues = getCustomParms(customParm);
+        //
+        var pageSize = '@defaultPageSize';
+        if (document.getElementById("SelectPageSize") != null) {
+            pageSize = document.getElementById('SelectPageSize').value;
+        }
+        $.ajax({
+            url: "@(baseUrl)/News/_List",
+            type: 'Get',
+            async: false,
+            cache: false,
+            contentType: "application/json; charset=utf-8",
+            data: { title: Title, mainCategory: mainCategory, subCategory: subCategory, date: date, pageNumber: pagenumber, pageSize: pageSize },
+            success: function (data) {
+                $('#divList').html(data);
+
+            },
+            error: function (xhr, textStatus) {
+                toastr.error('Error!');
+            }
+        });
+        return false;
+    }
+
+    function getCustomParms(customParm) {
+        if (customParm == null) return "";
+        var keys = customParm.split(",");
+        var keysWithValues
+        for (var i = 0; i < keys.length; i++) {
+            keysWithValues = "&" + keys[i].replace("|", "=");
+        }
+        return keysWithValues;
+    }
+    function gotoPage(pageNumber) {
+        debugger;
+        var pager = $('#pager');
+        if (pager == null) return;
+        var url = pager.attr('data-url');
+        var container = pager.attr('data-container');
+        var title = pager.attr('data-Newstitle');
+        var mainCategory = pager.attr('data-maincategory');
+        var subCategory = pager.attr('data-subcategory');
+        var date = pager.attr('data-date');
+        var sortOrder = pager.attr('data-sort');
+        // custom paramter
+        var customParm = pager.attr('data-customparm');
+        var customParmValues = getCustomParms(customParm);
+        //
+        var pageSize = pager.attr('data-page-size');
+        if (pageSize == '') {
+            pageSize = '@defaultPageSize';
+        }
+
+        $.ajax({
+            url: url + "?title=" + encodeURIComponent(title) + "&mainCategory=" + mainCategory + "&subCategory=" + subCategory + "&date=" + date + "&pageSize=" + pageSize + "&PageNumber=" + pageNumber + customParmValues,
+            type: 'Get',
+            async: false,
+            cache: false,
+            success: function (data) {
+                $('#' + container).html(data);
+            },
+            error: function () {
+
+            }
+        });
+    }
+</script>
+<script>
+
+    $(document).ready(function (e) {
+        $('.checkbox').on('click', function (event) {
+            debugger;
+            var Title = $('#Newstitle').val();
+            var mainCategory = $('#MainCategory').val();
+            var subCategory = $('#SubCategory').val();
+            var date = $('#Date').val();
+            var pagenumber = 1;
+            if ('@ViewBag.PageNumber' != null && '@ViewBag.PageNumber' != "" && '@ViewBag.PageNumber' != '') {
+                pagenumber = '@ViewBag.PageNumber';
+            }
+            var id = $(this).attr("data-id");
+            var ckbox = $(this).attr("data-checked");
+            console.log(id);
+            if (ckbox == "True") {
+                var status = "0";
+            } else {
+                var status = "1";
+            }
+            var statusId = status + "," + id;
+            url = '@(baseUrl)/' + '/News/UnActivateNews/' + statusId;
+
+            if (status == "1") {
+                var r = confirm("@Resources.Messages.ActivateNews");
+            } else {
+                var r = confirm("@Resources.Messages.DeAtivateUNews");
+            }
+            var isSuccess = false;
+            if (r == true) {
+                $.ajax({
+                    url: url,
+                    type: "POST",
+                    async: false,
+                    cache: false,
+                    data: { statusId: statusId, pageNumber: pagenumber },
+                    success: function (data) {
+
+                        toastr.success('@Resources.Messages.Updated');
+                        $('#divList').html(data);
+                        search(pagenumber);
+
+                    },
+                    error: function () {
+                        toastr.error('Error Message');
+
+                    }
+                });
+
+            }
+            else {
+                //$(this).toggle($(this).checked);
+                //$(this).prop("checked", !$checks.is(":checked"));
+                if ($(this).is(':checked')) {
+                    $(this).attr('checked', false);
+                }
+                else {
+
+                    //$(this).attr("checked", true);
+                    //$(this).is(":checked" , true);
+                    $(this).prop("checked", true)
+                }
+
+            }
+        });
+
+
+        //=======
+
+
+    });
+
+</script>
